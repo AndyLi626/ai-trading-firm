@@ -80,3 +80,19 @@ if __name__ == "__main__":
     r = log_decision("infra", "test", "GCP connection verified", "N/A", 0, "init")
     errs = r.get('insertErrors', [])
     print("GCP test:", "OK" if not errs else errs)
+
+
+def log_handoff(from_bot: str, to_bot: str, task: str, payload: dict = None, session_id: str = None):
+    """Log a cross-bot context handoff to GCP."""
+    import time, uuid
+    row = {
+        "handoff_id": str(uuid.uuid4()),
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "bot": from_bot,
+        "session_id": session_id or "",
+        "last_checkpoint": f"{from_bot}→{to_bot}: {task}",
+        "context_summary": task,
+        "next_action": f"{to_bot}: process {task}",
+        "full_context": json.dumps({"from": from_bot, "to": to_bot, "payload": payload or {}})
+    }
+    return insert_rows("context_handoffs", [row])

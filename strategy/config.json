@@ -2,7 +2,10 @@
   "mean_reversion": {
     "dip_threshold_pct": 1.5,
     "confidence_floor_execute": 0.61,
-    "confidence_half_size_range": [0.58, 0.60],
+    "confidence_half_size_range": [
+      0.58,
+      0.6
+    ],
     "no_trade_below": 0.58
   },
   "range_play": {
@@ -10,8 +13,13 @@
     "below_floor_action": "watchlist_only"
   },
   "momentum": {
-    "confidence_floor_execute": 0.60
+    "confidence_floor_execute": 0.6
   },
-  "last_updated": "2026-03-01T18:21:00Z",
-  "updated_by": "ManagerBot directive"
+  "last_updated": "2026-03-01T18:47:57Z",
+  "updated_by": "ManagerBot directive",
+  "execution_guards": {
+    "dedup_check": true,
+    "hard_confidence_block": true,
+    "min_confidence_override": false
+  }
 }

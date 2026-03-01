@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-03-01T18:47:55Z",
+  "total_records": 12,
+  "true_duplicates": [
+    {
+      "cycle": 2,
+      "symbol": "AAPL",
+      "occurrences": 2,
+      "cycle_ids": [
+        "C002-05e54c",
+        "C002-35f8d6"
+      ],
+      "row_indices": [
+        0,
+        3
+      ],
+      "reason": "Same cycle number and symbol, different cycle_ids \u2014 re-run duplicates"
+    },
+    {
+      "cycle": 3,
+      "symbol": "MSFT",
+      "occurrences": 2,
+      "cycle_ids": [
+        "C003-c66d1e",
+        "C003-bd7a30"
+      ],
+      "row_indices": [
+        1,
+        4
+      ],
+      "reason": "Same cycle number and symbol, different cycle_ids \u2014 re-run duplicates"
+    },
+    {
+      "cycle": 4,
+      "symbol": "NVDA",
+      "occurrences": 2,
+      "cycle_ids": [
+        "C004-9ed4a6",
+        "C004-7ca8e5"
+      ],
+      "row_indices": [
+        2,
+        5
+      ],
+      "reason": "Same cycle number and symbol, different cycle_ids \u2014 re-run duplicates"
+    }
+  ],
+  "legitimate_multiple": [],
+  "summary": "3 true duplicate groups found"
+}

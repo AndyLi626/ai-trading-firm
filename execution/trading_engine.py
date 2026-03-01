@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.expanduser('~/.openclaw/workspace-research/shared/too
 sys.path.insert(0, os.path.expanduser('~/.openclaw/secrets'))
 sys.path.insert(0, os.path.expanduser('~/.openclaw/workspace/execution'))
 
-from gcp_client import insert_rows, log_decision, log_token_usage
+from gcp_client import insert_rows, log_decision, log_token_usage, log_handoff
 from load_secrets import alphavantage, alpaca_paper_key, alpaca_paper_secret
 from execution_service import execute as exec_order, alpaca_request
 
@@ -139,6 +139,9 @@ def run_cycle(cycle_num, results):
             "thesis": f"{plan['strategy']} on {plan['symbol']} ({plan['change_pct']:+.1f}%)",
         }
         
+        # Log handoff: strategy → risk
+        log_handoff("research", "risk", f"Review order {order['plan_id']}", payload=plan, session_id=cid)
+
         # Risk check
         risk_dec, risk_reason = risk_check(plan)
         order["risk_approved"] = risk_dec == "Approve"
@@ -148,6 +151,9 @@ def run_cycle(cycle_num, results):
         cycle_cost = (2100*3 + 680*15 + 1800*3 + 420*15 + 800*3 + 200*15) / 1_000_000
         cost += cycle_cost
         
+        # Log handoff: risk → execution
+        log_handoff("risk", "execution", f"{risk_dec}: {risk_reason}", payload={"decision": risk_dec, "plan_id": order["plan_id"]}, session_id=cid)
+
         if order["risk_approved"]:
             result = exec_order(order)
             order_status = result.get("status","error")
@@ -156,6 +162,18 @@ def run_cycle(cycle_num, results):
             order_status = f"skipped_{risk_dec.lower()}"
             alpaca_id = "N/A"
         
+        # Log risk review to GCP
+        insert_rows("risk_reviews", [{
+            "review_id": order["risk_review_id"],
+            "timestamp": TS(),
+            "plan_id": order["plan_id"],
+            "decision": risk_dec,
+            "reason": risk_reason,
+            "risk_score": round(1 - plan["confidence"], 2),
+            "portfolio_impact": f"{round(plan['size']/100000*100,1)}% of $100k",
+            "modified_order": "{}"
+        }])
+
         # Log to GCP
         insert_rows("trade_plans", [{
             "plan_id": order["plan_id"],"timestamp": TS(),

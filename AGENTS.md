@@ -45,6 +45,26 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+
+## Subagent Delegation (Context Protection)
+
+To prevent main session context rot (93% token = 112s compaction = timeout):
+
+**Spawn a subagent for ANY task involving:**
+- Writing or modifying 3+ files
+- Running tests that take >30s
+- Installing repos or skills
+- Large code generation (>100 lines)
+- Any task likely to take >2 minutes
+
+**How:**
+Use `sessions_spawn(task="...", mode="run", cleanup="delete")`
+Results auto-announce on completion. Main session stays clean.
+
+**Stay in main session for:**
+- Status checks, single file edits, short shell commands (<10s)
+- Answering questions, planning, analysis
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.

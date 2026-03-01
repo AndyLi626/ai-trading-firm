@@ -24,6 +24,18 @@
       "enabled": false,
       "type": "testnet",
       "note": "Requires Polymarket API credentials"
+    },
+    "alpaca_paper_crypto": {
+      "enabled": true,
+      "type": "paper",
+      "base_url": "https://paper-api.alpaca.markets",
+      "note": "Crypto: BTC/USD, ETH/USD, SOL/USD via Alpaca paper"
+    },
+    "alpaca_paper_options": {
+      "enabled": true,
+      "type": "paper",
+      "base_url": "https://paper-api.alpaca.markets",
+      "note": "Options: SPY/QQQ/AAPL calls and puts, level 3 approved"
     }
   },
   "hard_rules": {

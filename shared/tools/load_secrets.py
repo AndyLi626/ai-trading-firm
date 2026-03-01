@@ -47,3 +47,5 @@ def get_api(category: str, name: str) -> dict:
 
 def alpaca_paper_key(): return load('alpaca_paper_key')
 def alpaca_paper_secret(): return load('alpaca_paper_secret')
+def brave_api_key(): return load('brave_api_key')
+def alphavantage_api_key(): return load('alphavantage_api_key')

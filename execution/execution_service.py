@@ -89,6 +89,145 @@ def submit_alpaca_order(order: dict) -> dict:
     }
     return result
 
+def submit_alpaca_crypto(order: dict) -> dict:
+    """Submit crypto order to Alpaca paper (crypto-specific endpoint)."""
+    symbol = order.get('instrument', 'BTC/USD')
+    # Alpaca crypto uses symbol like BTC/USD
+    if '/' not in symbol:
+        symbol = symbol.replace('USD','') + '/USD'
+
+    direction = order.get('direction', '').lower()
+    side = 'buy' if direction in ['long','buy'] else 'sell'
+    notional = float(order.get('size_notional', 100))
+
+    body = {
+        "symbol": symbol,
+        "notional": str(notional),
+        "side": side,
+        "type": "market",
+        "time_in_force": "gtc"
+    }
+
+    resp, _ = alpaca_request("POST", "/orders", body)
+
+    if resp.get("error"):
+        return {
+            "order_id": order.get("order_id"),
+            "status": "error",
+            "error_message": str(resp.get("error")),
+            "venue": "alpaca_paper_crypto",
+            "instrument": symbol,
+            "submitted_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        }
+
+    return {
+        "order_id": order.get("order_id"),
+        "alpaca_order_id": resp.get("id"),
+        "status": "accepted",
+        "venue": "alpaca_paper_crypto",
+        "instrument": symbol,
+        "side": side,
+        "notional": notional,
+        "filled_qty": resp.get("filled_qty", "0"),
+        "fill_price": float(resp.get("filled_avg_price") or 0),
+        "submitted_at": resp.get("submitted_at", time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+    }
+
+
+def get_options_chain(symbol: str, expiration_date: str = None, option_type: str = None) -> list:
+    """Fetch options contracts for a symbol.
+    option_type: 'call' or 'put'
+    expiration_date: 'YYYY-MM-DD' or None for nearest
+    """
+    params = f"underlying_symbols={symbol}&limit=10&status=active"
+    if expiration_date:
+        params += f"&expiration_date={expiration_date}"
+    if option_type:
+        params += f"&type={option_type}"
+    resp, _ = alpaca_request("GET", f"/options/contracts?{params}")
+    return resp.get("option_contracts", []) if isinstance(resp, dict) else []
+
+def submit_alpaca_option(order: dict) -> dict:
+    """Submit an options order to Alpaca paper.
+
+    order must contain:
+    - instrument: underlying symbol e.g. 'SPY'
+    - option_type: 'call' or 'put'
+    - strike_price: float
+    - expiration_date: 'YYYY-MM-DD'
+    - contracts: int (number of contracts, 1 contract = 100 shares)
+    - direction: 'long' (buy to open) or 'short' (sell to open)
+    """
+    symbol = order.get('instrument', 'SPY')
+    opt_type = order.get('option_type', 'call').lower()
+    strike = float(order.get('strike_price', 0))
+    expiry = order.get('expiration_date', '')
+    contracts = int(order.get('contracts', 1))
+    direction = order.get('direction', 'long').lower()
+
+    # Find matching contract
+    chain = get_options_chain(symbol, expiry, opt_type)
+    contract = None
+    for c in chain:
+        if abs(float(c.get('strike_price', 0)) - strike) < 0.01:
+            contract = c
+            break
+
+    # If exact strike not found, use closest
+    if not contract and chain:
+        contract = min(chain, key=lambda c: abs(float(c.get('strike_price', 0)) - strike))
+
+    if not contract:
+        return {
+            "order_id": order.get("order_id"),
+            "status": "error",
+            "error_message": f"No options contract found for {symbol} {opt_type} ~{strike} exp {expiry}",
+            "venue": "alpaca_paper_options",
+            "instrument": symbol,
+            "submitted_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        }
+
+    contract_symbol = contract.get('symbol')
+    side = 'buy' if direction in ['long', 'buy'] else 'sell'
+
+    body = {
+        "symbol": contract_symbol,
+        "qty": str(contracts),
+        "side": side,
+        "type": "market",
+        "time_in_force": "day",
+        "order_class": "simple"
+    }
+
+    resp, _ = alpaca_request("POST", "/orders", body)
+
+    if resp.get("error") or resp.get("status_code"):
+        return {
+            "order_id": order.get("order_id"),
+            "status": "error",
+            "error_message": str(resp.get("error", resp)),
+            "venue": "alpaca_paper_options",
+            "instrument": contract_symbol,
+            "submitted_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        }
+
+    return {
+        "order_id": order.get("order_id"),
+        "alpaca_order_id": resp.get("id"),
+        "status": "accepted",
+        "venue": "alpaca_paper_options",
+        "instrument": contract_symbol,
+        "underlying": symbol,
+        "option_type": opt_type,
+        "strike_price": float(contract.get("strike_price", strike)),
+        "expiration_date": contract.get("expiration_date", expiry),
+        "contracts": contracts,
+        "side": side,
+        "fill_price": float(resp.get("filled_avg_price") or 0),
+        "submitted_at": resp.get("submitted_at", time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+    }
+
+
 def execute(order_json: str) -> dict:
     order = json.loads(order_json) if isinstance(order_json, str) else order_json
     valid, reason = validate_order(order)
@@ -99,7 +238,14 @@ def execute(order_json: str) -> dict:
                   "submitted_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     else:
         venue = order.get('venue', 'alpaca_paper')
-        if 'alpaca' in venue:
+        instrument = order.get('instrument', '')
+        is_crypto = any(c in instrument.upper() for c in ['BTC', 'ETH', 'SOL', 'DOGE', 'AVAX'])
+        is_options = order.get('option_type') is not None or venue == 'alpaca_paper_options'
+        if 'alpaca' in venue and is_options:
+            result = submit_alpaca_option(order)
+        elif 'alpaca' in venue and is_crypto:
+            result = submit_alpaca_crypto(order)
+        elif 'alpaca' in venue:
             result = submit_alpaca_order(order)
         else:
             result = {"order_id": order['order_id'], "status": "venue_not_implemented",

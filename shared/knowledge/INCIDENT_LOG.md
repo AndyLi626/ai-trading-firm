@@ -113,3 +113,37 @@ ManagerBot 用 `sessions_list` 判断 bot 是否在线，但 OpenClaw agents 是
 3. **不用 sessions_list 判断 bot 状态**，用 team_status.py + GCP
 4. **发现 409 立查双进程**: `ps aux | grep openclaw`
 5. **cron 失败不阻塞**: `bestEffortDeliver: true`，`maxRetries: 2`
+
+---
+
+## INCIDENT-006 — 2026-03-01 20:32 UTC
+**Type:** Repeated session timeout during compaction
+**Symptom:** `Request was aborted` / `embedded run timeout: timeoutMs=120000`
+**Root Cause (confirmed via logs):**
+- Main session hit 185k/200k tokens (93% full)
+- `compaction start` at 20:30:24, `agent start` at 20:32:16 — **112 seconds** on compaction alone
+- `timeoutSeconds` was still 120s at that run (180s update hadn't taken effect yet)
+- Agent got <8s to respond after compaction, timed out immediately
+**Fix Applied:**
+- `agents.defaults.timeoutSeconds` → 180s (already done)
+- Long-term: reduce session token accumulation (see below)
+**Session Token Analysis (from user-provided /status output):**
+```
+main (InfraBot):   185k/200k  93%  — CRITICAL, triggers long compaction
+research (cron):    26k/200k  13%  — fine
+manager (telegram): 11k/200k   5%  — fine
+manager (cron):     10k/200k   5%  — fine
+main (cron):        16k/200k   8%  — fine
+media (cron):       12k/200k   6%  — fine
+```
+**Why main session is so full:**
+1. Large summary injected at conversation start (compaction summary ~30k tokens)
+2. All test file writes in single run = large tool outputs accumulated in context
+3. SOUL.md + AGENTS.md + TOOLS.md + IDENTITY.md + USER.md + HEARTBEAT.md loaded every session
+4. cron status entries duplicated in session list (each cron shows 2x)
+**Optimization Recommendations:**
+1. Keep `timeoutSeconds = 240` for main session (compaction can take 2+ min at high token count)
+2. Set `compaction.mode = aggressive` to compact earlier (before 93%)
+3. Break large multi-file tasks into separate messages to avoid accumulating huge context
+4. Consider moving SOUL.md + AGENTS.md injections to a shorter summary format
+**Status:** Resolved for now; 180s timeout active. Monitor session token level.

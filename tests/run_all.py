@@ -15,6 +15,9 @@ SUITES = [
     ("models",      "test_models.py",      "AI model endpoints",           False),
     ("gcp",         "test_gcp.py",         "GCP BigQuery tables",          False),
     ("execution",   "test_execution.py",   "ExecutionService + Alpaca",    False),
+    ("media",       "test_media.py",       "MediaBot pipeline",            False),
+    ("crypto",      "test_crypto.py",      "Crypto execution",             False),
+    ("options",     "test_options.py",     "Options execution (mkt hrs)",  True),   # slow=True since market hours only
     ("market_data", "test_market_data.py", "Market data APIs (slow)",      True),  # slow=True
     ("pipeline",    "test_pipeline.py",    "Full E2E pipeline",            False),
 ]

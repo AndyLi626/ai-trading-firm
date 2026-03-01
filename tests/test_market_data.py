@@ -96,5 +96,41 @@ try:
 except Exception as e:
     fail("Alpaca paper account", e)
 
+# 5. Brave Search API
+try:
+    import urllib.parse
+    import time as _time
+    brave_key = open(os.path.expanduser('~/.openclaw/secrets/brave_api_key.txt')).read().strip()
+    params = urllib.parse.urlencode({"q": "SPY stock market", "count": 3, "freshness": "pd"})
+    url = f"https://api.search.brave.com/res/v1/news/search?{params}"
+    req = urllib.request.Request(url, headers={
+        "Accept": "application/json",
+        "X-Subscription-Token": brave_key
+    })
+    with urllib.request.urlopen(req, timeout=10) as r:
+        d = json.loads(r.read())
+    results = d.get("results", [])
+    assert len(results) > 0, "no results"
+    ok("Brave Search API", f"{len(results)} results → '{results[0].get('title','')[:50]}'")
+except Exception as e:
+    fail("Brave Search API", e)
+
+# 6. market_news.py (MediaBot combined tool)
+try:
+    sys.path.insert(0, os.path.expanduser('~/.openclaw/workspace-media/tools'))
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "market_news",
+        os.path.expanduser('~/.openclaw/workspace-media/tools/market_news.py')
+    )
+    mn = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mn)
+    # Test brave_search only (skip av_sentiment to avoid rate limit)
+    results = mn.brave_search("bitcoin crypto market", count=2)
+    assert results.get("results"), "no brave results"
+    ok("market_news.brave_search", f"{len(results['results'])} articles")
+except Exception as e:
+    fail("market_news.brave_search", e)
+
 print(f"\nRESULT: {len(PASS)} passed, {len(FAIL)} failed")
 sys.exit(0 if not FAIL else 1)

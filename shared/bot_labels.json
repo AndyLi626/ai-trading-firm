@@ -1,0 +1,9 @@
+{
+  "manager": "manager",
+  "research": "research", 
+  "strategy": "research",
+  "media": "media",
+  "risk": "risk",
+  "audit": "audit",
+  "infra": "main"
+}

@@ -1,0 +1,17 @@
+{
+  "mean_reversion": {
+    "dip_threshold_pct": 1.5,
+    "confidence_floor_execute": 0.61,
+    "confidence_half_size_range": [0.58, 0.60],
+    "no_trade_below": 0.58
+  },
+  "range_play": {
+    "confidence_floor_execute": 0.62,
+    "below_floor_action": "watchlist_only"
+  },
+  "momentum": {
+    "confidence_floor_execute": 0.60
+  },
+  "last_updated": "2026-03-01T18:21:00Z",
+  "updated_by": "ManagerBot directive"
+}

@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Runtime / logs
+runtime_state/trading_log.jsonl
+runtime_state/engine_stdout.log
+runtime_state/*.pid
+
+# Secrets (NEVER commit)
+secrets/
+*.key
+*.pem
+*.p12
+*.json.secret
+
+# OpenClaw session transcripts
+*.jsonl
+.openclaw/
+
+# Large repos (referenced, not owned)
+# workspace-research/repos/ tracked separately
+
+# Memory (personal, not versioned)
+memory/
+
+# OS
+.DS_Store
+Thumbs.db
+.gsd/

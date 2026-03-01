@@ -1,0 +1,36 @@
+{
+  "service": "ExecutionService",
+  "mode": "paper",
+  "live_enabled": false,
+  "approval_required": true,
+  "venues": {
+    "alpaca_paper": {
+      "enabled": true,
+      "type": "paper",
+      "base_url": "https://paper-api.alpaca.markets",
+      "api_key": null,
+      "api_secret": null,
+      "note": "Add ALPACA_PAPER_KEY and ALPACA_PAPER_SECRET to secrets"
+    },
+    "binance_testnet": {
+      "enabled": true,
+      "type": "testnet",
+      "base_url": "https://testnet.binance.vision",
+      "api_key": null,
+      "api_secret": null,
+      "note": "Add BINANCE_TESTNET_KEY and BINANCE_TESTNET_SECRET to secrets"
+    },
+    "polymarket_test": {
+      "enabled": false,
+      "type": "testnet",
+      "note": "Requires Polymarket API credentials"
+    }
+  },
+  "hard_rules": {
+    "require_risk_approval": true,
+    "require_signed_order": true,
+    "no_live_without_boss_approval": true,
+    "max_notional_per_order_usd": 10000,
+    "log_all_to_gcp": true
+  }
+}

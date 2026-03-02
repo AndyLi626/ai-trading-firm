@@ -46,7 +46,7 @@ def check_heartbeat():
         return "FAIL", f"infra_heartbeat.json missing at {HEARTBEAT_FILE}"
     if age > HEARTBEAT_MAX_AGE:
         mins = age.total_seconds() / 60
-        return "FAIL", f"infra_heartbeat.json age={mins:.1f}min > 5min threshold"
+        return "FAIL", f"infra_heartbeat.json age={mins:.1f}min > 6min threshold"
     mins = age.total_seconds() / 60
     return "PASS", f"infra_heartbeat.json age={mins:.1f}min (threshold=5min)"
 
@@ -67,30 +67,35 @@ def check_config_check():
 # ── Check 4: cron allowlist — all delivery=none except manager-30min-report ──
 
 def check_cron_allowlist():
-    """Parse openclaw.json crons and verify delivery policy."""
-    if not os.path.exists(OPENCLAW_JSON):
-        return "FAIL", f"openclaw.json missing at {OPENCLAW_JSON}"
+    """Parse cron/jobs.json and verify delivery policy."""
+    jobs_path = os.path.expanduser("~/.openclaw/cron/jobs.json")
+    if not os.path.exists(jobs_path):
+        return "FAIL", f"cron/jobs.json missing at {jobs_path}"
     try:
-        with open(OPENCLAW_JSON) as f:
+        with open(jobs_path) as f:
             cfg = json.load(f)
     except json.JSONDecodeError as e:
-        return "FAIL", f"openclaw.json parse error: {e}"
+        return "FAIL", f"jobs.json parse error: {e}"
 
-    crons = cfg.get("crons", [])
+    crons = cfg.get("jobs", [])
     if not crons:
         return "PASS", "No crons configured (nothing to check)"
 
     violations = []
     for cron in crons:
         name = cron.get("name", "<unnamed>")
-        delivery = cron.get("delivery", "none")
+        delivery_raw = cron.get("delivery", {})
+        if isinstance(delivery_raw, dict):
+            mode = delivery_raw.get("mode", "none")
+        else:
+            mode = str(delivery_raw) if delivery_raw else "none"
         # Only manager-30min-report may use delivery=announce
         if name == "manager-30min-report":
-            if delivery not in ("announce", "none"):
-                violations.append(f"{name}: unexpected delivery={delivery}")
+            if mode != "announce":
+                violations.append(f"{name}: mode={mode} (must be announce)")
         else:
-            if delivery not in ("none", "", None):
-                violations.append(f"{name}: delivery={delivery} (must be none)")
+            if mode not in ("none", ""):
+                violations.append(f"{name}: mode={mode} (must be none)")
 
     if violations:
         return "FAIL", "Cron delivery violations: " + "; ".join(violations)
@@ -107,14 +112,18 @@ def check_arch_lock():
     except json.JSONDecodeError as e:
         return "FAIL", f"ARCH_LOCK.json parse error: {e}"
 
-    # Count entries — handle dict or list format
+    # Count entries — ARCH_LOCK format: {generated_at, version, entries:{...}}
     if isinstance(data, dict):
-        entries = sum(len(v) if isinstance(v, list) else 1
-                      for v in data.values()
-                      if v and not isinstance(v, str))
-        if entries == 0:
-            # Try counting top-level keys as entries
-            entries = len([k for k in data if k not in ("generated_at", "version")])
+        entries_val = data.get("entries", {})
+        if isinstance(entries_val, dict):
+            entries = len(entries_val)  # count keys in entries dict
+        elif isinstance(entries_val, list):
+            entries = len(entries_val)
+        elif isinstance(entries_val, int):
+            entries = entries_val
+        else:
+            # fallback: count non-meta top-level keys
+            entries = len([k for k in data if k not in ("generated_at", "version", "entries")])
     elif isinstance(data, list):
         entries = len(data)
     else:

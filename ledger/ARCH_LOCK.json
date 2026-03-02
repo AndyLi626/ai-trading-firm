@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T23:19:37.202644+00:00",
+  "generated_at": "2026-03-02T23:26:34.641450+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -175,8 +175,8 @@
     },
     "script::boot_policy_check.py": {
       "path": "shared/scripts/boot_policy_check.py",
-      "hash": "641e1d75dd45bdc1",
-      "size": 10104
+      "hash": "3a93b366e478e461",
+      "size": 10475
     },
     "script::bot_cache_alert_gate.py": {
       "path": "shared/scripts/bot_cache_alert_gate.py",
@@ -270,8 +270,8 @@
     },
     "script::healthcheck.py": {
       "path": "shared/scripts/healthcheck.py",
-      "hash": "ad70c0af71fb6505",
-      "size": 11477
+      "hash": "b7232ad64713a8c0",
+      "size": 11621
     },
     "script::infra_poll_unified.py": {
       "path": "shared/scripts/infra_poll_unified.py",

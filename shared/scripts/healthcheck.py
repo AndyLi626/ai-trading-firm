@@ -197,9 +197,10 @@ def check_archivist():
     try:
         with open(ARCH_LOCK_PATH) as f:
             lock = json.load(f)
-        entries = lock.get("entries", [])
-        result["entries_count"] = len(entries)
-        result["checks"]["entries_gt_0"] = "VERIFIED" if len(entries) > 0 else "FAIL (entries=0)"
+        entries_raw = lock.get("entries", {})
+        entries_count = len(entries_raw) if isinstance(entries_raw, dict) else (len(entries_raw) if isinstance(entries_raw, list) else 0)
+        result["entries_count"] = entries_count
+        result["checks"]["entries_gt_0"] = "VERIFIED" if entries_count > 0 else "FAIL (entries=0)"
     except Exception as e:
         result["checks"]["entries_readable"] = f"FAIL ({e})"
 

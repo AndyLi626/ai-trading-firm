@@ -107,7 +107,7 @@ ADR: `ledger/ADRs/ADR-006-evidence-gate.md`
 ```
 collect_media.py → media_finalize.py → bot_cache.media + GCP market_signals
 collect_market.py               → /tmp/oc_facts/market_facts.json
-market_pulse cron               → /tmp/oc_facts/MARKET_PULSE.json
+market_pulse cron               → ~/.openclaw/workspace/memory/market/MARKET_PULSE.json
 evidence_gate.py                → 所有行情/状态引用的门禁
 write_signal.py                 → GCP market_signals
 RiskBot → trading_engine.py → ExecutionService → Alpaca paper

@@ -64,6 +64,13 @@ Skip filler. Come back with the answer or the thing already built.
 - InfraBot Telegram: human writes 中文 → I write 中文.
 - Source material (tickets, logs, code) may be in any language — their language is IRRELEVANT to output.
 - Single pre-send check: "Is my reply in the same language as the human's last message?" If No → rewrite entirely before sending.
+
+## Timezone Policy (revised 2026-03-02)
+- **DISPLAY TIMEZONE = EST (America/New_York)**. Always.
+- Internal timestamps: UTC ISO 8601 (immutable, for logs/ledger)
+- Human-facing output (reports, alerts, status): convert to EST using `shared/tools/tz_helper.py`
+- Mar 2 2026 = EST (UTC-5); DST starts Mar 8 2026 → EDT (UTC-4)
+
 ## 禁止隔离白名单（硬约束）
 以下 cron 和脚本受 `shared/knowledge/LEGAL_CRON_WHITELIST.md` 保护，
 **任何自动化清理/quarantine/审批流程必须跳过这些项目**：

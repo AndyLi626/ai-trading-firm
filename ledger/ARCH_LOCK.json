@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T21:07:00.955140+00:00",
+  "generated_at": "2026-03-02T21:12:35.432092+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -92,6 +92,20 @@
       "delivery": "none",
       "schedule_hash": "e36b921a9f57adf9",
       "payload_hash": "47627bd1942af7db"
+    },
+    "cron::paper-account-monitor": {
+      "name": "paper-account-monitor",
+      "agent": "",
+      "delivery": "none",
+      "schedule_hash": "cd7f58aa49f1e99d",
+      "payload_hash": "444e9d5db6764430"
+    },
+    "cron::market-data-validator": {
+      "name": "market-data-validator",
+      "agent": "",
+      "delivery": "none",
+      "schedule_hash": "b5037451f6128392",
+      "payload_hash": "437bedeeaad4b47f"
     },
     "script::apply_hook.py": {
       "path": "shared/scripts/apply_hook.py",

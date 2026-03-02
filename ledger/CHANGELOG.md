@@ -114,3 +114,12 @@ ConfigCheck: APPLY_ALLOWED
   fallbacks: gemini-2.5-flash, claude-sonnet-4-6
 - research agent: confirmed openai/gpt-5.2 (set in previous cycle)
 - ADR-007: gateway restart required
+
+## 2026-03-02 21:12 UTC — cron: add paper-account-monitor + market-data-validator
+
+ConfigCheck: APPLY_ALLOWED (Boss approved)
+- paper-account-monitor: every 30min, agent=main, delivery=none, 0 LLM
+  output: memory/paper_account_snapshot.json + memory/paper_pnl_daily.md
+- market-data-validator: every 15min (+2min after market-pulse-15m), agent=main, delivery=none, 0 LLM
+  output: memory/data_quality_status.json + memory/data_quality_report.md
+Total cron jobs: 15

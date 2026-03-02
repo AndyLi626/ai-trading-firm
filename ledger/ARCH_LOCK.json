@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T18:01:09.620581+00:00",
+  "generated_at": "2026-03-02T18:03:56.847802+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -35,7 +35,7 @@
       "agent": "manager",
       "delivery": "announce",
       "schedule_hash": "855b8e5644218760",
-      "payload_hash": "631148462211b4ae"
+      "payload_hash": "c5997b8f1a73dbe4"
     },
     "cron::autonomy-orchestrator": {
       "name": "autonomy-orchestrator",
@@ -367,6 +367,11 @@
       "path": "ledger/ADRs/ADR-006-evidence-gate.md",
       "hash": "06aa45fb2e32ebc2",
       "size": 4108
+    },
+    "adr::ADR-007-model-override-tracing.md": {
+      "path": "ledger/ADRs/ADR-007-model-override-tracing.md",
+      "hash": "2dc2c417a6b87d98",
+      "size": 1200
     },
     "skills::index": {
       "count": 14,

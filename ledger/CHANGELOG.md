@@ -47,3 +47,19 @@ _Append-only. Each entry: date | commit | change | files_
 - BUDGET.json: global 2M→8M, main 1.5M→2M, provider caps 新增
 - Healthcheck 7/7 PASS → STABLE_RUN_CERT.md 签发
 - git tag v0.7-stable
+
+## 2026-03-02 18:03 UTC — 점진적 재개 + P0-2 근본 원인
+
+### P0-2 모델 불일치 조사 결론
+- **불일치 job**: audit-daily (17:56 UTC 실행)
+- **원인**: 17:37 UTC 모델 변경 후 gateway reload 미실행 → 구 캐시(haiku) 사용
+- **해결**: ADR-007 (모델 변경 → gateway reload 필수 규칙) 추가
+- **ticketify**: 62fb3acf 티켓 생성 (다음 실행 gemini 확인)
+
+### P0-1 manager-30min-report 재개
+- payload: delta-only + run_with_budget 올바른 호출 (-- 구분자)
+- Evidence Gate 강제: market_price/system_status → source+as_of 필수
+
+### P0-3 ticketify 워크플로
+- shared/tools/ticketify.py 배포
+- 대화→JSONL 큐 enqueue + memory/proposals/ 마크다운 기록

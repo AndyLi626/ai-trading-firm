@@ -526,5 +526,25 @@
     "next_update_at": "2026-03-02T07:15:02.771341+00:00",
     "resolved_at": "2026-03-02T07:05:02.772229+00:00",
     "resolution": "검증 완료 — 모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② "
+  },
+  "62fb3acf-abe2-4df1-b16d-655914064de8": {
+    "ticket_id": "62fb3acf-abe2-4df1-b16d-655914064de8",
+    "action": "create",
+    "from": "manager",
+    "to": "infra",
+    "message": "audit-daily 모델 불일치: 설정 gemini-2.0-flash, 실제 claude-haiku-4-5\n\naudit-daily 모델 불일치: 설정 gemini-2.0-flash, 실제 claude-haiku-4-5 (gateway 재시작 전 캐시 문제)\n\n검수기준: 다음 audit-daily 실행 시 model=gemini-2.0-flash 확인",
+    "priority": "normal",
+    "status": "OPEN",
+    "created_at": "2026-03-02T18:03:26.520226+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:13:26.520241+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:03:26.520251+00:00",
+        "by": "manager"
+      }
+    ],
+    "_ts": "2026-03-02T18:03:26.520257+00:00"
   }
 }

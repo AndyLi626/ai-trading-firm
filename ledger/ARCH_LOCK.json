@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T05:41:13.759128+00:00",
+  "generated_at": "2026-03-02T05:42:56.991663+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -151,8 +151,8 @@
     },
     "script::infra_scan.py": {
       "path": "shared/scripts/infra_scan.py",
-      "hash": "459f955d251107a3",
-      "size": 7334
+      "hash": "ad8cc0a2cf560718",
+      "size": 7757
     },
     "script::ledger_preflight.py": {
       "path": "shared/scripts/ledger_preflight.py",

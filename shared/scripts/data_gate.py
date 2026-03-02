@@ -8,7 +8,8 @@ Exit 1: gate FAIL (prints DATA_UNVERIFIED JSON with reason)
 import sys, os, json, argparse
 from datetime import datetime, timezone
 
-ARTIFACT_PATH = "/tmp/oc_facts/MARKET_PULSE.json"
+import os as _os
+ARTIFACT_PATH = _os.path.expanduser("~/.openclaw/workspace/memory/market/MARKET_PULSE.json")
 DEFAULT_MAX_AGE = 300  # 5 minutes
 
 

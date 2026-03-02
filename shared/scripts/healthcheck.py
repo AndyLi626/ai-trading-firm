@@ -155,7 +155,7 @@ def check_model_runtime():
 
 
 def check_market_pulse():
-    """5. market_pulse: MARKET_PULSE.json age < 15min"""
+    """5. market_pulse: MARKET_PULSE.json age < 5min — INFRA-004"""
     result = {"name": "market_pulse", "checks": {}}
 
     if not os.path.exists(MARKET_PULSE_PATH):
@@ -173,7 +173,7 @@ def check_market_pulse():
             age_min = (datetime.now(timezone.utc) - ts).total_seconds() / 60
             result["age_min"] = round(age_min, 1)
             result["generated_at"] = gen_at
-            result["checks"]["freshness"] = "VERIFIED" if age_min < 15 else f"FAIL (age={age_min:.1f}min > 15min)"
+            result["checks"]["freshness"] = "VERIFIED" if age_min < 5 else f"FAIL (age={age_min:.1f}min > 5min)"
         else:
             result["checks"]["freshness"] = "FAIL (no timestamp)"
     except Exception as e:

@@ -14,7 +14,7 @@ STATUS_PATH = os.path.join(WS, 'memory/data_quality_status.json')
 REPORT_PATH = os.path.join(WS, 'memory/data_quality_report.md')
 
 # Thresholds
-MAX_AGE_MIN      = 20        # pulse older than this → stale
+MAX_AGE_MIN      = 5         # pulse older than this → stale
 SPIKE_PCT        = 10.0      # >10% single-bar move → anomaly
 REQUIRED_FIELDS  = ['last_price', 'prev_close', 'pct_change_day', 'timestamp', 'data_source']
 REQUIRED_TOP     = ['as_of', 'source', 'generated_at', 'quotes']

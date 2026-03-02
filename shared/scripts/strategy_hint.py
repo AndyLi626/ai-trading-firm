@@ -133,7 +133,6 @@ def _detect_trigger() -> tuple[str, dict]:
     try:
         for mp_path in [
             f"{WS}/memory/market/MARKET_PULSE.json",
-            f"{FACTS}/MARKET_PULSE.json",
         ]:
             if not os.path.exists(mp_path):
                 continue

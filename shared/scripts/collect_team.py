@@ -3,7 +3,7 @@
 collect_team.py — Query GCP for real team state. No hallucination allowed.
 Outputs: /tmp/oc_facts/team_facts.json + /tmp/oc_facts/team_status.json
 """
-import sys, os, json, urllib.request
+import sys, os, json, uuid, time, urllib.request
 from datetime import datetime, timezone
 
 FACTS_DIR = "/tmp/oc_facts"
@@ -12,27 +12,28 @@ sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
 
 from gcp_client import get_token
 
-def bq(sql):
-import uuid as _uuid, time as _time
 try:
-    sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
     from token_meter import record_run as _record_run
     _METER = True
 except Exception:
     _METER = False
-_RUN_ID = str(_uuid.uuid4())
-_t0 = _time.time()
 
+_RUN_ID = str(uuid.uuid4())
+_t0 = time.time()
+
+
+def bq(sql):
     token = get_token()
     req = urllib.request.Request(
         "https://bigquery.googleapis.com/bigquery/v2/projects/ai-org-mvp-001/queries",
-        data=json.dumps({"query":sql,"useLegacySql":False,"timeoutMs":8000}).encode(),
-        headers={"Authorization":f"Bearer {token}","Content-Type":"application/json"},
+        data=json.dumps({"query": sql, "useLegacySql": False, "timeoutMs": 8000}).encode(),
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
         method="POST"
     )
     with urllib.request.urlopen(req, timeout=12) as r:
         d = json.loads(r.read())
-    return [[f["v"] for f in row["f"]] for row in d.get("rows",[])]
+    return [[f["v"] for f in row["f"]] for row in d.get("rows", [])]
+
 
 errors = []
 facts = {
@@ -48,27 +49,32 @@ facts = {
 try:
     r = bq("SELECT COUNT(*) FROM `ai-org-mvp-001.trading_firm.decisions` WHERE timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR)")
     facts["decisions_today"] = int(r[0][0]) if r else 0
-except Exception as e: errors.append(f"decisions: {e}")
+except Exception as e:
+    errors.append(f"decisions: {e}")
 
 try:
     r = bq("SELECT COUNT(*) FROM `ai-org-mvp-001.trading_firm.execution_logs` WHERE status='accepted'")
     facts["executions_total"] = int(r[0][0]) if r else 0
-except Exception as e: errors.append(f"executions: {e}")
+except Exception as e:
+    errors.append(f"executions: {e}")
 
 try:
     r = bq("SELECT COUNT(*) FROM `ai-org-mvp-001.trading_firm.risk_reviews` WHERE decision='Approve'")
     facts["risk_approvals"] = int(r[0][0]) if r else 0
-except Exception as e: errors.append(f"risk: {e}")
+except Exception as e:
+    errors.append(f"risk: {e}")
 
 try:
     rows = bq("SELECT source_bot,symbol,signal_type,value_label,headline FROM `ai-org-mvp-001.trading_firm.market_signals` WHERE source_bot != 'test' ORDER BY timestamp DESC LIMIT 5")
-    facts["recent_signals"] = [{"bot":r[0],"symbol":r[1],"type":r[2],"label":r[3],"headline":(r[4] or "")[:80]} for r in rows]
-except Exception as e: errors.append(f"signals: {e}")
+    facts["recent_signals"] = [{"bot": r[0], "symbol": r[1], "type": r[2], "label": r[3], "headline": (r[4] or "")[:80]} for r in rows]
+except Exception as e:
+    errors.append(f"signals: {e}")
 
 try:
     rows = bq("SELECT bot, SUM(cost_usd) FROM `ai-org-mvp-001.trading_firm.token_usage` WHERE timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR) GROUP BY bot")
-    facts["bot_costs_usd"] = {r[0]: round(float(r[1] or 0),4) for r in rows}
-except Exception as e: errors.append(f"costs: {e}")
+    facts["bot_costs_usd"] = {r[0]: round(float(r[1] or 0), 4) for r in rows}
+except Exception as e:
+    errors.append(f"costs: {e}")
 
 with open(f"{FACTS_DIR}/team_facts.json", "w") as f:
     json.dump(facts, f, indent=2)
@@ -77,10 +83,9 @@ status = {"ok": len(errors) < 3, "errors": errors, "timestamp": facts["timestamp
 with open(f"{FACTS_DIR}/team_status.json", "w") as f:
     json.dump(status, f, indent=2)
 
-
 if _METER:
     _record_run(_RUN_ID, "infra", "collect_team",
                 llm_calls=0, total_input=0, total_output=0,
-                duration_sec=round(_time.time()-_t0,2), status="ok")
+                duration_sec=round(time.time() - _t0, 2), status="ok")
 
 print(json.dumps(status))

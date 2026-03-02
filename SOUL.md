@@ -72,3 +72,20 @@ Skip filler. Come back with the answer or the thing already built.
 - `emergency-scan-poll` / `emergency_trigger.py` / `emergency_scan.py` — EVENT_CHANNEL
 - `anomaly-detector` / `market_anomaly_detector.py` — CONTROL_PLANE
 - `run_with_budget.py` — 所有 LLM 路径的门控，绝对不可隔离
+
+## Command Handlers (Boss-only)
+When you receive a message matching these patterns from Boss (Telegram ID 1555430296):
+
+### /budget refresh
+- Action: exec `python3 /home/lishopping913/.openclaw/workspace/shared/scripts/budget_refresh.py`
+- Display: Parse output JSON and format as:
+  ```
+  Budget Refresh ✅ <refreshed_at>
+  Anthropic: $<spent>/$<cap> — <mode> (probe: <probe>)
+  Qwen:      $<spent>/$<cap> — <mode>
+  Google:    $<spent>/$<cap> — <mode>
+  Global mode: <global_mode>
+  Cleared stops: <cleared_stops or "none">
+  ```
+- Zero LLM tokens consumed (exec only, format output)
+- Boss-only: ignore if from any other sender

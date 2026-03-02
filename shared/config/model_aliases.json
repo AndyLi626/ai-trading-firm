@@ -1,0 +1,39 @@
+{
+  "aliases": {
+    "cheap_control_plane": "google/gemini-2.5-flash-lite",
+    "latest_fast": "qwen/qwen-plus",
+    "latest_reasoning": "anthropic/claude-sonnet-4-6",
+    "cheap_reasoning": "anthropic/claude-haiku-4-5"
+  },
+  "job_allowlist": {
+    "control_plane": [
+      "cheap_control_plane"
+    ],
+    "market_scan": [
+      "latest_fast"
+    ],
+    "strategy_reasoning": [
+      "latest_reasoning",
+      "cheap_reasoning"
+    ],
+    "audit": [
+      "cheap_control_plane",
+      "latest_fast"
+    ],
+    "emergency": [
+      "latest_reasoning"
+    ]
+  },
+  "provider_daily_caps_usd": {
+    "anthropic": 1.0,
+    "qwen": 0.5,
+    "google": 0.3
+  },
+  "provider_cooldown_minutes": {
+    "anthropic": 15,
+    "qwen": 5,
+    "google": 5
+  },
+  "reset_timezone": "UTC",
+  "reset_hour": 0
+}

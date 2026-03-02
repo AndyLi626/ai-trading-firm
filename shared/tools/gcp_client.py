@@ -14,6 +14,22 @@ DATASET = 'trading_firm'
 
 _token_cache = {'token': None, 'expires': 0}
 
+MODEL_NORMALIZE = {
+    'claude-sonnet-4-6':      'anthropic/claude-sonnet-4-6',
+    'claude-haiku-4-5':       'anthropic/claude-haiku-4-5',
+    'claude-opus-4-6':        'anthropic/claude-opus-4-6',
+    'qwen-plus':              'qwen/qwen-plus',
+    'qwen-turbo':             'qwen/qwen-turbo',
+    'qwen-max':               'qwen/qwen-max',
+    'gemini-2.5-flash-lite':  'google/gemini-2.5-flash-lite',
+    'gemini-2.0-flash':       'google/gemini-2.0-flash',
+    'gemini-2.5-pro':         'google/gemini-2.5-pro',
+}
+
+def normalize_model(name):
+    return MODEL_NORMALIZE.get(name, name)
+
+
 def get_token():
     if _token_cache['token'] and time.time() < _token_cache['expires'] - 60:
         return _token_cache['token']
@@ -36,6 +52,7 @@ def get_token():
     _token_cache['expires'] = now + 3600
     return _token_cache['token']
 
+
 def insert_rows(table, rows):
     """Insert rows into BigQuery table. rows = list of dicts."""
     token = get_token()
@@ -44,6 +61,7 @@ def insert_rows(table, rows):
     req = urllib.request.Request(url, data=payload, headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
     resp = json.loads(urllib.request.urlopen(req).read())
     return resp
+
 
 def log_decision(bot, decision_type, summary, risk_status="N/A", token_cost=0, session_id="", payload=None):
     import uuid
@@ -55,17 +73,10 @@ def log_decision(bot, decision_type, summary, risk_status="N/A", token_cost=0, s
         "session_id": session_id, "payload": json.dumps(payload or {})
     }])
 
+
 def log_token_usage(bot, model, input_tokens, output_tokens, session_id="", task_type=""):
     # Normalize model names to include provider prefix
-    _model_map = {
-        "claude-sonnet-4-6": "anthropic/claude-sonnet-4-6",
-        "claude-haiku-4-5": "anthropic/claude-haiku-4-5",
-        "claude-haiku-4-5-20251001": "anthropic/claude-haiku-4-5",
-        "qwen-plus": "qwen/qwen-plus",
-        "gemini-2.0-flash-lite": "google/gemini-2.0-flash-lite",
-        "gemini-2.0-flash": "google/gemini-2.0-flash",
-    }
-    model = _model_map.get(model, model)
+    model = normalize_model(model)
     # Rough cost estimate for claude-sonnet-4-6
     cost = (input_tokens * 3 + output_tokens * 15) / 1_000_000
     return insert_rows("token_usage", [{
@@ -74,6 +85,7 @@ def log_token_usage(bot, model, input_tokens, output_tokens, session_id="", task
         "input_tokens": input_tokens, "output_tokens": output_tokens,
         "cost_usd": round(cost, 6), "session_id": session_id, "task_type": task_type
     }])
+
 
 def log_handoff(bot, session_id, last_checkpoint, context_summary, next_action, full_context=None):
     import uuid
@@ -84,6 +96,7 @@ def log_handoff(bot, session_id, last_checkpoint, context_summary, next_action, 
         "last_checkpoint": last_checkpoint, "context_summary": context_summary,
         "next_action": next_action, "full_context": json.dumps(full_context or {})
     }])
+
 
 def query(sql: str) -> list:
     """Run a BigQuery SQL query and return list of row dicts."""

@@ -146,11 +146,6 @@ def main():
         _rs('market_pulse', 'ok', f"stocks={len(output.get('stocks',{}))} crypto={len(output.get('crypto',{}))}")
     except Exception:
         pass
-    _now = datetime.now(timezone.utc)
-    _est_hour = (_now.hour - 5) % 24
-    _mkt = "regular" if 9*60+30 <= _est_hour*60+_now.minute <= 16*60 else "closed"
-    output["market_session"] = _mkt
-    output["data_note"] = "实时 IEX" if _mkt == "regular" else f"盘外({_mkt}) — 最近交易日收盘价"
     print(json.dumps(output, indent=2))
 
 def fetch_crypto(symbols):

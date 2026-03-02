@@ -1,0 +1,30 @@
+{
+  "date": "2026-03-02",
+  "generated_at": "2026-03-02T03:41:18.763249+00:00",
+  "global": {
+    "total_tokens": 1500,
+    "daily_budget": 2000000,
+    "pct_used": 0.1
+  },
+  "estimated_cost_usd": 0.0105,
+  "bots": [
+    {
+      "bot": "research",
+      "total_tokens": 1500,
+      "input_tokens": 1000,
+      "output_tokens": 500,
+      "run_count": 3,
+      "daily_budget": 500000,
+      "pct_used": 0.3
+    }
+  ],
+  "top_task_types": [
+    {
+      "task_type": "market_analysis",
+      "tokens": 800,
+      "runs": 2
+    }
+  ],
+  "waste_candidates": [],
+  "summary": "=== Daily Token Usage Report \u2014 2026-03-02 ===\nGlobal: 1,500 / 2,000,000 (0.1%)\nEstimated cost: $0.0105\n\nBot usage:\n  research       1,500 /  500,000  (0.3%)\n\nTop task types:\n  market_analysis            800 tokens  (2 runs)\n\nNo waste candidates today."
+}

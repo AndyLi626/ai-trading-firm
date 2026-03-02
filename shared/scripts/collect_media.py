@@ -4,8 +4,24 @@ collect_media.py — Collect market news, sentiment, and social signals.
 Outputs: /tmp/oc_facts/media_facts.json + /tmp/oc_facts/media_status.json
 No bot logic. Pure data collection.
 """
-import sys, os, json, urllib.request, urllib.parse, gzip, time
+# Token accounting: log no-op if facts unchanged
+import sys, os
+sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+try:
+    from token_meter import facts_changed, record_run
+    _METER_OK = True
+except Exception:
+    _METER_OK = False
+
+import json, urllib.request, urllib.parse, gzip, time, uuid as _uuid
 from datetime import datetime, timezone
+
+_RUN_ID    = str(_uuid.uuid4())
+_BOT       = "media"
+_TASK      = "collect_media"
+_START     = time.time()
+_PREV_FACTS = "/tmp/oc_facts/media_facts.json"
+_NEW_FACTS  = "/tmp/oc_facts/media_facts_new.json"
 
 FACTS_DIR = "/tmp/oc_facts"
 os.makedirs(FACTS_DIR, exist_ok=True)
@@ -114,3 +130,16 @@ with open(f"{FACTS_DIR}/media_status.json", "w") as f:
     json.dump(status, f, indent=2)
 
 print(json.dumps(status))
+
+# Token accounting: detect no-op
+import shutil as _shutil
+try:
+    _shutil.copy(f"{FACTS_DIR}/media_facts.json", _NEW_FACTS)
+except Exception:
+    pass
+if _METER_OK:
+    _changed = facts_changed(_PREV_FACTS, _NEW_FACTS,
+                             key_fields=["spy_sentiment_score", "spy_sentiment_label", "top_headlines"])
+    _status = "ok" if _changed else "no_op"
+    record_run(_RUN_ID, _BOT, _TASK, llm_calls=0, total_input=0,
+               total_output=0, duration_sec=time.time()-_START, status=_status)

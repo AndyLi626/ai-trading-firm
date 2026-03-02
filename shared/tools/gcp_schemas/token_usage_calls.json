@@ -1,0 +1,16 @@
+[
+  {"name": "run_id",       "type": "STRING",    "mode": "REQUIRED"},
+  {"name": "bot",          "type": "STRING",    "mode": "REQUIRED"},
+  {"name": "channel",      "type": "STRING",    "mode": "NULLABLE"},
+  {"name": "task_type",    "type": "STRING",    "mode": "NULLABLE"},
+  {"name": "model",        "type": "STRING",    "mode": "NULLABLE"},
+  {"name": "usage_source", "type": "STRING",    "mode": "NULLABLE"},
+  {"name": "input_tokens", "type": "INTEGER",   "mode": "NULLABLE"},
+  {"name": "output_tokens","type": "INTEGER",   "mode": "NULLABLE"},
+  {"name": "total_tokens", "type": "INTEGER",   "mode": "NULLABLE"},
+  {"name": "started_at",   "type": "TIMESTAMP", "mode": "NULLABLE"},
+  {"name": "ended_at",     "type": "TIMESTAMP", "mode": "NULLABLE"},
+  {"name": "duration_ms",  "type": "INTEGER",   "mode": "NULLABLE"},
+  {"name": "status",       "type": "STRING",    "mode": "NULLABLE"},
+  {"name": "error",        "type": "STRING",    "mode": "NULLABLE"}
+]

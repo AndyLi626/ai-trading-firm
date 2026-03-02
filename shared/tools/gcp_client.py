@@ -85,6 +85,47 @@ def log_handoff(bot, session_id, last_checkpoint, context_summary, next_action, 
         "next_action": next_action, "full_context": json.dumps(full_context or {})
     }])
 
+def query(sql: str) -> list:
+    """Run a BigQuery SQL query and return list of row dicts."""
+    token = get_token()
+    url = f"https://bigquery.googleapis.com/bigquery/v2/projects/{PROJECT}/queries"
+    payload = json.dumps({"query": sql, "useLegacySql": False, "timeoutMs": 30000}).encode()
+    req = urllib.request.Request(url, data=payload, headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
+    resp = json.loads(urllib.request.urlopen(req).read())
+    schema = resp.get("schema", {}).get("fields", [])
+    rows = []
+    for row in resp.get("rows", []):
+        values = row.get("f", [])
+        rows.append({schema[i]["name"]: values[i].get("v") for i in range(len(schema))})
+    return rows
+
+
+def ensure_table(table_id: str, schema_file: str):
+    """Create BigQuery table if it does not exist, using a JSON schema file."""
+    import os as _os
+    token = get_token()
+    # Check existence
+    check_url = f"https://bigquery.googleapis.com/bigquery/v2/projects/{PROJECT}/datasets/{DATASET}/tables/{table_id}"
+    try:
+        req = urllib.request.Request(check_url, headers={"Authorization": f"Bearer {token}"})
+        urllib.request.urlopen(req).read()
+        return {"status": "exists"}
+    except urllib.error.HTTPError as e:
+        if e.code != 404:
+            raise
+    # Create table
+    with open(schema_file) as f:
+        schema_fields = json.load(f)
+    create_url = f"https://bigquery.googleapis.com/bigquery/v2/projects/{PROJECT}/datasets/{DATASET}/tables"
+    body = json.dumps({
+        "tableReference": {"projectId": PROJECT, "datasetId": DATASET, "tableId": table_id},
+        "schema": {"fields": schema_fields},
+    }).encode()
+    req = urllib.request.Request(create_url, data=body, headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
+    resp = json.loads(urllib.request.urlopen(req).read())
+    return {"status": "created", "tableId": resp.get("tableReference", {}).get("tableId")}
+
+
 if __name__ == "__main__":
     # Test
     r = log_decision("infra", "test", "GCP connection verified", "N/A", 0, "init")

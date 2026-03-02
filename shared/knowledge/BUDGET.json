@@ -1,0 +1,15 @@
+{
+  "per_run_max_tokens": 50000,
+  "global_daily_tokens": 2000000,
+  "per_bot_daily_tokens": {
+    "manager": 200000,
+    "research": 500000,
+    "media": 300000,
+    "risk": 200000,
+    "audit": 100000,
+    "main": 100000
+  },
+  "warn_pct": 0.70,
+  "degrade_pct": 0.85,
+  "stop_pct": 0.95
+}

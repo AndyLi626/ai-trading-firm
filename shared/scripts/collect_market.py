@@ -3,8 +3,24 @@
 collect_market.py — Collect live crypto prices and market data.
 Outputs: /tmp/oc_facts/market_facts.json + /tmp/oc_facts/market_status.json
 """
-import sys, os, json, urllib.request
+# Token accounting: log no-op if facts unchanged
+import sys, os
+sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+try:
+    from token_meter import facts_changed, record_run
+    _METER_OK = True
+except Exception:
+    _METER_OK = False
+
+import json, urllib.request, uuid, time as _time
 from datetime import datetime, timezone
+
+_RUN_ID   = str(uuid.uuid4())
+_BOT      = "main"
+_TASK     = "collect_market"
+_START    = _time.time()
+_PREV_FACTS = "/tmp/oc_facts/market_facts.json"
+_NEW_FACTS  = "/tmp/oc_facts/market_facts_new.json"
 
 FACTS_DIR = "/tmp/oc_facts"
 os.makedirs(FACTS_DIR, exist_ok=True)
@@ -58,3 +74,15 @@ with open(f"{FACTS_DIR}/market_status.json", "w") as f:
     json.dump(status, f, indent=2)
 
 print(json.dumps(status))
+
+# Token accounting: detect no-op (write to _NEW_FACTS for comparison)
+import shutil as _shutil
+_shutil.copy(f"{FACTS_DIR}/market_facts.json", _NEW_FACTS)
+if _METER_OK:
+    _changed = facts_changed(_PREV_FACTS, _NEW_FACTS, key_fields=["prices"])
+    if not _changed:
+        record_run(_RUN_ID, _BOT, _TASK, llm_calls=0, total_input=0,
+                   total_output=0, duration_sec=_time.time()-_START, status="no_op")
+    else:
+        record_run(_RUN_ID, _BOT, _TASK, llm_calls=0, total_input=0,
+                   total_output=0, duration_sec=_time.time()-_START, status="ok")

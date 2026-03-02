@@ -27,6 +27,7 @@ SUITES = [
     ("manager",     "test_manager.py",     "ManagerBot & orchestration",   False),
     ("strategy",    "test_strategy.py",    "StrategyBot & market scripts", False),
     ("failure_chains", "test_failure_chains.py", "Failure-chain scenarios (stale/fail/signal/cache)", False),
+    ("token_meter",    "test_token_meter.py",    "Token accounting infrastructure",                   False),
 ]
 
 args = sys.argv[1:]

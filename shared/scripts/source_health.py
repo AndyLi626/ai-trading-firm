@@ -93,8 +93,8 @@ def check_alpaca():
 def main():
     checks = [
         ("brave_news",    check_brave),
-        ("alphavantage",  check_alphavantage),
-        ("fmp",           check_fmp),
+        # alphavantage: free-tier quota exhausted — disabled to stop repeated failures
+        # fmp: 403 on free tier — disabled
         ("hyperliquid",   check_hyperliquid),
         ("alpaca_iex",    check_alpaca),
     ]

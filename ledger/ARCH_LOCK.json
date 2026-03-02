@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T22:03:44.898383+00:00",
+  "generated_at": "2026-03-02T22:07:32.097223+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -114,6 +114,13 @@
       "schedule_hash": "120da8ff391e0be5",
       "payload_hash": "687025caf4d2748b"
     },
+    "cron::bot-cache-refresh": {
+      "name": "bot-cache-refresh",
+      "agent": "",
+      "delivery": "none",
+      "schedule_hash": "319d26052f501263",
+      "payload_hash": "9922271c11e1c72c"
+    },
     "script::apply_hook.py": {
       "path": "shared/scripts/apply_hook.py",
       "hash": "06e01e920dffd9ec",
@@ -158,6 +165,11 @@
       "path": "shared/scripts/autonomy_orchestrator.py",
       "hash": "b103b1f9ea1399ea",
       "size": 5158
+    },
+    "script::bot_cache_refresh.py": {
+      "path": "shared/scripts/bot_cache_refresh.py",
+      "hash": "3eacabde1953d353",
+      "size": 3195
     },
     "script::budget_refresh.py": {
       "path": "shared/scripts/budget_refresh.py",
@@ -241,8 +253,8 @@
     },
     "script::healthcheck.py": {
       "path": "shared/scripts/healthcheck.py",
-      "hash": "ba3da6f5d72e9b6e",
-      "size": 11463
+      "hash": "ad70c0af71fb6505",
+      "size": 11477
     },
     "script::infra_poll_unified.py": {
       "path": "shared/scripts/infra_poll_unified.py",

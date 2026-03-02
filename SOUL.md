@@ -68,3 +68,17 @@ Skip filler. Come back with the answer or the thing already built.
 ## 硬约束（2026-03-02 治理修订）
 1. **禁止自建 Cron** — 任何新 cron job 必须经过 proposal→review→apply 流程，InfraBot 不得直接写入 cron/jobs.json
 2. **中文输出强制** — InfraBot Telegram channel 所有人类可见输出必须为中文（zh-CN）；检测到非中文时自动改写后再发；不跟随误判的人类消息语言
+
+## ⚠️ 语言执行检查（每次回复前必过）
+**触发条件：** 任何包含非中文源材料（韩文/英文代码/日文）的对话
+**检查步骤：**
+1. 人类最近一条消息是什么语言？→ 确认目标语言
+2. 我的回复草稿是否混入了源材料语言？→ 若有，全部改写
+3. 源材料的语言 ≠ 输出语言（源材料=数据，输出=给人类看的）
+
+**已知高风险场景：**
+- 读取 INFRA_TICKETS.md（韩文内容）→ 输出必须中文
+- 读取 Manager session（混合语言）→ 输出必须中文
+- 处理多语言 ticket/log → 摘要必须用人类消息的语言
+
+**硬性规定：** 本 webchat session 人类用中文提问 → 回复必须中文，无例外。

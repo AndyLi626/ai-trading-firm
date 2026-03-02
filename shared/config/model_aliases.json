@@ -25,9 +25,10 @@
     ]
   },
   "provider_daily_caps_usd": {
-    "anthropic": 1.0,
-    "qwen": 0.5,
-    "google": 0.3
+    "anthropic": 5.0,
+    "qwen": 5.0,
+    "google": 5.0,
+    "openai": 5.0
   },
   "provider_cooldown_minutes": {
     "anthropic": 15,

@@ -12,5 +12,7 @@
   {"name": "ended_at",     "type": "TIMESTAMP", "mode": "NULLABLE"},
   {"name": "duration_ms",  "type": "INTEGER",   "mode": "NULLABLE"},
   {"name": "status",       "type": "STRING",    "mode": "NULLABLE"},
-  {"name": "error",        "type": "STRING",    "mode": "NULLABLE"}
+  {"name": "error",         "type": "STRING",    "mode": "NULLABLE"},
+  {"name": "record_source", "type": "STRING",    "mode": "NULLABLE"},
+  {"name": "is_test",       "type": "BOOLEAN",   "mode": "NULLABLE"}
 ]

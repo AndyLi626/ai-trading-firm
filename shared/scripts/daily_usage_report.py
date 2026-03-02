@@ -66,7 +66,15 @@ def run_report(gcp_query_fn=None):
             gcp_query_fn = lambda sql: []
             print(f"[daily_usage_report] GCP unavailable: {e}")
 
-    # Per-bot totals
+    # Per-bot totals — use query_usage_today helper (handles legacy table fallback)
+    try:
+        import gcp_client as _gcp_helper
+        _usage_today_rows = _gcp_helper.query_usage_today()
+        # Reformat to match expected schema
+        _usage_map = {r.get("bot"): r for r in _usage_today_rows}
+    except Exception:
+        _usage_map = {}
+
     sql_bots = f"""
         SELECT bot,
                SUM(total_input_tokens)  AS input_tokens,
@@ -75,6 +83,8 @@ def run_report(gcp_query_fn=None):
                COUNT(*)                 AS run_count
         FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
         WHERE date = '{today}'
+          AND (is_test IS NULL OR is_test = FALSE)
+          AND (record_source IS NULL OR record_source = 'runtime')
         GROUP BY bot
         ORDER BY total_tokens DESC
     """
@@ -85,6 +95,8 @@ def run_report(gcp_query_fn=None):
         SELECT task_type, SUM(total_tokens) AS tokens, COUNT(*) AS runs
         FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
         WHERE date = '{today}'
+          AND (is_test IS NULL OR is_test = FALSE)
+          AND (record_source IS NULL OR record_source = 'runtime')
         GROUP BY task_type
         ORDER BY tokens DESC
         LIMIT 5
@@ -97,6 +109,7 @@ def run_report(gcp_query_fn=None):
         FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
         WHERE date = '{today}'
           AND total_tokens > 5000
+          AND (is_test IS NULL OR is_test = FALSE)
           AND (status = 'no_op' OR status = 'minimal')
         ORDER BY total_tokens DESC
         LIMIT 3

@@ -1,0 +1,66 @@
+{
+  "_comment": "Price per 1M tokens in USD. Source: official provider pricing pages (2025-03).",
+  "_last_updated": "2026-03-02",
+  "models": {
+    "anthropic/claude-sonnet-4-6": {
+      "input_per_1m_usd": 3.00,
+      "output_per_1m_usd": 15.00,
+      "currency": "USD",
+      "provider": "anthropic"
+    },
+    "claude-sonnet-4-6": {
+      "input_per_1m_usd": 3.00,
+      "output_per_1m_usd": 15.00,
+      "currency": "USD",
+      "provider": "anthropic"
+    },
+    "anthropic/claude-haiku-4-5": {
+      "input_per_1m_usd": 0.80,
+      "output_per_1m_usd": 4.00,
+      "currency": "USD",
+      "provider": "anthropic"
+    },
+    "claude-haiku-4-5": {
+      "input_per_1m_usd": 0.80,
+      "output_per_1m_usd": 4.00,
+      "currency": "USD",
+      "provider": "anthropic"
+    },
+    "anthropic/claude-haiku-4-5-20251001": {
+      "input_per_1m_usd": 0.80,
+      "output_per_1m_usd": 4.00,
+      "currency": "USD",
+      "provider": "anthropic"
+    },
+    "google/gemini-2.0-flash": {
+      "input_per_1m_usd": 0.10,
+      "output_per_1m_usd": 0.40,
+      "currency": "USD",
+      "provider": "google"
+    },
+    "google/gemini-2.0-flash-lite": {
+      "input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 0.30,
+      "currency": "USD",
+      "provider": "google"
+    },
+    "gemini-2.0-flash-lite": {
+      "input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 0.30,
+      "currency": "USD",
+      "provider": "google"
+    },
+    "qwen/qwen-plus": {
+      "input_per_1m_usd": 0.40,
+      "output_per_1m_usd": 1.20,
+      "currency": "USD",
+      "provider": "qwen"
+    },
+    "qwen-plus": {
+      "input_per_1m_usd": 0.40,
+      "output_per_1m_usd": 1.20,
+      "currency": "USD",
+      "provider": "qwen"
+    }
+  }
+}

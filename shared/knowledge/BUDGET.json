@@ -9,7 +9,7 @@
     "audit": 100000,
     "main": 100000
   },
-  "warn_pct": 0.70,
+  "warn_pct": 0.7,
   "degrade_pct": 0.85,
   "stop_pct": 0.95
 }

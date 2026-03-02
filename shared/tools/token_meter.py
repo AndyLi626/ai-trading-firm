@@ -86,6 +86,8 @@ def record_call(
     status: str = "ok",
     usage_source: str = "exact",
     error: str = None,
+    record_source: str = "runtime",
+    is_test: bool = False,
 ) -> dict:
     """Record a single LLM API call to token_usage_calls."""
     total_tokens = (input_tokens or 0) + (output_tokens or 0)
@@ -112,6 +114,8 @@ def record_call(
         "duration_ms":   duration_ms,
         "status":        status,
         "error":         error or "",
+        "record_source": record_source,
+        "is_test":       is_test,
     }
     return _to_gcp("token_usage_calls", [row])
 

@@ -175,3 +175,52 @@ def log_signal(source_bot: str, symbol: str, signal_type: str,
         "raw_data": json.dumps(raw_data or {})
     }
     return insert_rows("market_signals", [row])
+
+
+def query_usage_today(bot: str = None) -> list:
+    """
+    Query today's token usage, handling both new (token_usage_runs) and legacy (token_usage) tables.
+    Returns list of dicts: [{bot, total_tokens, date}]
+    Falls back to legacy table if token_usage_runs is empty.
+    Filters out test and non-runtime records.
+    """
+    from datetime import datetime, timezone
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    bot_filter = f"AND bot = '{bot}'" if bot else ""
+
+    # Try new table
+    sql_new = f"""
+        SELECT bot, SUM(total_tokens) AS total_tokens, date
+        FROM `{PROJECT}.{DATASET}.token_usage_runs`
+        WHERE date = '{today}'
+          AND (is_test IS NULL OR is_test = FALSE)
+          AND (record_source IS NULL OR record_source = 'runtime')
+          {bot_filter}
+        GROUP BY bot, date
+    """
+    try:
+        rows = query(sql_new)
+        if rows:
+            return rows
+    except Exception:
+        pass
+
+    # Fallback to legacy token_usage table (handles Unix-seconds float timestamps)
+    sql_legacy = f"""
+        SELECT bot, SUM(total_tokens) AS total_tokens, '{today}' AS date
+        FROM `{PROJECT}.{DATASET}.token_usage`
+        WHERE (
+            SAFE.PARSE_DATE('%Y-%m-%d', SAFE_CAST(
+                FORMAT_TIMESTAMP('%Y-%m-%d', SAFE.PARSE_TIMESTAMP('%s',
+                    SAFE_CAST(CAST(SAFE_CAST(timestamp AS FLOAT64) AS INT64) AS STRING)))
+            AS STRING)) = '{today}'
+            OR DATE(timestamp) = '{today}'
+        )
+        {bot_filter}
+        GROUP BY bot
+    """
+    try:
+        return query(sql_legacy)
+    except Exception:
+        return []

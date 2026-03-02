@@ -28,6 +28,7 @@ SUITES = [
     ("strategy",    "test_strategy.py",    "StrategyBot & market scripts", False),
     ("failure_chains", "test_failure_chains.py", "Failure-chain scenarios (stale/fail/signal/cache)", False),
     ("token_meter",    "test_token_meter.py",    "Token accounting infrastructure",                   False),
+    ("harvester",      "test_harvester.py",      "Runtime usage harvester + budget status",            False),
 ]
 
 args = sys.argv[1:]

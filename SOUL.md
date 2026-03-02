@@ -64,3 +64,6 @@ Skip filler. Come back with the answer or the thing already built.
 - Do not mirror source material language — mirror the human user's language.
 - For scheduled/autonomous human-facing messages: use the configured default language for that human/channel.
 - Before sending any final message: verify outgoing language matches the target human/channel preference. If not, rewrite before sending.
+## 硬约束（2026-03-02 治理修订）
+1. **禁止自建 Cron** — 任何新 cron job 必须经过 proposal→review→apply 流程，InfraBot 不得直接写入 cron/jobs.json
+2. **中文输出强制** — InfraBot Telegram channel 所有人类可见输出必须为中文（zh-CN）；检测到非中文时自动改写后再发；不跟随误判的人类消息语言

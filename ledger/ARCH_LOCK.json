@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T22:24:06.680438+00:00",
+  "generated_at": "2026-03-02T22:31:34.207744+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -120,6 +120,13 @@
       "delivery": "none",
       "schedule_hash": "319d26052f501263",
       "payload_hash": "9922271c11e1c72c"
+    },
+    "cron::workspace-sync": {
+      "name": "workspace-sync",
+      "agent": "",
+      "delivery": "none",
+      "schedule_hash": "6d69f125466e7caa",
+      "payload_hash": "c07a9055762bd118"
     },
     "script::apply_hook.py": {
       "path": "shared/scripts/apply_hook.py",
@@ -390,6 +397,11 @@
       "path": "shared/scripts/upgrade_check.py",
       "hash": "472435cb0a6fc8a5",
       "size": 2714
+    },
+    "script::workspace_sync.py": {
+      "path": "shared/scripts/workspace_sync.py",
+      "hash": "30f70190a6bb3957",
+      "size": 2837
     },
     "script::write_signal.py": {
       "path": "shared/scripts/write_signal.py",

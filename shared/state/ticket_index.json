@@ -808,5 +808,55 @@
     "ack_type": "auto",
     "owner": "infra",
     "next_update_at": "2026-03-02T18:44:55.839668+00:00"
+  },
+  "55470d8e-50ed-4fd9-b743-8675a588f023": {
+    "ticket_id": "55470d8e-50ed-4fd9-b743-8675a588f023",
+    "action": "create",
+    "from": "manager",
+    "to": "infra",
+    "message": "upgrade-check 주간 cron 추가 제안: 매주 월요일 09:00 UTC, upgrade_check\n\nupgrade-check 주간 cron 추가 제안: 매주 월요일 09:00 UTC, upgrade_check.py 실행, delivery=none\n\n검수기준: cron 추가 후 첫 실행에서 versions_consistent=True 확인",
+    "priority": "normal",
+    "status": "OPEN",
+    "created_at": "2026-03-02T18:48:32.294412+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:58:32.294426+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:48:32.294434+00:00",
+        "by": "manager"
+      }
+    ],
+    "_ts": "2026-03-02T18:48:32.294438+00:00"
+  },
+  "62705ef2-f551-4a66-bb52-daed76822512": {
+    "ticket_id": "62705ef2-f551-4a66-bb52-daed76822512",
+    "action": "ack",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
+    "priority": "normal",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T18:48:37.915168+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:58:37.915182+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:48:37.915192+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T18:48:37.918321+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:58"
+      }
+    ],
+    "_ts": "2026-03-02T18:48:37.918224+00:00",
+    "ack_at": "2026-03-02T18:48:37.918219+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T18:58:37.918201+00:00"
   }
 }

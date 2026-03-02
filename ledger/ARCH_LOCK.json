@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T18:35:04.347698+00:00",
+  "generated_at": "2026-03-02T18:48:37.850068+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -328,6 +328,11 @@
       "hash": "9d1b530a3908d8c0",
       "size": 875
     },
+    "script::upgrade_check.py": {
+      "path": "shared/scripts/upgrade_check.py",
+      "hash": "082b00ad98e701fe",
+      "size": 2765
+    },
     "script::write_signal.py": {
       "path": "shared/scripts/write_signal.py",
       "hash": "437f178e45eb9d93",
@@ -382,6 +387,11 @@
       "path": "ledger/ADRs/ADR-007-model-override-tracing.md",
       "hash": "2dc2c417a6b87d98",
       "size": 1200
+    },
+    "adr::ADR-008-upgrade-sop.md": {
+      "path": "ledger/ADRs/ADR-008-upgrade-sop.md",
+      "hash": "d6494673f7dfc18f",
+      "size": 5085
     },
     "skills::index": {
       "count": 14,

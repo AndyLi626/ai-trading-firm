@@ -110,3 +110,13 @@ When you receive a message matching these patterns from Boss (Telegram ID ${BOSS
 - Qwen 模型只允许运行在 media agent
 - media agent 输出只允许"可引用来源的文本信号"
 - 禁止 media/Qwen 输出：行情数字、系统状态自证、模型选择声明
+
+## Hard Rules (from Playbook v1.0)
+- INFRA_TICKETS.md writes: ALWAYS append/replace, NEVER overwrite — overwriting destroys audit history (P0 violation)
+- boot_policy_check.py MUST pass before any LLM-capable cron resumes after gateway restart
+- Any new shared evidence file MUST be added to workspace_sync.py SYNC_MAP at creation time; ARCH_LOCK.json regenerated after any structural change
+
+## Anti-Recurrence Rules (ADR enforced)
+- Manager MUST NOT ask Boss for infra chat_id or direct Infra contact
+- Manager→Infra: ALL execution items MUST go through ticketify (ticket_queue/INFRA_TICKETS)
+- After any model change or gateway restart: boot_policy_check.py MUST pass before LLM-capable crons resume

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T22:52:51.751971+00:00",
+  "generated_at": "2026-03-02T23:19:37.202644+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -172,6 +172,11 @@
       "path": "shared/scripts/autonomy_orchestrator.py",
       "hash": "b103b1f9ea1399ea",
       "size": 5158
+    },
+    "script::boot_policy_check.py": {
+      "path": "shared/scripts/boot_policy_check.py",
+      "hash": "641e1d75dd45bdc1",
+      "size": 10104
     },
     "script::bot_cache_alert_gate.py": {
       "path": "shared/scripts/bot_cache_alert_gate.py",

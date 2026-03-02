@@ -120,6 +120,12 @@ def main():
         pass
 
     approved_count = sum(1 for v in new_verdicts if v.get("approved"))
+try:
+    import sys as _sys; _sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+    from run_registry import registry_set as _rs
+    _rs(f"risk_review:{verdict.get('symbol','?')}", "ok", verdict.get("decision","?"))
+except Exception:
+    pass
     print(json.dumps({
         "status":   "ok",
         "reviewed": len(new_verdicts),

@@ -221,6 +221,12 @@ def main():
     except Exception:
         pass  # degrade silently, main scan already done
 
+try:
+    import sys as _sys; _sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+    from run_registry import registry_set as _rs
+    _rs("emergency_scan", result.get("status","ok"), f"signals={result.get('signals_count',0)} chain={result.get('chain_id','')[:8]}")
+except Exception:
+    pass
     print(json.dumps({"status": "done", "request_id": request_id,
                       "signals_written": signals_written, "chain_id": chain_id}))
 

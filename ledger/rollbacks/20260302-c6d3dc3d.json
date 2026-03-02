@@ -1,0 +1,19 @@
+{
+  "change_id": "c6d3dc3d-bf25-476b-a015-ee6a18871506",
+  "applied_at": "2026-03-02T06:08:58.947740+00:00",
+  "summary": "feat: run_registry \u2014 job\u8fd0\u884c\u4e8b\u5b9e\u6e90 + 5\u811a\u672c\u5199\u5165\u94a9\u5b50 + Manager\u67e5\u8be2\u5165\u53e3",
+  "files": [
+    "run_registry.py",
+    "market_pulse.py",
+    "emergency_scan.py",
+    "strategy_hint.py",
+    "risk_review_lite.py",
+    "market_anomaly_detector.py"
+  ],
+  "rollback_steps": [
+    "git revert --no-commit HEAD (if committed)",
+    "Restore files: ['run_registry.py', 'market_pulse.py', 'emergency_scan.py', 'strategy_hint.py', 'risk_review_lite.py', 'market_anomaly_detector.py']",
+    "python3 shared/scripts/arch_lock.py generate",
+    "python3 shared/scripts/snapshot_capabilities.py"
+  ]
+}

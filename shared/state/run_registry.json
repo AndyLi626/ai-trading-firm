@@ -1,0 +1,30 @@
+{
+  "market_pulse": {
+    "task_key": "market_pulse",
+    "last_run_at": "2026-03-02T06:08:40.663263+00:00",
+    "last_status": "ok",
+    "last_summary_at": "2026-03-02T06:08:40.663263+00:00",
+    "last_summary_text": "stocks=10 crypto=3"
+  },
+  "premarket_scan:SPY,QQQ,NVDA,PLTR,XOM,GLD": {
+    "task_key": "premarket_scan:SPY,QQQ,NVDA,PLTR,XOM,GLD",
+    "last_run_at": "2026-03-02T06:08:40.712441+00:00",
+    "last_status": "ok",
+    "last_summary_at": "2026-03-02T06:08:40.712441+00:00",
+    "last_summary_text": "6 symbols scanned"
+  },
+  "anomaly_detector": {
+    "task_key": "anomaly_detector",
+    "last_run_at": "2026-03-02T06:08:40.767326+00:00",
+    "last_status": "ok",
+    "last_summary_at": "2026-03-02T06:08:40.767326+00:00",
+    "last_summary_text": "events=2"
+  },
+  "risk_review:PLTR": {
+    "task_key": "risk_review:PLTR",
+    "last_run_at": "2026-03-02T06:08:40.821996+00:00",
+    "last_status": "ok",
+    "last_summary_at": "2026-03-02T06:08:40.821996+00:00",
+    "last_summary_text": "approved"
+  }
+}

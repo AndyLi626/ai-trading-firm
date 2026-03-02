@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T05:55:55.048322+00:00",
+  "generated_at": "2026-03-02T06:08:58.995686+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -150,8 +150,8 @@
     },
     "script::emergency_scan.py": {
       "path": "shared/scripts/emergency_scan.py",
-      "hash": "3b85b3006618c087",
-      "size": 7717
+      "hash": "09b30dcc6cbede7f",
+      "size": 8033
     },
     "script::emergency_trigger.py": {
       "path": "shared/scripts/emergency_trigger.py",
@@ -185,13 +185,13 @@
     },
     "script::market_anomaly_detector.py": {
       "path": "shared/scripts/market_anomaly_detector.py",
-      "hash": "5e04de1f3d63a1c5",
-      "size": 6602
+      "hash": "a599f4c0b67112b1",
+      "size": 6861
     },
     "script::market_pulse.py": {
       "path": "shared/scripts/market_pulse.py",
-      "hash": "fcde79d755593050",
-      "size": 6304
+      "hash": "cb64734917887167",
+      "size": 6592
     },
     "script::media_finalize.py": {
       "path": "shared/scripts/media_finalize.py",
@@ -205,8 +205,8 @@
     },
     "script::risk_review_lite.py": {
       "path": "shared/scripts/risk_review_lite.py",
-      "hash": "7f221378968d27ae",
-      "size": 4494
+      "hash": "6c8951f451efc95e",
+      "size": 4762
     },
     "script::run_with_budget.py": {
       "path": "shared/scripts/run_with_budget.py",
@@ -220,13 +220,13 @@
     },
     "script::source_health.py": {
       "path": "shared/scripts/source_health.py",
-      "hash": "9ff79ced41ce69e9",
-      "size": 6055
+      "hash": "196e1c8a8d9f8f3b",
+      "size": 6104
     },
     "script::strategy_hint.py": {
       "path": "shared/scripts/strategy_hint.py",
-      "hash": "ed3988d64edf463a",
-      "size": 6845
+      "hash": "f6c8cd8da3d22914",
+      "size": 7132
     },
     "script::test_budget_enforcement.py": {
       "path": "shared/scripts/test_budget_enforcement.py",

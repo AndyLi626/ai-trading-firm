@@ -14,3 +14,4 @@ _Append-only. Each entry: date | commit | change | files_
 | 2026-03-02 | 4ebb10f | P1: strategy_hint+risk_review_lite+Event Loop | 2 scripts |
 | 2026-03-02 | `d77631f9` | P1 Archivist: changelog hook + test_gate + bot_cache.archivist | archivist_apply_hook.py, test_gate.py, ARCH_LOCK.json |
 | 2026-03-02 | `fc52f3d2` | P0: infra_ticket通道+source_health+Manager投递修复 | infra_ticket.py, source_health.py, jobs.json |
+| 2026-03-02 | `c6d3dc3d` | feat: run_registry — job运行事实源 + 5脚本写入钩子 + Manager查询入口 | run_registry.py, market_pulse.py, emergency_scan.py |

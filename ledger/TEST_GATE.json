@@ -1,0 +1,45 @@
+{
+  "status": "green",
+  "all_green": true,
+  "total_passed": 37,
+  "total_tests": 37,
+  "suites": [
+    {
+      "name": "test_failure_chains",
+      "passed": 10,
+      "total": 10,
+      "exit_code": 0,
+      "green": true
+    },
+    {
+      "name": "test_config_guard",
+      "passed": 1,
+      "total": 1,
+      "exit_code": 0,
+      "green": true
+    },
+    {
+      "name": "test_autonomy_framework",
+      "passed": 7,
+      "total": 7,
+      "exit_code": 0,
+      "green": true
+    },
+    {
+      "name": "test_archivist",
+      "passed": 6,
+      "total": 6,
+      "exit_code": 0,
+      "green": true
+    },
+    {
+      "name": "test_smoke",
+      "passed": 13,
+      "total": 13,
+      "exit_code": 0,
+      "green": true
+    }
+  ],
+  "checked_at": "2026-03-02T05:46:22.156229+00:00",
+  "verdict": "APPLY_ALLOWED"
+}

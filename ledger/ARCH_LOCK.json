@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T05:42:56.991663+00:00",
+  "generated_at": "2026-03-02T05:46:04.706286+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -83,6 +83,11 @@
       "path": "shared/scripts/arch_lock.py",
       "hash": "7e24c4c85f7b5cb7",
       "size": 5467
+    },
+    "script::archivist_apply_hook.py": {
+      "path": "shared/scripts/archivist_apply_hook.py",
+      "hash": "5d7ba8237615aa79",
+      "size": 4844
     },
     "script::autonomy_init_day.py": {
       "path": "shared/scripts/autonomy_init_day.py",
@@ -203,6 +208,11 @@
       "path": "shared/scripts/test_budget_enforcement.py",
       "hash": "a22600a25cc089a2",
       "size": 5853
+    },
+    "script::test_gate.py": {
+      "path": "shared/scripts/test_gate.py",
+      "hash": "a2cfcc0a0c7f5a36",
+      "size": 2685
     },
     "script::token_cost_summary.py": {
       "path": "shared/scripts/token_cost_summary.py",

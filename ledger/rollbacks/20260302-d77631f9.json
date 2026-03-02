@@ -1,0 +1,16 @@
+{
+  "change_id": "d77631f9-9102-4dea-abd8-7663c311d810",
+  "applied_at": "2026-03-02T05:46:04.642398+00:00",
+  "summary": "P1 Archivist: changelog hook + test_gate + bot_cache.archivist",
+  "files": [
+    "archivist_apply_hook.py",
+    "test_gate.py",
+    "ARCH_LOCK.json"
+  ],
+  "rollback_steps": [
+    "git revert --no-commit HEAD (if committed)",
+    "Restore files: ['archivist_apply_hook.py', 'test_gate.py', 'ARCH_LOCK.json']",
+    "python3 shared/scripts/arch_lock.py generate",
+    "python3 shared/scripts/snapshot_capabilities.py"
+  ]
+}

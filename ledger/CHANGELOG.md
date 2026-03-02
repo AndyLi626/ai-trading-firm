@@ -134,3 +134,4 @@ Total cron jobs: 15
 5. Telegram groupAllowFrom=[1555430296] added to infra + manager accounts ✅
 6. Token counter: NOT reset. Boss decision pending (current spend: Anthropic 8.6%, Qwen 4.8%, Google 3.2%)
 | 2026-03-02 | `d55ba801` | manual apply | — |
+| 2026-03-02 | `04371e19` | manual apply | — |

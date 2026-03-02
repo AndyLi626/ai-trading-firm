@@ -1,0 +1,12 @@
+{
+  "change_id": "04371e19-8adc-4d54-b444-a379c4955560",
+  "applied_at": "2026-03-02T22:13:29.987659+00:00",
+  "summary": "manual apply",
+  "files": [],
+  "rollback_steps": [
+    "git revert --no-commit HEAD (if committed)",
+    "Restore files: []",
+    "python3 shared/scripts/arch_lock.py generate",
+    "python3 shared/scripts/snapshot_capabilities.py"
+  ]
+}

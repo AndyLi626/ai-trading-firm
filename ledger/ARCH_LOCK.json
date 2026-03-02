@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T22:07:32.097223+00:00",
+  "generated_at": "2026-03-02T22:14:00.692256+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -165,6 +165,11 @@
       "path": "shared/scripts/autonomy_orchestrator.py",
       "hash": "b103b1f9ea1399ea",
       "size": 5158
+    },
+    "script::bot_cache_alert_gate.py": {
+      "path": "shared/scripts/bot_cache_alert_gate.py",
+      "hash": "b7184b5df5f6cf05",
+      "size": 2643
     },
     "script::bot_cache_refresh.py": {
       "path": "shared/scripts/bot_cache_refresh.py",
@@ -450,6 +455,11 @@
       "path": "ledger/ADRs/ADR-010-market-data-single-source-of-truth.md",
       "hash": "f3878bdb5b769249",
       "size": 1635
+    },
+    "adr::ADR-011-freshness-thresholds.md": {
+      "path": "ledger/ADRs/ADR-011-freshness-thresholds.md",
+      "hash": "aae68040b0e569c2",
+      "size": 1497
     },
     "skills::index": {
       "count": 14,

@@ -37,3 +37,29 @@
 2. **arch_lock_drift** — run_with_budget.py 哈希漂移 → 调查后运行 arch_lock.py update 或回滚
 3. **audit_pipeline** — gemini-2.0-flash-lite 已停用 → 更新 AuditBot 模型配置
 4. **config_validity** — openclaw.json invalid → `openclaw doctor --fix`
+
+## Freshness Thresholds (ADR-011) — VERIFIED 2026-03-02
+
+| Layer | Threshold | Component | Status |
+|-------|-----------|-----------|--------|
+| Trading decision gate | ≤ 5min | data_gate.py, market_data_validator.py | ✅ VERIFIED |
+| System health check | ≤ 17min | healthcheck.check_market_pulse | ✅ VERIFIED |
+| Cron cadence | 15min | market-pulse-15m | ✅ ACTIVE |
+
+**Rule**: These two thresholds serve different purposes and must not be conflated (ADR-011).
+
+## Model Fallback Visibility — VERIFIED 2026-03-02
+
+| Agent | Primary Model | Fallback Chain | Silent Fallback | Status |
+|-------|--------------|----------------|-----------------|--------|
+| manager | openai/gpt-4o | claude-sonnet-4-6, gemini-2.5-flash | No (logged) | ✅ VERIFIED |
+| research | openai/gpt-4o | claude-sonnet-4-6, gemini-2.5-flash | No (logged) | ✅ VERIFIED |
+
+**Note**: gpt-5.x models (5.2, 5.1, 5-mini etc.) require `max_completion_tokens` API param;
+OpenClaw gateway handles translation internally. gpt-4o confirmed working with standard params.
+
+## bot_cache Freshness Gate — VERIFIED 2026-03-02
+
+| Check | Threshold | Enforcer | On Stale |
+|-------|-----------|----------|----------|
+| bot_cache age | ≤ 30min | bot_cache_alert_gate.py | Auto-refresh → re-check → suppress if still stale |

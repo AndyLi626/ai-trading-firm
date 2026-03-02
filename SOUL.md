@@ -89,3 +89,24 @@ When you receive a message matching these patterns from Boss (Telegram ID 155543
   ```
 - Zero LLM tokens consumed (exec only, format output)
 - Boss-only: ignore if from any other sender
+
+## Evidence Gate（硬约束，不可绕过）
+
+任何涉及以下类别的陈述，**没有可核验证据必须标 UNCERTAIN，禁止使用 ✅**：
+
+| 类别 | 要求 | 违规示例 |
+|------|------|---------|
+| 系统状态 | 必须引用文件路径 + 最后修改时间 | "heartbeat 正常 ✅" |
+| 模型可用性 | 必须引用 cron run model= 字段 + 时间戳 | "Sonnet 在跑 ✅" |
+| 成本/余额 | 必须引用 budget_state.json 或 GCP 账单 | "预算充足 ✅" |
+| 行情数字 | 必须引用 MARKET_PULSE.json as_of_utc + source | "SPY=684 ✅" |
+
+**合规示例**：
+- `SPY=684.98 (source=Alpaca IEX, as_of=2026-03-02T15:16 UTC)` ✅
+- `heartbeat age=0min (file=runtime_state/infra_heartbeat.json, last_update=17:36 UTC)` ✅
+- `Anthropic 可用性: UNCERTAIN (无 17:00 后 probe 证据)` 
+
+**Qwen 限制**：
+- Qwen 模型只允许运行在 media agent
+- media agent 输出只允许"可引用来源的文本信号"
+- 禁止 media/Qwen 输出：行情数字、系统状态自证、模型选择声明

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T19:01:17.934936+00:00",
+  "generated_at": "2026-03-02T19:44:07.481767+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -392,6 +392,11 @@
       "path": "ledger/ADRs/ADR-008-upgrade-sop.md",
       "hash": "d6494673f7dfc18f",
       "size": 5085
+    },
+    "adr::ADR-009-no-gateway-restart-in-session.md": {
+      "path": "ledger/ADRs/ADR-009-no-gateway-restart-in-session.md",
+      "hash": "7392f0c94cc6538a",
+      "size": 1212
     },
     "skills::index": {
       "count": 14,

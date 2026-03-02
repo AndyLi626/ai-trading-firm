@@ -12,9 +12,13 @@ validate(patch_dict) → {"result": "PASS"|"REJECT", "reason": str}
 import os
 
 KNOWN_TOP_KEYS = {
+    # core
     "meta", "wizard", "auth", "models", "agents", "gateway",
     "compaction", "heartbeat", "timeoutSeconds", "typingIntervalSeconds",
-    "typingMode", "workspace", "defaults", "list"
+    "typingMode", "workspace", "defaults", "list",
+    # actual openclaw.json top-level keys (synced 2026-03-02)
+    "tools", "bindings", "messages", "channels", "plugins",
+    "skills", "commands", "session", "cron", "hooks",
 }
 
 ALLOWED_AGENT_IDS = {
@@ -64,6 +68,15 @@ def validate(patch_dict: dict) -> dict:
         for agent in agents_list:
             if not isinstance(agent, dict):
                 return {"result": "REJECT", "reason": f"Agent entry must be a dict, got: {type(agent)}"}
+
+            # Rule 5: unknown agent-level keys (compaction, default, etc. not allowed in list entries)
+            ALLOWED_AGENT_KEYS = {"id", "name", "workspace", "model", "identity", "tools", "soul",
+                                  "_phase", "_readonly", "_hourly_cap_tokens"}
+            unknown_keys = [k for k in agent.keys() if k not in ALLOWED_AGENT_KEYS]
+            if unknown_keys:
+                return {"result": "REJECT",
+                        "reason": f"Unknown key(s) in agent entry: {unknown_keys}. "
+                                  f"Allowed: {sorted(ALLOWED_AGENT_KEYS)}"}
 
             # Rule 4: agentId allowlist
             agent_id = agent.get("id")

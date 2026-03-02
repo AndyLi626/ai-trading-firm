@@ -106,3 +106,11 @@ ConfigCheck: APPLY_ALLOWED
 - research agent model: claude-sonnet-4-6 → openai/gpt-5.2
   - fallbacks: claude-sonnet-4-6, gemini-2.5-flash
 - ADR-007: gateway restart required after model change
+
+## 2026-03-02 21:01 UTC — model: manager → openai/gpt-5.2
+
+ConfigCheck: APPLY_ALLOWED
+- manager agent: gemini-2.5-flash → openai/gpt-5.2
+  fallbacks: gemini-2.5-flash, claude-sonnet-4-6
+- research agent: confirmed openai/gpt-5.2 (set in previous cycle)
+- ADR-007: gateway restart required

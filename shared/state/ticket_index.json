@@ -588,5 +588,165 @@
       }
     ],
     "_ts": "2026-03-02T18:27:16.936389+00:00"
+  },
+  "d6dfd5d2-1a98-46bd-98ff-3908bdd0e36e": {
+    "ticket_id": "d6dfd5d2-1a98-46bd-98ff-3908bdd0e36e",
+    "action": "create",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
+    "priority": "normal",
+    "status": "OPEN",
+    "created_at": "2026-03-02T18:33:32.746861+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:43:32.746872+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:33:32.746880+00:00",
+        "by": "manager"
+      }
+    ],
+    "_ts": "2026-03-02T18:33:32.746884+00:00"
+  },
+  "296c8f63-056b-4afa-9206-100a8dc7562e": {
+    "ticket_id": "296c8f63-056b-4afa-9206-100a8dc7562e",
+    "action": "create",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE FAIL 자동 티켓: SC2_ticketify_ack: ack error: cannot i\n\nE2E SMOKE FAIL 자동 티켓: SC2_ticketify_ack: ack error: cannot import name 'ack_ticke; SC5_cron_drift: drift=1 violations=[]\n\n검수기준: smoke 재실행 시 PASS 6/6 확인",
+    "priority": "high",
+    "status": "OPEN",
+    "created_at": "2026-03-02T18:33:32.808428+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T18:43:32.808442+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:33:32.808451+00:00",
+        "by": "manager"
+      }
+    ],
+    "_ts": "2026-03-02T18:33:32.808456+00:00"
+  },
+  "8bef6ef9-9c07-4277-ac58-98b24bd7447c": {
+    "ticket_id": "8bef6ef9-9c07-4277-ac58-98b24bd7447c",
+    "action": "create",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
+    "priority": "normal",
+    "status": "OPEN",
+    "created_at": "2026-03-02T18:33:52.170073+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:43:52.170085+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:33:52.170092+00:00",
+        "by": "manager"
+      }
+    ],
+    "_ts": "2026-03-02T18:33:52.170096+00:00"
+  },
+  "1f60d767-f87e-4182-b25b-3099a4c7bbb8": {
+    "ticket_id": "1f60d767-f87e-4182-b25b-3099a4c7bbb8",
+    "action": "create",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE FAIL 자동 티켓: SC2_ticketify_ack: ack error: name '_l\n\nE2E SMOKE FAIL 자동 티켓: SC2_ticketify_ack: ack error: name '_load_index' is not def\n\n검수기준: smoke 재실행 시 PASS 6/6 확인",
+    "priority": "high",
+    "status": "OPEN",
+    "created_at": "2026-03-02T18:33:52.232043+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T18:43:52.232060+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:33:52.232067+00:00",
+        "by": "manager"
+      }
+    ],
+    "_ts": "2026-03-02T18:33:52.232072+00:00"
+  },
+  "d6fa6318-ae72-464b-8eb7-656eaeaa3eab": {
+    "ticket_id": "d6fa6318-ae72-464b-8eb7-656eaeaa3eab",
+    "action": "ack",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
+    "priority": "normal",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T18:33:56.613949+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:43:56.613961+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:33:56.613969+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T18:33:56.616739+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:43"
+      }
+    ],
+    "_ts": "2026-03-02T18:33:56.616635+00:00",
+    "ack_at": "2026-03-02T18:33:56.616631+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T18:43:56.616615+00:00"
+  },
+  "dad11f9e-0324-46f6-99f5-3fe5cc811f67": {
+    "ticket_id": "dad11f9e-0324-46f6-99f5-3fe5cc811f67",
+    "action": "create",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE FAIL 자동 티켓: SC5_cron_drift: drift=1 violations=[]\n\nE2E SMOKE FAIL 자동 티켓: SC5_cron_drift: drift=1 violations=[]\n\n검수기준: smoke 재실행 시 PASS 6/6 확인",
+    "priority": "high",
+    "status": "OPEN",
+    "created_at": "2026-03-02T18:33:56.678003+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T18:43:56.678018+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:33:56.678027+00:00",
+        "by": "manager"
+      }
+    ],
+    "_ts": "2026-03-02T18:33:56.678032+00:00"
+  },
+  "e981d34f-00f6-44a6-8187-d780a3e31b7f": {
+    "ticket_id": "e981d34f-00f6-44a6-8187-d780a3e31b7f",
+    "action": "ack",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
+    "priority": "normal",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T18:34:04.385411+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:44:04.385423+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:34:04.385430+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T18:34:04.388298+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:44"
+      }
+    ],
+    "_ts": "2026-03-02T18:34:04.388208+00:00",
+    "ack_at": "2026-03-02T18:34:04.388204+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T18:44:04.388187+00:00"
   }
 }

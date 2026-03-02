@@ -38,3 +38,12 @@ _Append-only. Each entry: date | commit | change | files_
 - **수정**: 5개 whitelist cron의 payload를 직접 실행 방식으로 변경
   - market-pulse-15m, anomaly-detector, emergency-scan-poll, infra-ticket-poll, media-intel-scan
 - **결과**: MARKET_PULSE age=0min (수정 전 139min)
+
+## 2026-03-02 18:01 UTC — P0 修复 + v0.7-stable
+
+- heartbeat 统一路径，Manager 同步对齐
+- run_with_budget.py 参数 bug 修复（drift 合法，ARCH_LOCK 更新 entries=69 drift=0）  
+- openclaw.json soul 键清理
+- BUDGET.json: global 2M→8M, main 1.5M→2M, provider caps 新增
+- Healthcheck 7/7 PASS → STABLE_RUN_CERT.md 签发
+- git tag v0.7-stable

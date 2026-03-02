@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T17:36:58.801561+00:00",
+  "generated_at": "2026-03-02T18:01:09.620581+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -208,6 +208,11 @@
       "hash": "cc937f2a0a476e8a",
       "size": 16090
     },
+    "script::healthcheck.py": {
+      "path": "shared/scripts/healthcheck.py",
+      "hash": "e9a406ff46615120",
+      "size": 11452
+    },
     "script::infra_poll_unified.py": {
       "path": "shared/scripts/infra_poll_unified.py",
       "hash": "e5c76529b8d6111e",
@@ -285,8 +290,8 @@
     },
     "script::run_with_budget.py": {
       "path": "shared/scripts/run_with_budget.py",
-      "hash": "66bfb37d7199d482",
-      "size": 3863
+      "hash": "6bad88c44aac9463",
+      "size": 5965
     },
     "script::source_health.py": {
       "path": "shared/scripts/source_health.py",
@@ -357,6 +362,11 @@
       "path": "ledger/ADRs/ADR-005-governance-flow.md",
       "hash": "c53bbee7cd1b2ba9",
       "size": 1126
+    },
+    "adr::ADR-006-evidence-gate.md": {
+      "path": "ledger/ADRs/ADR-006-evidence-gate.md",
+      "hash": "06aa45fb2e32ebc2",
+      "size": 4108
     },
     "skills::index": {
       "count": 14,

@@ -26,7 +26,6 @@ def get_today_dir(date_str=None):
 
 def check_budget():
     if not os.path.exists(BUDGET_SCRIPT):
-        print("WARN: run_with_budget.py not found, skipping budget check")
         return True
     try:
         result = subprocess.run(
@@ -34,17 +33,14 @@ def check_budget():
             capture_output=True, text=True, timeout=30
         )
         if result.returncode == 1:
-            print("BUDGET HARD STOP — orchestrator aborted.")
             return False
         lines = [l for l in result.stdout.strip().splitlines() if l.strip()]
         if lines:
             data = json.loads(lines[-1])
             if data.get("action") == "stop":
-                print("BUDGET HARD STOP — orchestrator aborted.")
                 return False
         return True
-    except Exception as e:
-        print(f"WARN: budget check failed ({e}), proceeding")
+    except Exception:
         return True
 
 
@@ -75,7 +71,8 @@ def load_queue(queue_path):
     if os.path.exists(queue_path):
         with open(queue_path) as f:
             return json.load(f)
-    return {"date": today_str(), "queue": [], "metadata": {}}
+    return {"date": today_str(), "status": "initialized", "queue": [], "completed": [],
+            "summary": {"total_jobs": 0, "completed": 0, "pending": 0, "failed": 0}}
 
 
 def update_queue(queue_data, jobs_run):
@@ -83,30 +80,30 @@ def update_queue(queue_data, jobs_run):
     for item in queue_data.get("queue", []):
         if item.get("job_name") in run_names:
             item["status"] = "completed"
-    completed = sum(1 for i in queue_data["queue"] if i.get("status") == "completed")
-    failed = sum(1 for i in queue_data["queue"] if i.get("status") == "failed")
-    pending = len(queue_data["queue"]) - completed - failed
-    queue_data["metadata"] = {
-        "total_jobs": len(queue_data["queue"]),
-        "completed": completed,
-        "pending": pending,
-        "failed": failed,
-        "last_refresh": datetime.now(timezone.utc).isoformat(),
+    completed_count = len([j for j in jobs_run if j.get("status") in ("completed", "success", "ok")])
+    queue_data["completed"] = [j["name"] for j in jobs_run]
+    queue_data["summary"] = {
+        "total_jobs": len(queue_data.get("queue", [])),
+        "completed": completed_count,
+        "pending": max(0, len(queue_data.get("queue", [])) - completed_count),
+        "failed": 0,
         "runs_today": len(jobs_run),
+        "last_refresh": datetime.now(timezone.utc).isoformat(),
     }
+    queue_data["status"] = "refreshed"
     return queue_data
 
 
 def append_outputs(outputs_path, jobs_run, queue_data):
     now = datetime.now(timezone.utc).strftime("%H:%M UTC")
-    meta = queue_data.get("metadata", {})
+    summary = queue_data.get("summary", {})
     lines = [
         f"\n## Refresh @ {now}",
-        f"- Jobs run today: {meta.get('runs_today', len(jobs_run))}",
-        f"- Queue: {meta.get('completed',0)} completed / {meta.get('pending',0)} pending / {meta.get('failed',0)} failed",
+        f"- Jobs run today: {summary.get('runs_today', len(jobs_run))}",
+        f"- Completed: {summary.get('completed', 0)} / Pending: {summary.get('pending', 0)}",
     ]
     if jobs_run:
-        lines.append("- Recent runs: " + ", ".join(j["name"] for j in jobs_run[-5:]))
+        lines.append("- Recent: " + ", ".join(j["name"] for j in jobs_run[-5:]))
     with open(outputs_path, "a") as f:
         f.write("\n".join(lines) + "\n")
 
@@ -123,6 +120,7 @@ def main():
         os.makedirs(today_dir, exist_ok=True)
 
     if not check_budget():
+        print(json.dumps({"total": 0, "completed": 0, "status": "budget_stop"}))
         sys.exit(0)
 
     queue_path = os.path.join(today_dir, "AUTONOMY_QUEUE.json")
@@ -140,7 +138,15 @@ def main():
             f.write(f"# AUTONOMY_OUTPUTS — {date_str}\n\n")
 
     append_outputs(outputs_path, jobs_run, queue_data)
-    print(f"Orchestrator done. Runs today: {len(jobs_run)}. Queue: {queue_path}")
+
+    summary = queue_data.get("summary", {})
+    result = {
+        "total": summary.get("total_jobs", 0),
+        "completed": summary.get("completed", 0),
+        "runs_today": len(jobs_run),
+        "status": "ok",
+    }
+    print(json.dumps(result))
 
 
 if __name__ == "__main__":

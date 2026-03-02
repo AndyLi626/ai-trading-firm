@@ -7,8 +7,7 @@ import os
 import sys
 from datetime import datetime, timezone
 
-WORKSPACE = os.environ.get("WORKSPACE", os.path.expanduser(
-    "~/.openclaw/workspace"))
+WORKSPACE = os.environ.get("WORKSPACE", os.path.expanduser("~/.openclaw/workspace"))
 
 
 def today_str():
@@ -30,15 +29,12 @@ def init_day(base_dir=None, date_str=None):
     if not os.path.exists(queue_path):
         skeleton = {
             "date": date_str,
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "status": "initialized",
             "schema_version": "1.0",
             "queue": [],
-            "metadata": {
-                "total_jobs": 0,
-                "completed": 0,
-                "pending": 0,
-                "failed": 0,
-            }
+            "completed": [],
+            "summary": {"total_jobs": 0, "completed": 0, "pending": 0, "failed": 0},
+            "created_at": datetime.now(timezone.utc).isoformat(),
         }
         with open(queue_path, "w") as f:
             json.dump(skeleton, f, indent=2)

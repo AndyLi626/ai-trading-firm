@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T22:14:00.692256+00:00",
+  "generated_at": "2026-03-02T22:16:26.765499+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -275,6 +275,11 @@
       "path": "shared/scripts/infra_ticket.py",
       "hash": "17e5aa1287b38cfa",
       "size": 9937
+    },
+    "script::infra_ticket_status.py": {
+      "path": "shared/scripts/infra_ticket_status.py",
+      "hash": "b73a138c615fcf4f",
+      "size": 5439
     },
     "script::ledger_preflight.py": {
       "path": "shared/scripts/ledger_preflight.py",

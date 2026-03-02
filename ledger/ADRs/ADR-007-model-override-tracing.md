@@ -28,3 +28,21 @@ for j in d['jobs']:
     if fins: print(j['name'], fins[-1].get('model','?'))
 "
 ```
+## Addendum (2026-03-02 21:02 UTC) — Restart Policy Clarification
+
+**Do NOT restart gateway for routine model changes.**
+
+- `openclaw.json` model changes take effect on the next cron execution / agent turn automatically
+- Gateway restart = kills active session = user disconnect
+- Restart is ONLY required when:
+  1. Gateway is in a broken/crash-loop state
+  2. Boss explicitly requests a restart
+  3. Provider config (baseUrl, apiKey) changes require a new HTTP client
+
+**Correct procedure for model changes:**
+1. Edit `openclaw.json` (via config_guard pipeline)
+2. Commit + push
+3. Confirm on next cron run that `model=` field shows new value
+4. DO NOT restart
+
+ADR-009 (no restart during active session) takes precedence.

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T05:46:04.706286+00:00",
+  "generated_at": "2026-03-02T05:55:55.048322+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -35,7 +35,7 @@
       "agent": "manager",
       "delivery": "announce",
       "schedule_hash": "855b8e5644218760",
-      "payload_hash": "11374f795a5cdb6b"
+      "payload_hash": "e6e95f763491de1d"
     },
     "cron::autonomy-orchestrator": {
       "name": "autonomy-orchestrator",
@@ -78,6 +78,20 @@
       "delivery": "none",
       "schedule_hash": "f2ee564d8cf416b6",
       "payload_hash": "70c35c3ac6070ffa"
+    },
+    "cron::infra-ticket-poll": {
+      "name": "infra-ticket-poll",
+      "agent": "main",
+      "delivery": "none",
+      "schedule_hash": "0ed4b036f31de950",
+      "payload_hash": "92bcacb74587d10b"
+    },
+    "cron::source-health-30m": {
+      "name": "source-health-30m",
+      "agent": "media",
+      "delivery": "none",
+      "schedule_hash": "25754c512ecf6b90",
+      "payload_hash": "bf8e961e53bbee2f"
     },
     "script::arch_lock.py": {
       "path": "shared/scripts/arch_lock.py",
@@ -159,6 +173,11 @@
       "hash": "ad8cc0a2cf560718",
       "size": 7757
     },
+    "script::infra_ticket.py": {
+      "path": "shared/scripts/infra_ticket.py",
+      "hash": "37fff5470fc360f9",
+      "size": 3198
+    },
     "script::ledger_preflight.py": {
       "path": "shared/scripts/ledger_preflight.py",
       "hash": "c32a18033219d910",
@@ -198,6 +217,11 @@
       "path": "shared/scripts/snapshot_capabilities.py",
       "hash": "8e17a6531f190385",
       "size": 8447
+    },
+    "script::source_health.py": {
+      "path": "shared/scripts/source_health.py",
+      "hash": "9ff79ced41ce69e9",
+      "size": 6055
     },
     "script::strategy_hint.py": {
       "path": "shared/scripts/strategy_hint.py",

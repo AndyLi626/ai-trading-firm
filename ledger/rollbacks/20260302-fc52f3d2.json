@@ -1,0 +1,16 @@
+{
+  "change_id": "fc52f3d2-4e43-468a-82fe-f9dfc3fd23b4",
+  "applied_at": "2026-03-02T05:55:55.004522+00:00",
+  "summary": "P0: infra_ticket\u901a\u9053+source_health+Manager\u6295\u9012\u4fee\u590d",
+  "files": [
+    "infra_ticket.py",
+    "source_health.py",
+    "jobs.json"
+  ],
+  "rollback_steps": [
+    "git revert --no-commit HEAD (if committed)",
+    "Restore files: ['infra_ticket.py', 'source_health.py', 'jobs.json']",
+    "python3 shared/scripts/arch_lock.py generate",
+    "python3 shared/scripts/snapshot_capabilities.py"
+  ]
+}

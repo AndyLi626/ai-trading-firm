@@ -1,0 +1,62 @@
+{
+  "TEST-001": {
+    "ticket_id": "TEST-001",
+    "action": "ack",
+    "from": "manager",
+    "to": "infra",
+    "message": "测试工单 — 验证 JSONL 队列",
+    "priority": "high",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T07:01:02.507090+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T07:11:02.507110+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T07:01:02.507118+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T07:01:02.619923+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=10min | next_update=2026-03-02T07:11"
+      }
+    ],
+    "_ts": "2026-03-02T07:01:02.619825+00:00",
+    "ack_at": "2026-03-02T07:01:02.619820+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T07:11:02.619805+00:00"
+  },
+  "GOVERNANCE-CRON-SPRAWL": {
+    "ticket_id": "GOVERNANCE-CRON-SPRAWL",
+    "action": "ack",
+    "from": "infra",
+    "to": "infra",
+    "message": "",
+    "priority": "high",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T07:01:02.618458+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T07:11:02.618470+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T07:01:02.618478+00:00",
+        "by": "infra"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T07:01:02.620555+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=10min | next_update=2026-03-02T07:11"
+      }
+    ],
+    "_ts": "2026-03-02T07:01:02.620493+00:00",
+    "ack_at": "2026-03-02T07:01:02.620489+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T07:11:02.620478+00:00"
+  }
+}

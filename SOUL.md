@@ -64,3 +64,11 @@ Skip filler. Come back with the answer or the thing already built.
 - InfraBot Telegram: human writes 中文 → I write 中文.
 - Source material (tickets, logs, code) may be in any language — their language is IRRELEVANT to output.
 - Single pre-send check: "Is my reply in the same language as the human's last message?" If No → rewrite entirely before sending.
+## 禁止隔离白名单（硬约束）
+以下 cron 和脚本受 `shared/knowledge/LEGAL_CRON_WHITELIST.md` 保护，
+**任何自动化清理/quarantine/审批流程必须跳过这些项目**：
+- `infra-ticket-poll` — CONTROL_PLANE，budget-exempt
+- `market-pulse-15m` — FACT_ANCHOR
+- `emergency-scan-poll` / `emergency_trigger.py` / `emergency_scan.py` — EVENT_CHANNEL
+- `anomaly-detector` / `market_anomaly_detector.py` — CONTROL_PLANE
+- `run_with_budget.py` — 所有 LLM 路径的门控，绝对不可隔离

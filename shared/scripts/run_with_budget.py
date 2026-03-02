@@ -2,11 +2,20 @@
 """
 run_with_budget.py — Budget enforcer wrapper for bot cron runs.
 
-Usage:
-  python3 run_with_budget.py <bot_id> <task_type> <estimated_tokens>
+Usage (两种调用均支持):
+  # 模式 A：precheck only（输出 JSON，不执行命令）
+  python3 run_with_budget.py <bot_id> <estimated_tokens>
+
+  # 模式 B：推荐——分隔符后接命令（budget 通过才执行）
+  python3 run_with_budget.py <bot_id> <estimated_tokens> -- python3 script.py [args...]
+
+  # 模式 C：兼容旧格式（第3个参数是整数则视为 tokens，其余为命令）
+  python3 run_with_budget.py <bot_id> <estimated_tokens> python3 script.py [args...]
+
+  注意：<estimated_tokens> 必须是整数；python3/命令不能作为第3个参数。
 
 Output JSON: {allowed, action, budget_mode, today_total, degrade_hints}
-Exit code: 0=allowed, 1=hard_stop
+Exit code: 0=allowed/executed, 1=hard_stop/budget_blocked
 """
 import os, sys, json, uuid, subprocess
 from datetime import datetime, timezone
@@ -57,14 +66,51 @@ def _write_audit_event(bot: str, task_type: str, status: str, estimated_tokens: 
         print(f"[run_with_budget] audit write failed: {e}", file=sys.stderr)
 
 
-def main():
-    if len(sys.argv) < 4:
-        print(json.dumps({"error": "Usage: run_with_budget.py <bot_id> <task_type> <estimated_tokens>"}))
+def _parse_args():
+    """
+    解析参数，支持三种调用格式，fail-fast 并给出清晰错误。
+    返回 (bot_id, estimated_tokens, command_list_or_None)
+    """
+    args = sys.argv[1:]
+    USAGE = (
+        "Usage:\n"
+        "  run_with_budget.py <bot> <tokens>                       # precheck only\n"
+        "  run_with_budget.py <bot> <tokens> -- cmd [args...]      # 推荐\n"
+        "  run_with_budget.py <bot> <tokens> cmd [args...]         # 兼容旧格式\n"
+        "  <tokens> 必须是整数，例如 200，不能是 'python3'"
+    )
+    if len(args) < 2:
+        print(json.dumps({"error": USAGE}), file=sys.stderr)
         sys.exit(1)
 
-    bot_id           = sys.argv[1]
-    task_type        = sys.argv[2]
-    estimated_tokens = int(sys.argv[3])
+    bot_id = args[0]
+
+    # 第2个参数必须是整数
+    try:
+        estimated_tokens = int(args[1])
+    except ValueError:
+        print(json.dumps({
+            "error": f"estimated_tokens 必须是整数，收到: {args[1]!r}",
+            "hint":  USAGE
+        }), file=sys.stderr)
+        sys.exit(1)
+
+    # 解析命令部分
+    rest = args[2:]
+    if not rest:
+        return bot_id, estimated_tokens, None          # precheck only
+
+    if rest[0] == '--':
+        cmd = rest[1:] if len(rest) > 1 else None      # 模式 B
+    else:
+        cmd = rest                                      # 模式 C（兼容旧格式）
+
+    return bot_id, estimated_tokens, cmd or None
+
+
+def main():
+    bot_id, estimated_tokens, command = _parse_args()
+    task_type = ' '.join(command) if command else 'precheck'
 
     # Step 1: quick harvest for fresh data
     _run_harvest_quick()
@@ -109,7 +155,17 @@ def main():
         _write_audit_event(bot_id, task_type, "budget_degrade", estimated_tokens)
 
     print(json.dumps(output))
-    sys.exit(0 if result.get("allowed", True) else 1)
+
+    # Step 4: 如果 allowed 且有命令，执行命令
+    if result.get("allowed", True) and command:
+        try:
+            ret = subprocess.run(command)
+            sys.exit(ret.returncode)
+        except FileNotFoundError as e:
+            print(json.dumps({"error": f"命令不存在: {e}"}), file=sys.stderr)
+            sys.exit(1)
+    else:
+        sys.exit(0 if result.get("allowed", True) else 1)
 
 
 if __name__ == "__main__":

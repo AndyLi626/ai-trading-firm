@@ -27,8 +27,11 @@ cache = json.load(open(CACHE))
 cache["media"].update({
     "last_sentiment_score": score,
     "last_sentiment_label": label,
+    "last_headline": headline[:100],
     "last_brave_headlines": [h.get("title","") for h in (facts.get("top_headlines") or [])[:2]],
-    "last_scan_timestamp": ts
+    "last_scan_timestamp": ts,
+    "trading_alert": signal_ok and label != "Neutral",
+    "alert_summary": f"{label} | {headline[:60]}" if label != "Neutral" else ""
 })
 cache["_updated"] = datetime.now(timezone.utc).isoformat()
 json.dump(cache, open(CACHE,"w"), indent=2)

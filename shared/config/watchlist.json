@@ -1,0 +1,23 @@
+{
+  "_comment": "Tier 0 监控标的。market_anomaly_detector.py 使用此文件。",
+  "tier": 0,
+  "crypto": ["BTC-USD", "ETH-USD", "SOL-USD"],
+  "us_proxy": ["SPY", "QQQ"],
+  "stocks": ["NVDA", "MSFT", "AAPL", "PLTR", "XOM"],
+  "commodities_etf": ["GLD", "USO", "SLV"],
+  "volatility": ["VXX"],
+  "thresholds": {
+    "stock_etf": {"pct_5m": 1.5, "pct_15m": 3.0},
+    "crypto":    {"pct_5m": 2.0, "pct_15m": 4.0},
+    "volume_multiplier": 3.0,
+    "dedup_minutes": 10,
+    "hourly_cap": 20,
+    "spy_qqq_cascade_factor": 0.7
+  },
+  "market_hours_utc": {"open": "13:30", "close": "20:00"},
+  "poll_intervals_sec": {
+    "crypto_always": 120,
+    "us_market_open": 300,
+    "us_after_hours": 900
+  }
+}

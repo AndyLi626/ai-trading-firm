@@ -56,10 +56,13 @@ def main():
     realtime = True
     generated_at = datetime.now(timezone.utc).isoformat()
 
+    # Alpaca stocks API only handles non-crypto symbols
+    stock_symbols = [s for s in symbols if "-USD" not in s]
+
     try:
-        data = fetch_bars(symbols, key, secret)
+        data = fetch_bars(stock_symbols, key, secret) if stock_symbols else {"bars": {}}
         bars = data.get("bars", {})
-        for sym in symbols:
+        for sym in stock_symbols:
             bar = bars.get(sym)
             if bar:
                 quotes[sym] = build_quote(bar)
@@ -72,7 +75,7 @@ def main():
                 }
     except Exception as e:
         realtime = False
-        for sym in symbols:
+        for sym in stock_symbols:
             quotes[sym] = {
                 "last_price": None, "pct_change_5m": None,
                 "pct_change_15m": None, "prev_close": None,
@@ -88,13 +91,23 @@ def main():
             movers.append({"symbol": sym, "pct_change_day": q["pct_change_day"]})
     movers.sort(key=lambda x: abs(x["pct_change_day"]), reverse=True)
 
+    # Enrich with crypto (Hyperliquid) for -USD symbols
+    crypto_syms = [s for s in symbols if "-USD" in s]
+    if crypto_syms:
+        cdata = fetch_crypto(crypto_syms)
+        quotes.update(cdata)
+        for sym, q in cdata.items():
+            if q.get("last_price"):
+                realtime = True
+                movers.append({"symbol": sym, "pct_change_day": q.get("pct_change_day")})
+
     output = {
         "symbols": symbols,
         "quotes": quotes,
         "top_movers": movers,
         "realtime_data": realtime,
         "generated_at": generated_at,
-        "data_source": "alpaca_iex"
+        "data_source": "alpaca_iex+hyperliquid" if crypto_syms else "alpaca_iex"
     }
 
     os.makedirs(FACTS_DIR, exist_ok=True)
@@ -110,6 +123,47 @@ def main():
         json.dump(output, f, indent=2)
 
     print(json.dumps(output, indent=2))
+
+def fetch_crypto(symbols):
+    """Fetch crypto prices via Hyperliquid allMids."""
+    import urllib.request as _ur
+    crypto_map = {}
+    try:
+        payload = json.dumps({"type": "allMids"}).encode()
+        req = _ur.Request("https://api.hyperliquid.xyz/info",
+                          data=payload,
+                          headers={"Content-Type": "application/json"})
+        with _ur.urlopen(req, timeout=10) as r:
+            d = json.loads(r.read())
+        for sym in symbols:
+            hl_sym = sym.replace("-USD", "").replace("-USDT", "")
+            if hl_sym in d:
+                price = round(float(d[hl_sym]), 4)
+                crypto_map[sym] = {
+                    "last_price": price,
+                    "pct_change_5m": None,
+                    "pct_change_15m": None,
+                    "prev_close": None,
+                    "pct_change_day": None,
+                    "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "data_source": "hyperliquid"
+                }
+    except Exception as e:
+        pass
+    return crypto_map
+
+
+def enrich_with_crypto(result, requested_syms):
+    crypto_syms = [s for s in requested_syms if "-USD" in s or s in ("BTC","ETH","SOL")]
+    if not crypto_syms:
+        return
+    cdata = fetch_crypto(crypto_syms)
+    result["quotes"].update(cdata)
+    result["symbols"] = list(set(result.get("symbols", [])) | set(cdata.keys()))
+    # Update top_movers with crypto (pct_change_day may be None)
+    for sym, q in cdata.items():
+        result["top_movers"].append({"symbol": sym, "pct_change_day": q.get("pct_change_day")})
+
 
 if __name__ == "__main__":
     main()

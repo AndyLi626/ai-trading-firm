@@ -97,3 +97,12 @@ _Append-only. Each entry: date | commit | change | files_
 - prompt: shortened to single line
 - Reason: flush triggered too frequently at 4000 tokens, flooding webchat UI
 - Gateway restart required to pick up new config
+
+## 2026-03-02 21:00 UTC — model: StrategyBot (research) → openai/gpt-5.2
+
+ConfigCheck: APPLY_ALLOWED
+- Registered OpenAI provider (models.providers.openai)
+  - models: gpt-5.2, gpt-4o, o3
+- research agent model: claude-sonnet-4-6 → openai/gpt-5.2
+  - fallbacks: claude-sonnet-4-6, gemini-2.5-flash
+- ADR-007: gateway restart required after model change

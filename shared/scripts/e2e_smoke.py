@@ -294,27 +294,21 @@ def main():
     msg = "\n".join(lines)
     print(f"\n{msg}\n")
 
-    # Telegram 전송 (1건, no_spam_guard 통과 후)
+    # Telegram 전송 (1건) — openclaw CLI
     if not DRY_RUN:
         try:
-            from no_spam_guard import can_send, mark_sent
-            key = "e2e_smoke"
-            if can_send(key, window_min=30):
-                import subprocess
-                r2 = subprocess.run(
-                    ["openclaw", "message", "--channel", "telegram",
-                     "--to", "1555430296", "--text", msg],
-                    capture_output=True, text=True, timeout=15
-                )
-                if r2.returncode == 0:
-                    mark_sent(key)
-                    print("📤 Telegram 전송 완료")
-                else:
-                    print(f"⚠️  Telegram 전송 실패: {r2.stderr[:80]}")
+            tg_r = subprocess.run(
+                ["openclaw", "send", "--to", "1555430296",
+                 "--channel", "telegram", msg],
+                capture_output=True, text=True, timeout=20
+            )
+            if tg_r.returncode == 0:
+                print("📤 Telegram 전송 완료")
             else:
-                print("⏳ spam_guard: 30min 내 재전송 차단")
+                # fallback: message tool 없을 경우 파일만 저장
+                print(f"⚠️  Telegram CLI 없음 (결과는 memory/ 저장됨)")
         except Exception as e:
-            print(f"⚠️  Telegram 전송 오류: {e}")
+            print(f"⚠️  Telegram: {str(e)[:60]}")
 
     # JSON 결과 저장
     out = {

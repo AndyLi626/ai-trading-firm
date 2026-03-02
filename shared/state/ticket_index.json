@@ -748,5 +748,65 @@
     "ack_type": "auto",
     "owner": "infra",
     "next_update_at": "2026-03-02T18:44:04.388187+00:00"
+  },
+  "4f3435d4-e610-4bb3-9274-9dcbdf08f411": {
+    "ticket_id": "4f3435d4-e610-4bb3-9274-9dcbdf08f411",
+    "action": "ack",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
+    "priority": "normal",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T18:34:16.640238+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:44:16.640250+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:34:16.640258+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T18:34:16.643321+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:44"
+      }
+    ],
+    "_ts": "2026-03-02T18:34:16.643224+00:00",
+    "ack_at": "2026-03-02T18:34:16.643220+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T18:44:16.643202+00:00"
+  },
+  "be223823-500f-4017-bbb6-168862a9f87c": {
+    "ticket_id": "be223823-500f-4017-bbb6-168862a9f87c",
+    "action": "ack",
+    "from": "manager",
+    "to": "infra",
+    "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
+    "priority": "normal",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T18:34:55.836517+00:00",
+    "eta_min": 30,
+    "ack_deadline": "2026-03-02T18:44:55.836531+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T18:34:55.836538+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T18:34:55.839788+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:44"
+      }
+    ],
+    "_ts": "2026-03-02T18:34:55.839691+00:00",
+    "ack_at": "2026-03-02T18:34:55.839687+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T18:44:55.839668+00:00"
   }
 }

@@ -89,3 +89,11 @@ _Append-only. Each entry: date | commit | change | files_
 - runtime_state/ now gitignored
 - openclaw.json: outside git scope (safe)
 - secrets/: gitignored (safe)
+
+## 2026-03-02 20:42 UTC — config: raise memoryFlush.softThresholdTokens 4000→80000
+
+- ConfigCheck: APPLY_ALLOWED
+- softThresholdTokens: 4000 → 80000 (reduces flush frequency ~20x)
+- prompt: shortened to single line
+- Reason: flush triggered too frequently at 4000 tokens, flooding webchat UI
+- Gateway restart required to pick up new config

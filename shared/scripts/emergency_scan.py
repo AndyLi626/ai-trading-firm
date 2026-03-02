@@ -200,6 +200,27 @@ def main():
         "ts": completed_at
     })
 
+    # ── P1 downstream: strategy_hint → risk_review_lite ──────────────────────
+    WS = "/home/lishopping913/.openclaw/workspace"
+    try:
+        # Budget check before downstream LLM work
+        import subprocess as _sp
+        _bud = _sp.run(
+            [sys.executable,
+             os.path.join(WS, "shared/scripts/run_with_budget.py"),
+             "research", "strategy_hint", "2000"],
+            capture_output=True, text=True, timeout=15
+        )
+        _bres = json.loads(_bud.stdout.strip()) if _bud.stdout.strip() else {}
+        if _bres.get("allowed", True):
+            for script in ["strategy_hint.py", "risk_review_lite.py"]:
+                _sp.run(
+                    [sys.executable, os.path.join(WS, f"shared/scripts/{script}")],
+                    capture_output=True, text=True, timeout=30
+                )
+    except Exception:
+        pass  # degrade silently, main scan already done
+
     print(json.dumps({"status": "done", "request_id": request_id,
                       "signals_written": signals_written, "chain_id": chain_id}))
 

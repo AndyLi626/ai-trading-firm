@@ -47,6 +47,39 @@ KNOWN_CAPABILITIES = {
     "snapshot":            ("snapshot_capabilities.py", "EXISTS",   "shared/scripts/snapshot_capabilities.py"),
 }
 
+
+# ADR enforcement: routing/budget/governance changes require ADR
+ADR_TRIGGERS = [
+    (r"delivery\s*[=:]\s*(announce|none)", "routing"),
+    (r"run_with_budget|budget_mode|budget_policy", "budget"),
+    (r"config_guard|openclaw\.json|proposal.*apply", "governance"),
+    (r"cron.*job|schedule.*every|everyMs", "routing"),
+    (r"agent.*model|primary.*model", "governance"),
+]
+
+def check_adr_required(text):
+    import os
+    WS = os.path.expanduser("~/.openclaw/workspace")
+    adr_dir = os.path.join(WS, "ledger/ADRs")
+    existing_adrs = []
+    if os.path.exists(adr_dir):
+        existing_adrs = [f for f in os.listdir(adr_dir) if f.endswith(".md")]
+    
+    triggered = []
+    for pattern, domain in ADR_TRIGGERS:
+        if re.search(pattern, text, re.IGNORECASE):
+            triggered.append(domain)
+    
+    if triggered:
+        domains = list(set(triggered))
+        return {
+            "adr_required": True,
+            "domains": domains,
+            "existing_adrs": existing_adrs,
+            "guidance": f"Change affects {domains}. Write ADR in ledger/ADRs/ before applying."
+        }
+    return {"adr_required": False}
+
 def preflight(text: str) -> dict:
     text_lower = text.lower()
     violations = []
@@ -98,12 +131,15 @@ def preflight(text: str) -> dict:
     else:
         next_step = "Write proposal in memory/proposals/ with 12-field spec before implementing."
 
+    adr_check = check_adr_required(text)
     return {
         "verdict":     verdict,
         "verified":    verified,
         "wired":       wired,
         "violations":  violations,
         "next_step":   next_step,
+        "adr_required": adr_check.get("adr_required", False),
+        "adr_guidance": adr_check.get("guidance",""),
         "checked_at":  datetime.now(timezone.utc).isoformat()
     }
 

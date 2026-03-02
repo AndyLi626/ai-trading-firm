@@ -59,6 +59,22 @@ def check_scripts_for_direct_writes():
 
 def audit_jobs(jobs, recent_runs):
     proposals = []
+
+# ── Arch Lock drift check ────────────────────────────────────────────────────
+try:
+    import subprocess as _subp, sys as _sys
+    _r = _subp.run([_sys.executable,
+                    os.path.join(WS, "shared/scripts/arch_lock.py"), "check"],
+                   capture_output=True, text=True, timeout=15)
+    _drift = json.loads(_r.stdout)
+    if _drift.get("drift_count", 0) > 0:
+        for _d in _drift["drift"]:
+            add("arch_drift", "medium",
+                f"Arch drift: {_d['key']} {_d['change']}",
+                "Review change; if intentional, run arch_lock.py generate")
+except Exception:
+    pass
+
     for job in jobs:
         name = job.get("name", "unknown")
         delivery = job.get("delivery", {})

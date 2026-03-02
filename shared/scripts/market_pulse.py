@@ -123,13 +123,13 @@ def main():
         json.dump(output, f, indent=2)
 
 
-try:
-    import sys as _sys; _sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
-    from run_registry import registry_set as _rs
-    _rs('market_pulse', 'ok', f"stocks={len(output.get('stocks',{}))} crypto={len(output.get('crypto',{}))}")
-except Exception:
-    pass
-print(json.dumps(output, indent=2))
+    try:
+        import sys as _sys; _sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
+        from run_registry import registry_set as _rs
+        _rs('market_pulse', 'ok', f"stocks={len(output.get('stocks',{}))} crypto={len(output.get('crypto',{}))}")
+    except Exception:
+        pass
+    print(json.dumps(output, indent=2))
 
 def fetch_crypto(symbols):
     """Fetch crypto prices via Hyperliquid allMids."""

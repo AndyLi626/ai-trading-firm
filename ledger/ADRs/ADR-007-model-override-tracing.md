@@ -1,22 +1,22 @@
-# ADR-007 — 모델 오버라이드 추적 규칙
+# ADR-007 — Model Override Tracing Rules
 
-**상태**: 승인  
-**날짜**: 2026-03-02  
-**배경**: audit-daily가 설정(gemini-2.0-flash) 대신 이전 모델(claude-haiku-4-5)을 사용함
+****: Approved
+**Date**: 2026-03-02  
+**Background**: audit-daily (gemini-2.0-flash) (claude-haiku-4-5)
 
-## 근본 원인
-Gateway가 재시작되지 않으면 새 openclaw.json 설정이 실행 중인 cron에 반영되지 않음.
-모델 변경 후 gateway reload를 하지 않으면 stale 캐시로 이전 모델이 사용됨.
+## Cause
+If Gateway is not restarted, new openclaw.json settings are not applied to running crons.
+Without gateway reload after model change, stale cache causes the old model to be used.
 
-## 규칙
-1. **모델 변경 → 즉시 gateway reload** 필수
-2. **모델 변경은 CHANGELOG.md에 기록** (변경 전 모델, 변경 후 모델, 이유)
-3. **다음 cron 실행에서 model= 필드를 반드시 verify** (runs/ 파일에서 실증)
-4. **불일치 발견 시 ticketify()로 즉시 티켓 생성**
+##
+1. **Model change → immediate gateway reload**
+2. **Document model changes in CHANGELOG.md** ( , , Reason)
+3. **Verify model= field in the next cron run** (runs/ )
+4. **On mismatch detection, immediately create a ticket via ticketify()**
 
-## 검증 방법
+## Verification Method
 ```bash
-# runs/ 디렉터리에서 실제 사용 모델 확인
+# runs/ Verify actual model used
 python3 -c "
 import json, os
 runs = '/home/lishopping913/.openclaw/cron/runs'

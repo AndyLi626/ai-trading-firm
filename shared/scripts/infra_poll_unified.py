@@ -99,7 +99,7 @@ def write_ack_to_md(ticket_id, eta_min):
 
 
 def sync_manager_runtime(tickets_seen, tickets_acked):
-    """Manager가 읽는 runtime_state 파일도 동기화 (Rule 8 해제 조건)"""
+    """Manager  runtime_state file  (Rule 8  )"""
     import json
     from datetime import datetime, timezone
     MGR_RT = "/home/lishopping913/.openclaw/workspace-manager/runtime_state"
@@ -124,7 +124,7 @@ def sync_manager_runtime(tickets_seen, tickets_acked):
     fr_path = f"{MGR_RT}/freshness_registry.json"
     try:
         fr = json.load(open(fr_path))
-        # market_pulse freshness는 MARKET_PULSE.json 기준
+ # market_pulse freshness MARKET_PULSE.json
         try:
             mp_ts = json.load(open('/tmp/oc_facts/MARKET_PULSE.json')).get('generated_at','')
             fr.setdefault('market_pulse_scan',{})['last_run'] = mp_ts or now.isoformat()

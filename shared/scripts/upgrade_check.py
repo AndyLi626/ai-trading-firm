@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-upgrade_check.py — 주간 OpenClaw 버전 체크 (Phase 6 자동화)
-새 버전 발견 시 proposal 파일 생성 → Boss 승인 후 수동 업그레이드
+upgrade_check.py — Weekly OpenClaw version check (Phase 6 automation)
+Creates proposal file when new version found → Manual upgrade after Boss approval
 
-실행: python3 upgrade_check.py
+Run: python3 upgrade_check.py
 """
 import subprocess, json, os, re
 from datetime import datetime, timezone
@@ -56,22 +56,22 @@ def main():
     print(json.dumps(result, indent=2))
 
     if needs_upgrade:
-        # proposal 파일 생성
+ # proposal
         prop_dir = WS / "memory" / "proposals"
         prop_dir.mkdir(parents=True, exist_ok=True)
         prop_file = prop_dir / f"upgrade_{latest}_{now_utc.strftime('%Y%m%d')}.md"
         prop_file.write_text(
             f"# Upgrade Proposal: openclaw {current} → {latest}\n\n"
-            f"**생성**: {now_utc.strftime('%Y-%m-%d %H:%M')} UTC\n"
-            f"**상태**: PENDING_BOSS_APPROVAL\n\n"
-            f"## 체크 결과\n"
+            f"**create**: {now_utc.strftime('%Y-%m-%d %H:%M')} UTC\n"
+            f"**status**: PENDING_BOSS_APPROVAL\n\n"
+            f"# #  result\n"
             f"- current_cli: {current}\n"
             f"- current_gateway: {gateway}\n"
             f"- latest_npm: {latest}\n"
             f"- versions_consistent: {consistent}\n\n"
-            f"## 다음 단계\n"
-            f"Boss 승인 후 ADR-008 Phase 1→5 절차 실행\n\n"
-            f"## Preflight 실행 명령\n"
+            f"## Next steps\n"
+            f"Boss approval  ADR-008 Phase 1→5  Run\n\n"
+            f"## Preflight commands\n"
             f"```bash\n"
             f"python3 shared/scripts/e2e_smoke.py --dry-run\n"
             f"python3 shared/scripts/arch_lock.py check\n"
@@ -80,7 +80,7 @@ def main():
         print(f"\n📋 Proposal: {prop_file}")
 
     if not consistent:
-        print(f"\n⚠️  버전 불일치: CLI={current} Gateway={gateway}")
+        print(f"\n⚠️  Version mismatch: CLI={current} Gateway={gateway}")
 
 
 if __name__ == "__main__":

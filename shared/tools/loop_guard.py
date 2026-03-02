@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-loop_guard.py — 동일 chain_id/payload 중복 처리 방지
-동일 chain_id 또는 payload hash 10분 내 1회만 처리
+loop_guard.py —  chain_id/payload duplicate process prevent
+ chain_id  payload hash 10  1 process
 """
 import json, hashlib, os
 from datetime import datetime, timezone, timedelta
@@ -27,7 +27,7 @@ def check_and_mark(chain_id: str = None, payload: str = None) -> dict:
     db  = _load()
     now = datetime.now(timezone.utc)
 
-    # 만료된 항목 정리
+ #
     db = {k: v for k, v in db.items()
           if (now - datetime.fromisoformat(v['ts'])).total_seconds() < COOLDOWN_MIN * 60}
 

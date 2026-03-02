@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ticketify.py — 대화→ticket 변환기"""
+"""ticketify.py — Conversation→ticket converter"""
 import sys, os, json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -13,9 +13,9 @@ now = datetime.now(timezone.utc)
 def ticketify(discussion: str, priority: str = "normal", acceptance: str = "") -> dict:
     title = discussion.strip().splitlines()[0][:60]
     if not acceptance:
-        acceptance = "파일 존재 + Manager 보고서에 delta 반영"
+        acceptance = "file  + Manager  delta "
     t = enqueue(
-        message=f"{title}\n\n{discussion}\n\n검수기준: {acceptance}",
+        message=f"{title}\n\n{discussion}\n\ncriteria: {acceptance}",
         sender="manager",
         priority=priority
     )
@@ -30,16 +30,16 @@ def ticketify(discussion: str, priority: str = "normal", acceptance: str = "") -
         f"**ID**: {t['ticket_id']}\n"
         f"**Priority**: {priority}\n"
         f"**Created**: {now.strftime('%Y-%m-%d %H:%M')} UTC\n\n"
-        f"## 논의 내용\n{discussion}\n\n"
-        f"## 검수 기준\n{acceptance}\n\n"
-        f"## 증거 경로\n"
+        f"# #  \n{discussion}\n\n"
+        f"# #  criteria\n{acceptance}\n\n"
+        f"## evidence path\n"
         f"- shared/state/ticket_index.json\n"
         f"- memory/autonomy/{date_str}/AUTONOMY_OUTPUTS.md\n"
     )
     return {"ticket_id": t["ticket_id"], "title": title, "proposal": str(prop_file)}
 
 if __name__ == "__main__":
-    discussion = sys.argv[1] if len(sys.argv) > 1 else "테스트"
+    discussion = sys.argv[1] if len(sys.argv) > 1 else "test"
     priority   = next((sys.argv[i+1] for i,a in enumerate(sys.argv)
                        if a=="--priority" and i+1<len(sys.argv)), "normal")
     acceptance = next((sys.argv[i+1] for i,a in enumerate(sys.argv)

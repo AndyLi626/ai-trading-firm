@@ -26,18 +26,18 @@ _Append-only. Each entry: date | commit | change | files_
 - **Validated:** ✅
 - **Rollback:** check .bak files or git log
 
-## 2026-03-02 17:37 UTC — ARCH_LOCK 기준선 수립 + MARKET_PULSE 수정
+## 2026-03-02 17:37 UTC — ARCH_LOCK Baseline + MARKET_PULSE fixed
 
 ### ARCH_LOCK
-- `arch_lock.py generate` 실행: 67개 항목 기준선 수립
+- `arch_lock.py generate` : 67 entries Baseline
 - `arch_lock.py check`: drift=0, status=clean
-- 대상: cron jobs (13개) + scripts (54개)
+- : cron jobs (13) + scripts (54)
 
-### MARKET_PULSE freshness 수정
-- **근본 원인**: `run_with_budget.py` 호출 인수 오류 (`int("python3")` ValueError)
-- **수정**: 5개 whitelist cron의 payload를 직접 실행 방식으로 변경
+### MARKET_PULSE freshness fixed
+- ** Cause**: `run_with_budget.py` Error (`int("python3")` ValueError)
+- **fixed**: 5 whitelist cron payload Method
   - market-pulse-15m, anomaly-detector, emergency-scan-poll, infra-ticket-poll, media-intel-scan
-- **결과**: MARKET_PULSE age=0min (수정 전 139min)
+- **Result**: MARKET_PULSE age=0min (fixed 139min)
 
 ## 2026-03-02 18:01 UTC — P0 修复 + v0.7-stable
 
@@ -48,18 +48,27 @@ _Append-only. Each entry: date | commit | change | files_
 - Healthcheck 7/7 PASS → STABLE_RUN_CERT.md 签发
 - git tag v0.7-stable
 
-## 2026-03-02 18:03 UTC — 점진적 재개 + P0-2 근본 원인
+## 2026-03-02 18:03 UTC — Gradual rollout + P0-2 Cause
 
-### P0-2 모델 불일치 조사 결론
-- **불일치 job**: audit-daily (17:56 UTC 실행)
-- **원인**: 17:37 UTC 모델 변경 후 gateway reload 미실행 → 구 캐시(haiku) 사용
-- **해결**: ADR-007 (모델 변경 → gateway reload 필수 규칙) 추가
-- **ticketify**: 62fb3acf 티켓 생성 (다음 실행 gemini 확인)
+### P0-2 Model mismatch investigation conclusion
+- **Mismatched job**: audit-daily (17:56 UTC )
+- **Cause**: 17:37 UTC gateway reload → (haiku)
+- **Fix**: ADR-007 ( → gateway reload ) added
+- **ticketify**: 62fb3acf ( gemini )
 
-### P0-1 manager-30min-report 재개
-- payload: delta-only + run_with_budget 올바른 호출 (-- 구분자)
-- Evidence Gate 강제: market_price/system_status → source+as_of 필수
+### P0-1 manager-30min-report
+- payload: delta-only + run_with_budget (-- )
+- Evidence Gate : market_price/system_status → source+as_of
 
-### P0-3 ticketify 워크플로
-- shared/tools/ticketify.py 배포
-- 대화→JSONL 큐 enqueue + memory/proposals/ 마크다운 기록
+### P0-3 ticketify
+- shared/tools/ticketify.py
+- →JSONL enqueue + memory/proposals/
+## 2026-03-02 20:04 UTC — docs: normalize language to English + update README
+
+- Translated all Korean comments/docs to English (34 files scanned, scripts+ADRs+memory docs)
+- Skip list: memory/2026-03-02.md (personal log), memory/proposals/ticket_*.md (auto-generated)
+- New README: architecture diagram, 6-bot roles, Evidence Gate, ConfigCheck, Budget,
+  Ticket system, How-to-Run, Stability (v0.7-stable), Operations, Repo Layout, ADR Index
+- memory/i18n_korean_inventory.md: full file list
+- memory/token_security_report.md: tokens safe (outside git), Boss action required for env vars
+- memory/readme_update_summary.md: section-by-section changelog

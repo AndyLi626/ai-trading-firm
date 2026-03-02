@@ -139,14 +139,14 @@ def main():
     with open(mem_path, "w") as f:
         json.dump(output, f, indent=2)
 
-    # 장기 고정 경로: memory/market/MARKET_PULSE.json (LLM 세션 /tmp 의존 제거)
+    # Permanent fixed path: memory/market/MARKET_PULSE.json (removes /tmp dependency)
     market_dir = os.path.join(WORKSPACE, "memory", "market")
     os.makedirs(market_dir, exist_ok=True)
     market_path = os.path.join(market_dir, "MARKET_PULSE.json")
     with open(market_path, "w") as f:
         json.dump(output, f, indent=2)
 
-    # Manager 읽는 runtime_state 경로도 동기화
+    # Also sync the runtime_state path that Manager reads
     rt_dir = os.path.expanduser("~/.openclaw/workspace-manager/runtime_state")
     if os.path.isdir(rt_dir):
         import json as _j

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-strategy_hint.py — P1.5 이벤트 트리거 LLM 접목
-트리거: anomaly_detector / market_pulse 이상 / emergency_requests
-budget ok → LLM 분석; degrade → 규칙 엔진; stop → 규칙만, 0 tokens
+strategy_hint.py — P1.5 Event trigger LLM 
+Trigger: anomaly_detector / market_pulse  / emergency_requests
+budget ok → LLM analyze; degrade → rules engine; stop → rule, 0 tokens
 
 Input:  /tmp/oc_facts/emergency_scan_result.json
         /tmp/oc_facts/anomaly_events.json
-        memory/market/MARKET_PULSE.json (고정 경로)
+        memory/market/MARKET_PULSE.json ( path)
 Output: /tmp/oc_facts/event_proposals.json (append, risk_gate=pending)
 """
 import sys, os, json, uuid, subprocess
@@ -49,8 +49,8 @@ def _rules_hint(symbol: str, pct_day: float, sentiment: str) -> dict:
 def _llm_hint(symbol: str, pct_day: float, sentiment: str,
               chain_id: str, tier: str) -> dict:
     """
-    tier=0 → claude-haiku-4-5 (빠름)
-    tier=1 → claude-sonnet-4-6 (정확)
+    tier=0 → claude-haiku-4-5 ()
+    tier=1 → claude-sonnet-4-6 ()
     """
     model = "anthropic/claude-sonnet-4-6" if tier == "1" else "anthropic/claude-haiku-4-5"
     key_path = os.path.expanduser("~/.openclaw/secrets/anthropic_api_key.txt")
@@ -91,7 +91,7 @@ def _llm_hint(symbol: str, pct_day: float, sentiment: str,
 
 # ── RiskLite gate ─────────────────────────────────────────────────────────────
 def _risk_gate(proposal: dict) -> dict:
-    """risk_review_lite.py 통과 여부 확인"""
+    """risk_review_lite.py   Check"""
     try:
         r = subprocess.run(
             [sys.executable,
@@ -107,9 +107,9 @@ def _risk_gate(proposal: dict) -> dict:
         return {"risk_gate": "pending", "risk_detail": f"exception:{str(e)[:40]}"}
 
 
-# ── 트리거 감지 ───────────────────────────────────────────────────────────────
+# ── Trigger ───────────────────────────────────────────────────────────────
 def _detect_trigger() -> tuple[str, dict]:
-    """(trigger_type, scan_data) 반환"""
+    """(trigger_type, scan_data) return"""
     # 1. emergency_scan_result
     try:
         scan = json.load(open(f"{FACTS}/emergency_scan_result.json"))
@@ -128,7 +128,7 @@ def _detect_trigger() -> tuple[str, dict]:
     except Exception:
         pass
 
-    # 3. market_pulse 이상 (±1% 이상)
+ # 3. market_pulse (±1% )
     try:
         for mp_path in [
             f"{WS}/memory/market/MARKET_PULSE.json",
@@ -149,7 +149,7 @@ def _detect_trigger() -> tuple[str, dict]:
     return "none", {}
 
 
-# ── 메인 ──────────────────────────────────────────────────────────────────────
+# ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     trigger, scan = _detect_trigger()
 
@@ -162,7 +162,7 @@ def main():
     quotes    = scan.get("quotes") or {}
     sentiment = scan.get("sentiment_label", "Neutral")
 
-    # budget stop → 규칙 엔진만 (0 tokens)
+    # budget stop → Rules engine only (0 tokens)
     if mode == "stop":
         mode = "degrade"
 
@@ -177,7 +177,7 @@ def main():
         print(json.dumps({"status": "dedup_skip", "chain_id": chain_id}))
         return
 
-    # tier 결정 (anomaly tier0/tier1 → sonnet)
+    # Determine tier (anomaly tier0/tier1 → sonnet)
     anomaly = scan.get("anomaly", {})
     tier    = "1" if anomaly.get("severity", "").lower() in ("tier0","tier1") else "0"
 

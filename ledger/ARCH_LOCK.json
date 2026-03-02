@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T19:44:07.481767+00:00",
+  "generated_at": "2026-03-02T20:04:55.557757+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -125,8 +125,8 @@
     },
     "script::audit_model_verify.py": {
       "path": "shared/scripts/audit_model_verify.py",
-      "hash": "46b38ec41a8f7c2d",
-      "size": 2469
+      "hash": "2753666473ef6ce9",
+      "size": 2442
     },
     "script::autonomy_init_day.py": {
       "path": "shared/scripts/autonomy_init_day.py",
@@ -195,8 +195,8 @@
     },
     "script::e2e_smoke.py": {
       "path": "shared/scripts/e2e_smoke.py",
-      "hash": "a7934ded07b4547a",
-      "size": 15771
+      "hash": "a78a0320205f4d39",
+      "size": 14935
     },
     "script::emergency_scan.py": {
       "path": "shared/scripts/emergency_scan.py",
@@ -225,8 +225,8 @@
     },
     "script::infra_poll_unified.py": {
       "path": "shared/scripts/infra_poll_unified.py",
-      "hash": "e5c76529b8d6111e",
-      "size": 8135
+      "hash": "fc3e03a5883dae15",
+      "size": 8082
     },
     "script::infra_scan.py": {
       "path": "shared/scripts/infra_scan.py",
@@ -255,8 +255,8 @@
     },
     "script::market_pulse.py": {
       "path": "shared/scripts/market_pulse.py",
-      "hash": "c5036fb26528a75d",
-      "size": 8149
+      "hash": "77b618c4ac8297f0",
+      "size": 8146
     },
     "script::media_finalize.py": {
       "path": "shared/scripts/media_finalize.py",
@@ -310,8 +310,8 @@
     },
     "script::strategy_hint.py": {
       "path": "shared/scripts/strategy_hint.py",
-      "hash": "957c53987f8b0053",
-      "size": 9751
+      "hash": "4cb72eea96f1fe3a",
+      "size": 9669
     },
     "script::test_gate.py": {
       "path": "shared/scripts/test_gate.py",
@@ -330,8 +330,8 @@
     },
     "script::upgrade_check.py": {
       "path": "shared/scripts/upgrade_check.py",
-      "hash": "082b00ad98e701fe",
-      "size": 2765
+      "hash": "472435cb0a6fc8a5",
+      "size": 2714
     },
     "script::write_signal.py": {
       "path": "shared/scripts/write_signal.py",
@@ -385,18 +385,18 @@
     },
     "adr::ADR-007-model-override-tracing.md": {
       "path": "ledger/ADRs/ADR-007-model-override-tracing.md",
-      "hash": "2dc2c417a6b87d98",
-      "size": 1200
+      "hash": "e8b90a734e30d351",
+      "size": 1021
     },
     "adr::ADR-008-upgrade-sop.md": {
       "path": "ledger/ADRs/ADR-008-upgrade-sop.md",
-      "hash": "d6494673f7dfc18f",
-      "size": 5085
+      "hash": "37648b4e89b24d6c",
+      "size": 4378
     },
     "adr::ADR-009-no-gateway-restart-in-session.md": {
       "path": "ledger/ADRs/ADR-009-no-gateway-restart-in-session.md",
-      "hash": "7392f0c94cc6538a",
-      "size": 1212
+      "hash": "c13133ba83f6d425",
+      "size": 991
     },
     "skills::index": {
       "count": 14,

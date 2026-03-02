@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-evidence_gate.py — Evidence Gate 검증기
-시스템 상태/모델 가용성/비용/행情数字는 source+as_of 없으면 UNCERTAIN
+evidence_gate.py — Evidence Gate Verify
+ status/model /cost/情数字 source+as_of  UNCERTAIN
 """
 import json
 from datetime import datetime, timezone

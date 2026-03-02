@@ -58,5 +58,137 @@
     "ack_type": "auto",
     "owner": "infra",
     "next_update_at": "2026-03-02T07:11:02.620478+00:00"
+  },
+  "INFRA-2026-03-02-001": {
+    "ticket_id": "INFRA-2026-03-02-001",
+    "action": "resolve",
+    "from": "manager",
+    "to": "infra",
+    "message": "INFRA-2026-03-02-001",
+    "priority": "high",
+    "status": "RESOLVED",
+    "created_at": "2026-03-02T07:04:46.807401+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T07:14:46.807426+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T07:04:46.807435+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T07:04:46.808218+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=10min | next_update=2026-03-02T07:14"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T07:05:02.767278+00:00",
+        "by": "infra",
+        "detail": "모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② MediaBot: FRESH — age=0min sources=['brave_news', 'twitter', 'xhs', 'av_sentiment']\n③ MARKET_PULSE: age=19min realtime=True session=?\n④ Paper trading 데이터: 장외시간 — 마감가 기준, 방향성 분석 가능\n⑤ 알림: IEX bars/latest = 최근 거래일(2026-02-27) 마감가. 현재 UTC 07:05 = EST 02:05 (프리마켓). 실시간 틱 없음 = 정상.\n결론: DATA_VERIFIED as_of 07:05 UTC"
+      },
+      {
+        "event": "RESOLVED",
+        "at": "2026-03-02T07:05:02.768095+00:00",
+        "by": "infra",
+        "detail": "검증 완료 — 모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② "
+      }
+    ],
+    "_ts": "2026-03-02T07:05:02.768010+00:00",
+    "ack_at": "2026-03-02T07:04:46.808141+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T07:15:02.767081+00:00",
+    "resolved_at": "2026-03-02T07:05:02.767999+00:00",
+    "resolution": "검증 완료 — 모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② "
+  },
+  "INFRA-2026-03-02-002": {
+    "ticket_id": "INFRA-2026-03-02-002",
+    "action": "resolve",
+    "from": "manager",
+    "to": "infra",
+    "message": "INFRA-2026-03-02-002",
+    "priority": "high",
+    "status": "RESOLVED",
+    "created_at": "2026-03-02T07:04:46.809403+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T07:14:46.809413+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T07:04:46.809420+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T07:04:46.810206+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=10min | next_update=2026-03-02T07:14"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T07:05:02.769397+00:00",
+        "by": "infra",
+        "detail": "모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② MediaBot: FRESH — age=0min sources=['brave_news', 'twitter', 'xhs', 'av_sentiment']\n③ MARKET_PULSE: age=19min realtime=True session=?\n④ Paper trading 데이터: 장외시간 — 마감가 기준, 방향성 분석 가능\n⑤ 알림: IEX bars/latest = 최근 거래일(2026-02-27) 마감가. 현재 UTC 07:05 = EST 02:05 (프리마켓). 실시간 틱 없음 = 정상.\n결론: DATA_VERIFIED as_of 07:05 UTC"
+      },
+      {
+        "event": "RESOLVED",
+        "at": "2026-03-02T07:05:02.770443+00:00",
+        "by": "infra",
+        "detail": "검증 완료 — 모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② "
+      }
+    ],
+    "_ts": "2026-03-02T07:05:02.770371+00:00",
+    "ack_at": "2026-03-02T07:04:46.810134+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T07:15:02.769305+00:00",
+    "resolved_at": "2026-03-02T07:05:02.770362+00:00",
+    "resolution": "검증 완료 — 모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② "
+  },
+  "INFRA-2026-03-02-003": {
+    "ticket_id": "INFRA-2026-03-02-003",
+    "action": "resolve",
+    "from": "manager",
+    "to": "infra",
+    "message": "INFRA-2026-03-02-003",
+    "priority": "high",
+    "status": "RESOLVED",
+    "created_at": "2026-03-02T07:04:46.811270+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T07:14:46.811280+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T07:04:46.811287+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T07:04:46.812065+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=10min | next_update=2026-03-02T07:14"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T07:05:02.771429+00:00",
+        "by": "infra",
+        "detail": "모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② MediaBot: FRESH — age=0min sources=['brave_news', 'twitter', 'xhs', 'av_sentiment']\n③ MARKET_PULSE: age=19min realtime=True session=?\n④ Paper trading 데이터: 장외시간 — 마감가 기준, 방향성 분석 가능\n⑤ 알림: IEX bars/latest = 최근 거래일(2026-02-27) 마감가. 현재 UTC 07:05 = EST 02:05 (프리마켓). 실시간 틱 없음 = 정상.\n결론: DATA_VERIFIED as_of 07:05 UTC"
+      },
+      {
+        "event": "RESOLVED",
+        "at": "2026-03-02T07:05:02.772305+00:00",
+        "by": "infra",
+        "detail": "검증 완료 — 모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② "
+      }
+    ],
+    "_ts": "2026-03-02T07:05:02.772238+00:00",
+    "ack_at": "2026-03-02T07:04:46.811987+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T07:15:02.771341+00:00",
+    "resolved_at": "2026-03-02T07:05:02.772229+00:00",
+    "resolution": "검증 완료 — 모든 항목 검증 완료 (07:05 UTC):\n① Alpaca/IEX: OK — SPY=684.98 PLTR=137.3 (마감가, 장외시간)\n② "
   }
 }

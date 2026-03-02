@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T21:19:35.077732+00:00",
+  "generated_at": "2026-03-02T21:31:06.863237+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -371,8 +371,8 @@
     },
     "config::model_aliases.json": {
       "path": "shared/config/model_aliases.json",
-      "hash": "c4f430e2f7911dda",
-      "size": 792
+      "hash": "2ac058e266cb9394",
+      "size": 811
     },
     "config::model_pricing.json": {
       "path": "shared/config/model_pricing.json",

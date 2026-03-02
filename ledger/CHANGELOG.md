@@ -133,3 +133,4 @@ Total cron jobs: 15
 4. upgrade-check cron applied (ticket 55470d8e approved): weekly, delivery=none ✅
 5. Telegram groupAllowFrom=[1555430296] added to infra + manager accounts ✅
 6. Token counter: NOT reset. Boss decision pending (current spend: Anthropic 8.6%, Qwen 4.8%, Google 3.2%)
+| 2026-03-02 | `d55ba801` | manual apply | — |

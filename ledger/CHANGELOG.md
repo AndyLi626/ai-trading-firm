@@ -123,3 +123,13 @@ ConfigCheck: APPLY_ALLOWED (Boss approved)
 - market-data-validator: every 15min (+2min after market-pulse-15m), agent=main, delivery=none, 0 LLM
   output: memory/data_quality_status.json + memory/data_quality_report.md
 Total cron jobs: 15
+
+## 2026-03-02 21:20 UTC — ops: credit restored + config fixes + cron + telegram
+
+1. Anthropic credit recharged — apiKey restored to auth.profiles.anthropic:default ✅
+2. gemini-2.0-flash-lite removed by Boss — Google models now: gemini-2.5-flash, gemini-2.5-pro ✅
+3. env_var issue: OpenClaw does not expand ${VAR} in config — keys must be plaintext.
+   Restored all provider apiKeys from secrets/. openclaw.json is outside git (safe).
+4. upgrade-check cron applied (ticket 55470d8e approved): weekly, delivery=none ✅
+5. Telegram groupAllowFrom=[1555430296] added to infra + manager accounts ✅
+6. Token counter: NOT reset. Boss decision pending (current spend: Anthropic 8.6%, Qwen 4.8%, Google 3.2%)

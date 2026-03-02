@@ -189,13 +189,19 @@
         "at": "2026-03-02T17:59:30.558954+00:00",
         "by": "infra",
         "detail": "处理中（逾期 22分钟）— 继续执行"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T18:22:27.588580+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 12分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T07:01:02.619825+00:00",
     "ack_at": "2026-03-02T07:01:02.619820+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:09:30.558753+00:00"
+    "next_update_at": "2026-03-02T18:32:27.588455+00:00"
   },
   "GOVERNANCE-CRON-SPRAWL": {
     "ticket_id": "GOVERNANCE-CRON-SPRAWL",
@@ -387,13 +393,19 @@
         "at": "2026-03-02T17:59:30.560612+00:00",
         "by": "infra",
         "detail": "处理中（逾期 22分钟）— 继续执行"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T18:22:27.590130+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 12分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T07:01:02.620493+00:00",
     "ack_at": "2026-03-02T07:01:02.620489+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:09:30.560516+00:00"
+    "next_update_at": "2026-03-02T18:32:27.590035+00:00"
   },
   "INFRA-2026-03-02-001": {
     "ticket_id": "INFRA-2026-03-02-001",
@@ -529,12 +541,12 @@
   },
   "62fb3acf-abe2-4df1-b16d-655914064de8": {
     "ticket_id": "62fb3acf-abe2-4df1-b16d-655914064de8",
-    "action": "create",
+    "action": "ack",
     "from": "manager",
     "to": "infra",
     "message": "audit-daily 모델 불일치: 설정 gemini-2.0-flash, 실제 claude-haiku-4-5\n\naudit-daily 모델 불일치: 설정 gemini-2.0-flash, 실제 claude-haiku-4-5 (gateway 재시작 전 캐시 문제)\n\n검수기준: 다음 audit-daily 실행 시 model=gemini-2.0-flash 확인",
     "priority": "normal",
-    "status": "OPEN",
+    "status": "IN_PROGRESS",
     "created_at": "2026-03-02T18:03:26.520226+00:00",
     "eta_min": 30,
     "ack_deadline": "2026-03-02T18:13:26.520241+00:00",
@@ -543,8 +555,18 @@
         "event": "CREATED",
         "at": "2026-03-02T18:03:26.520251+00:00",
         "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T18:22:27.586398+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:32"
       }
     ],
-    "_ts": "2026-03-02T18:03:26.520257+00:00"
+    "_ts": "2026-03-02T18:22:27.586243+00:00",
+    "ack_at": "2026-03-02T18:22:27.586238+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T18:32:27.586214+00:00"
   }
 }

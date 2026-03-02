@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T18:03:56.847802+00:00",
+  "generated_at": "2026-03-02T18:26:21.959282+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -14,7 +14,7 @@
       "agent": "audit",
       "delivery": "none",
       "schedule_hash": "a67588e0d72590d3",
-      "payload_hash": "ec99b1ed846888ed"
+      "payload_hash": "ef5e71153fded294"
     },
     "cron::strategy-scan": {
       "name": "strategy-scan",
@@ -42,7 +42,7 @@
       "agent": "manager",
       "delivery": "none",
       "schedule_hash": "84387d1026fe376b",
-      "payload_hash": "dfe25d3eb90e99ba"
+      "payload_hash": "8bbf66a74b3b525c"
     },
     "cron::repo-skills-scan": {
       "name": "repo-skills-scan",
@@ -70,7 +70,7 @@
       "agent": "main",
       "delivery": "none",
       "schedule_hash": "f9d0a2d67a8ab7ab",
-      "payload_hash": "33101428b7f07719"
+      "payload_hash": "202e24b4b03c905c"
     },
     "cron::infra-ticket-poll": {
       "name": "infra-ticket-poll",
@@ -122,6 +122,11 @@
       "path": "shared/scripts/audit_data_violation.py",
       "hash": "4668b7a08dcf78a6",
       "size": 2491
+    },
+    "script::audit_model_verify.py": {
+      "path": "shared/scripts/audit_model_verify.py",
+      "hash": "46b38ec41a8f7c2d",
+      "size": 2469
     },
     "script::autonomy_init_day.py": {
       "path": "shared/scripts/autonomy_init_day.py",
@@ -245,8 +250,8 @@
     },
     "script::market_pulse.py": {
       "path": "shared/scripts/market_pulse.py",
-      "hash": "90359eb60b5b5228",
-      "size": 7246
+      "hash": "c5036fb26528a75d",
+      "size": 8149
     },
     "script::media_finalize.py": {
       "path": "shared/scripts/media_finalize.py",

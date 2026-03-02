@@ -139,6 +139,26 @@ def main():
     with open(mem_path, "w") as f:
         json.dump(output, f, indent=2)
 
+    # 장기 고정 경로: memory/market/MARKET_PULSE.json (LLM 세션 /tmp 의존 제거)
+    market_dir = os.path.join(WORKSPACE, "memory", "market")
+    os.makedirs(market_dir, exist_ok=True)
+    market_path = os.path.join(market_dir, "MARKET_PULSE.json")
+    with open(market_path, "w") as f:
+        json.dump(output, f, indent=2)
+
+    # Manager 읽는 runtime_state 경로도 동기화
+    rt_dir = os.path.expanduser("~/.openclaw/workspace-manager/runtime_state")
+    if os.path.isdir(rt_dir):
+        import json as _j
+        rt_mp = os.path.join(rt_dir, "MARKET_PULSE.json")
+        try:
+            rt_data = _j.load(open(rt_mp))
+            rt_data.setdefault("metadata", {})["last_update"] = output["generated_at"]
+            rt_data["metadata"]["source"] = "market_pulse.py direct exec"
+            _j.dump(rt_data, open(rt_mp,"w"), indent=2)
+        except Exception:
+            pass
+
 
     try:
         import sys as _sys; _sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')

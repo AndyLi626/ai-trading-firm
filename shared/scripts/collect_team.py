@@ -13,6 +13,16 @@ sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
 from gcp_client import get_token
 
 def bq(sql):
+import uuid as _uuid, time as _time
+try:
+    sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+    from token_meter import record_run as _record_run
+    _METER = True
+except Exception:
+    _METER = False
+_RUN_ID = str(_uuid.uuid4())
+_t0 = _time.time()
+
     token = get_token()
     req = urllib.request.Request(
         "https://bigquery.googleapis.com/bigquery/v2/projects/ai-org-mvp-001/queries",
@@ -66,5 +76,11 @@ with open(f"{FACTS_DIR}/team_facts.json", "w") as f:
 status = {"ok": len(errors) < 3, "errors": errors, "timestamp": facts["timestamp"]}
 with open(f"{FACTS_DIR}/team_status.json", "w") as f:
     json.dump(status, f, indent=2)
+
+
+if _METER:
+    _record_run(_RUN_ID, "infra", "collect_team",
+                llm_calls=0, total_input=0, total_output=0,
+                duration_sec=round(_time.time()-_t0,2), status="ok")
 
 print(json.dumps(status))

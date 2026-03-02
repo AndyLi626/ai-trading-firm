@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 """
 write_signal.py — Write one signal to GCP market_signals table.
-Usage: echo '{"source_bot":"media","symbol":"SPY","signal_type":"sentiment","value_numeric":0.15,"value_label":"Bullish","headline":"...","confidence":0.7,"session_id":""}' | python3 write_signal.py
+Usage: echo '{"source_bot":"media",...}' | python3 write_signal.py
 """
-import sys, os, json
+import sys, os, json, uuid, time
 sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
 from gcp_client import log_signal
+try:
+    from token_meter import record_run
+    _METER = True
+except Exception:
+    _METER = False
+
+RUN_ID = str(uuid.uuid4())
+_t0 = time.time()
 
 data = json.loads(sys.stdin.read())
 result = log_signal(
@@ -21,4 +29,11 @@ result = log_signal(
     raw_data=data.get("raw_data",{})
 )
 errors = result.get("insertErrors",[])
-print(json.dumps({"ok": not errors, "errors": errors}))
+ok = not errors
+
+if _METER:
+    record_run(RUN_ID, data.get("source_bot","unknown"), "write_signal",
+               llm_calls=0, total_input=0, total_output=0,
+               duration_sec=round(time.time()-_t0,2), status="ok" if ok else "error")
+
+print(json.dumps({"ok": ok, "errors": errors, "run_id": RUN_ID}))

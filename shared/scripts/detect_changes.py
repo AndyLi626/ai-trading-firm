@@ -106,11 +106,14 @@ def run():
     # --- Signals delta ---
     signals_now  = team.get("recent_signals", [])
     signals_prev = prior.get("last_signal_ids", [])
-    new_signal_ids = [s.get("id", s.get("signal_type","")) for s in signals_now
-                      if s.get("id", s.get("signal_type","")) not in signals_prev]
+    def _sig_id(s):
+        # 用 bot+symbol+label+headline前30字符 作为稳定 fingerprint
+        return f"{s.get('bot','')}/{s.get('symbol','')}/{s.get('label','')}/{s.get('headline','')[:30]}"
+    current_ids = [_sig_id(s) for s in signals_now]
+    new_signal_ids = [sid for sid in current_ids if sid not in signals_prev]
     if new_signal_ids:
-        reasons.append(f"new_signals: {new_signal_ids}")
-        delta["signals"] = {"new": new_signal_ids, "count": len(signals_now)}
+        reasons.append(f"new_signals: {len(new_signal_ids)}")
+        delta["signals"] = {"new": new_signal_ids[:3], "count": len(signals_now)}
 
     # --- Media delta ---
     media_label_now  = media_c.get("last_sentiment_label", "")

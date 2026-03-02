@@ -33,3 +33,7 @@ _Format: DATE | TIME | CHANGE | APPROVED BY | TESTS | RESULT_
 | 02:48 | MediaBot routing policy: failures→InfraBot, signals→StrategyBot via GCP, summary→ManagerBot cache | Boss | pending verify | 🟡 |
 | 02:48 | MediaBot agentToAgent + sessions_send tool enabled | Boss | n/a | ✅ |
 | 02:48 | RELEASE_GATE.md: v0.5 push conditions, stable criteria defined | Boss | n/a | ✅ |
+
+## 20260302T035636Z | bot=manager | result=APPLIED
+- patch: {"agents.defaults.timeoutSeconds": 250}
+- detail: /home/lishopping913/.openclaw/openclaw.json

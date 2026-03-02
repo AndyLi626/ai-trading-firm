@@ -1,0 +1,10 @@
+{
+  "bot_id": "manager",
+  "patch": {
+    "agents.defaults.timeoutSeconds": 250
+  },
+  "submitted_at": "20260302T035625Z",
+  "status": "approved",
+  "reviewed_at": "20260302T035625Z",
+  "review_note": "OK"
+}

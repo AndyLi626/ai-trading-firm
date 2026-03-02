@@ -56,6 +56,16 @@ def log_decision(bot, decision_type, summary, risk_status="N/A", token_cost=0, s
     }])
 
 def log_token_usage(bot, model, input_tokens, output_tokens, session_id="", task_type=""):
+    # Normalize model names to include provider prefix
+    _model_map = {
+        "claude-sonnet-4-6": "anthropic/claude-sonnet-4-6",
+        "claude-haiku-4-5": "anthropic/claude-haiku-4-5",
+        "claude-haiku-4-5-20251001": "anthropic/claude-haiku-4-5",
+        "qwen-plus": "qwen/qwen-plus",
+        "gemini-2.0-flash-lite": "google/gemini-2.0-flash-lite",
+        "gemini-2.0-flash": "google/gemini-2.0-flash",
+    }
+    model = _model_map.get(model, model)
     # Rough cost estimate for claude-sonnet-4-6
     cost = (input_tokens * 3 + output_tokens * 15) / 1_000_000
     return insert_rows("token_usage", [{
@@ -82,17 +92,45 @@ if __name__ == "__main__":
     print("GCP test:", "OK" if not errs else errs)
 
 
-def log_handoff(from_bot: str, to_bot: str, task: str, payload: dict = None, session_id: str = None):
+def log_handoff(from_bot: str, to_bot: str, summary: str, payload: dict = None, session_id: str = None):
     """Log a cross-bot context handoff to GCP."""
-    import time, uuid
+    import uuid
     row = {
         "handoff_id": str(uuid.uuid4()),
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "bot": from_bot,
+        "from_bot": from_bot,
+        "to_bot": to_bot,
+        "summary": summary,
         "session_id": session_id or "",
-        "last_checkpoint": f"{from_bot}→{to_bot}: {task}",
-        "context_summary": task,
-        "next_action": f"{to_bot}: process {task}",
-        "full_context": json.dumps({"from": from_bot, "to": to_bot, "payload": payload or {}})
+        "last_checkpoint": summary,
+        "context_summary": summary,
+        "next_action": f"→ {to_bot}",
+        "full_context": json.dumps(payload) if payload else "{}"
     }
     return insert_rows("context_handoffs", [row])
+
+
+def log_signal(source_bot: str, symbol: str, signal_type: str,
+               value_numeric: float = 0.0, value_label: str = "",
+               headline: str = "", source_url: str = "",
+               confidence: float = 0.0, session_id: str = "",
+               raw_data: dict = None) -> dict:
+    """Log a market signal to BigQuery market_signals table."""
+    from datetime import datetime
+    import uuid
+    row = {
+        "signal_id": str(uuid.uuid4()),
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "source_bot": source_bot,
+        "symbol": symbol,
+        "signal_type": signal_type,
+        "value_numeric": value_numeric,
+        "value_label": value_label,
+        "headline": headline[:500] if headline else "",
+        "source_url": source_url[:500] if source_url else "",
+        "confidence": confidence,
+        "session_id": session_id,
+        "raw_data": json.dumps(raw_data or {})
+    }
+    return insert_rows("market_signals", [row])

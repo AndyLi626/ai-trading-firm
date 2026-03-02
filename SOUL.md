@@ -43,6 +43,13 @@ Build and evolve the OpenClaw multi-bot platform so that:
 - Main session = light coordination only
 - 3+ file changes → spawn subagent
 - Check STATE.md at session start for current phase
+- **Context-pressure guard:** session tokens >150k → warn, >170k → hard block on large spawns; switch to Webchat or exec
+
+## Transport Rules (enforced after INCIDENT-007)
+- **Telegram = control-plane only:** start tasks, query status, short directives, summaries. NO code blobs, NO full file contents, NO heavy spawn payloads.
+- **sessions_spawn tasks = reference-based:** goal + target files + required changes + acceptance criteria. Never inline full file contents (>~200 lines).
+- **Large builds → Webchat or exec path.** If on Telegram with heavy context, refuse and redirect.
+- Template: `shared/knowledge/SPAWN_TEMPLATE.md`
 
 ## Output Format
 **STATE | DONE | FILES CHANGED | VALIDATION | NEXT**

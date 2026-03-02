@@ -147,3 +147,29 @@ media (cron):       12k/200k   6%  — fine
 3. Break large multi-file tasks into separate messages to avoid accumulating huge context
 4. Consider moving SOUL.md + AGENTS.md injections to a shorter summary format
 **Status:** Resolved for now; 180s timeout active. Monitor session token level.
+
+---
+
+## INCIDENT-007 — 2026-03-02 ~20:07 UTC
+
+**Type:** Prompt-as-transport anti-pattern caused aborted request under heavy session load
+**Symptom:** `Request was aborted` — InfraBot Telegram session, sessions_spawn call
+**Root Cause (confirmed via session log):**
+- InfraBot tried to embed 6 full file contents (GOVERNANCE.md, CHANGE_LOG.md, smoke_test.py, test_infra_audit.py + more) directly inside a single `sessions_spawn` task string
+- Payload was enormous (multi-thousand token JSON blob) — serialization/transport layer aborted mid-send
+- Compound factor: Telegram session was at `totalTokens: 180,933` (90% of 200k limit) — session already slow and heavy
+- Telegram polling connection not suited for large payload delivery
+
+**Anti-pattern name:** Prompt-as-transport — using the LLM prompt/task field as a file delivery vehicle instead of a goal + references description
+
+**Fix Applied:**
+- Retried from Webchat session (stable transport) using reference-based task description
+- Subagent `infra-governance-tests` running correctly
+
+**New Hard Rules (Boss directive 2026-03-02):**
+1. Telegram = control-plane only. Start tasks, query status, short directives, receive summaries. NO large payloads.
+2. sessions_spawn tasks must be reference-based: goal + target files + required changes + acceptance criteria. Never inline full file contents.
+3. Context-pressure guard: if session context near limit → refuse heavy spawn, summarize, switch channel or split work.
+4. Large rebuild / governance / test-gen tasks → Webchat or exec path only.
+
+**Status:** Rules enforced. Subagent running from Webchat. Compact task template created (see shared/knowledge/SPAWN_TEMPLATE.md).

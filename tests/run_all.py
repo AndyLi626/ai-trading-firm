@@ -20,6 +20,13 @@ SUITES = [
     ("options",     "test_options.py",     "Options execution (mkt hrs)",  True),   # slow=True since market hours only
     ("market_data", "test_market_data.py", "Market data APIs (slow)",      True),  # slow=True
     ("pipeline",    "test_pipeline.py",    "Full E2E pipeline",            False),
+    # Agent & governance coverage
+    ("audit",       "test_audit.py",       "AuditBot & shared components", False),
+    ("risk",        "test_risk.py",        "RiskBot & risk limits",        False),
+    ("infra",       "test_infra.py",       "InfraBot & workspace health",  False),
+    ("manager",     "test_manager.py",     "ManagerBot & orchestration",   False),
+    ("strategy",    "test_strategy.py",    "StrategyBot & market scripts", False),
+    ("failure_chains", "test_failure_chains.py", "Failure-chain scenarios (stale/fail/signal/cache)", False),
 ]
 
 args = sys.argv[1:]

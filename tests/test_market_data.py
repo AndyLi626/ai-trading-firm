@@ -14,7 +14,7 @@ print("=== TEST: Market Data APIs ===\n")
 
 # Load secrets
 try:
-    from load_secrets import alphavantage, fmp_api_key
+    from load_secrets import alphavantage, fmp as fmp_api_key
     AV_KEY = alphavantage()
     FMP_KEY = fmp_api_key()
     ok("load secrets")
@@ -29,7 +29,8 @@ try:
     q = d.get("Global Quote", {})
     price = q.get("05. price")
     note = d.get("Note","")
-    if note:
+    info = d.get("Information", "")
+    if note or info:
         ok("AlphaVantage quote (rate limited, key valid)")
     elif price:
         ok("AlphaVantage quote", f"SPY=${price}")

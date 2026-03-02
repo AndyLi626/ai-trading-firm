@@ -26,5 +26,19 @@
     "last_status": "ok",
     "last_summary_at": "2026-03-02T06:08:40.821996+00:00",
     "last_summary_text": "approved"
+  },
+  "strategy_hint:multi": {
+    "task_key": "strategy_hint:multi",
+    "last_run_at": "2026-03-02T06:17:28.438759+00:00",
+    "last_status": "ok",
+    "last_summary_at": "2026-03-02T06:17:28.438759+00:00",
+    "last_summary_text": "1 proposals"
+  },
+  "risk_review": {
+    "task_key": "risk_review",
+    "last_run_at": "2026-03-02T06:17:28.840576+00:00",
+    "last_status": "ok",
+    "last_summary_at": "2026-03-02T06:17:28.840576+00:00",
+    "last_summary_text": "0/1 approved"
   }
 }

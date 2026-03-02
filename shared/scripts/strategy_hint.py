@@ -136,12 +136,12 @@ def main():
     except Exception:
         pass
 
-try:
-    import sys as _sys; _sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
-    from run_registry import registry_set as _rs
-    _rs(f"strategy_hint:{result.get('symbol','?')}", result.get("status","ok"), result.get("action","?"))
-except Exception:
-    pass
+    try:
+        import sys as _sys; _sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+        from run_registry import registry_set as _rs
+        _rs(f"strategy_hint:multi", "ok", f"{len(new_proposals)} proposals")
+    except Exception:
+        pass
     print(json.dumps({
         "status": "ok",
         "proposals_written": len(new_proposals),

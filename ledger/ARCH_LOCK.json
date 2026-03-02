@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T21:01:24.628100+00:00",
+  "generated_at": "2026-03-02T21:07:00.955140+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -253,6 +253,11 @@
       "hash": "3717ecb7d51c6d41",
       "size": 6889
     },
+    "script::market_data_validator.py": {
+      "path": "shared/scripts/market_data_validator.py",
+      "hash": "0081239c37e03622",
+      "size": 8265
+    },
     "script::market_pulse.py": {
       "path": "shared/scripts/market_pulse.py",
       "hash": "6f58f7f9564e9c7a",
@@ -272,6 +277,11 @@
       "path": "shared/scripts/model_probe.py",
       "hash": "9a38a8711b6c0b0c",
       "size": 4533
+    },
+    "script::paper_account_monitor.py": {
+      "path": "shared/scripts/paper_account_monitor.py",
+      "hash": "a798fc521568c088",
+      "size": 10622
     },
     "script::postmortem_enforcer.py": {
       "path": "shared/scripts/postmortem_enforcer.py",
@@ -385,8 +395,8 @@
     },
     "adr::ADR-007-model-override-tracing.md": {
       "path": "ledger/ADRs/ADR-007-model-override-tracing.md",
-      "hash": "2a24fd58e2e14f97",
-      "size": 985
+      "hash": "3ddfbbe9ea905032",
+      "size": 1713
     },
     "adr::ADR-008-upgrade-sop.md": {
       "path": "ledger/ADRs/ADR-008-upgrade-sop.md",
@@ -397,6 +407,11 @@
       "path": "ledger/ADRs/ADR-009-no-gateway-restart-in-session.md",
       "hash": "c13133ba83f6d425",
       "size": 991
+    },
+    "adr::ADR-010-market-data-single-source-of-truth.md": {
+      "path": "ledger/ADRs/ADR-010-market-data-single-source-of-truth.md",
+      "hash": "f3878bdb5b769249",
+      "size": 1635
     },
     "skills::index": {
       "count": 14,

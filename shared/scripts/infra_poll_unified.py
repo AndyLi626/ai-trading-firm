@@ -96,6 +96,45 @@ def write_ack_to_md(ticket_id, eta_min):
         f.write(ack_block)
 
 
+
+
+def sync_manager_runtime(tickets_seen, tickets_acked):
+    """Manager가 읽는 runtime_state 파일도 동기화 (Rule 8 해제 조건)"""
+    import json
+    from datetime import datetime, timezone
+    MGR_RT = "/home/lishopping913/.openclaw/workspace-manager/runtime_state"
+    now    = datetime.now(timezone.utc)
+
+    # 1. infra_heartbeat.json
+    hb_path = f"{MGR_RT}/infra_heartbeat.json"
+    try:
+        hb = json.load(open(hb_path))
+    except Exception:
+        hb = {"system": "infra_heartbeat", "version": "1.1"}
+    hb.update({
+        "last_update":   now.strftime('%Y-%m-%dT%H:%M:%SZ'),
+        "status":        "ALIVE",
+        "source":        "infra_poll_unified.py",
+        "tickets_seen":  tickets_seen,
+        "tickets_acked": tickets_acked,
+    })
+    json.dump(hb, open(hb_path,'w'), indent=2)
+
+    # 2. freshness_registry.json market_pulse_scan
+    fr_path = f"{MGR_RT}/freshness_registry.json"
+    try:
+        fr = json.load(open(fr_path))
+        # market_pulse freshness는 MARKET_PULSE.json 기준
+        try:
+            mp_ts = json.load(open('/tmp/oc_facts/MARKET_PULSE.json')).get('generated_at','')
+            fr.setdefault('market_pulse_scan',{})['last_run'] = mp_ts or now.isoformat()
+        except Exception:
+            pass
+        json.dump(fr, open(fr_path,'w'), indent=2)
+    except Exception:
+        pass
+
+
 def poll():
     results = {'acked': [], 'incidents': [], 'progress_updated': [], 'imported': 0}
 
@@ -153,6 +192,8 @@ def poll():
         tickets_seen=len(open_tickets) + results['imported'],
         tickets_acked=len(results['acked']),
     )
+
+    sync_manager_runtime(tickets_seen=len(open_tickets)+results['imported'], tickets_acked=len(results['acked']))
 
     # ── 5. MD 镜像刷新 ────────────────────────────────────────────────────────
     try:

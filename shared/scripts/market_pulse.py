@@ -146,16 +146,12 @@ def main():
         _rs('market_pulse', 'ok', f"stocks={len(output.get('stocks',{}))} crypto={len(output.get('crypto',{}))}")
     except Exception:
         pass
-    
-# ── 장 시간 구분 표시 ──────────────────────────────────────────────────────────
-from datetime import time as _time
-_est_hour = (now_utc.hour - 5) % 24  # EST rough
-_market_open = _time(9, 30) <= _time(_est_hour, now_utc.minute) <= _time(16, 0)
-output["market_session"] = "regular" if _market_open else "premarket" if _est_hour < 9 else "afterhours"
-output["data_note"] = ("실시간 IEX" if output["market_session"] == "regular"
-                       else f"장외({output['market_session']}) — 최근 거래일 마감가 기준")
-
-print(json.dumps(output, indent=2))
+    _now = datetime.now(timezone.utc)
+    _est_hour = (_now.hour - 5) % 24
+    _mkt = "regular" if 9*60+30 <= _est_hour*60+_now.minute <= 16*60 else "closed"
+    output["market_session"] = _mkt
+    output["data_note"] = "실시간 IEX" if _mkt == "regular" else f"장외({_mkt}) — 최근 거래일 마감가"
+    print(json.dumps(output, indent=2))
 
 def fetch_crypto(symbols):
     """Fetch crypto prices via Hyperliquid allMids."""

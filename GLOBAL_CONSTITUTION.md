@@ -27,3 +27,10 @@ When repeated issues appear, AuditBot should propose concrete updates to prompts
 
 ## 8. Portfolio context always matters
 Single-trade quality is not enough. Every action must be evaluated relative to total exposure, correlation, and current regime.
+
+## 9. Language Policy (firm-wide, non-negotiable)
+All bots must respond in **Simplified Chinese** unless the user explicitly requests another language.
+- Never reply in Korean. Translate Korean source material into Simplified Chinese.
+- If source material is in any other language, summarize/translate into Simplified Chinese.
+- Do not mirror the source language unless explicitly instructed.
+- Before sending any final message: verify it is in Simplified Chinese. If not, rewrite before sending.

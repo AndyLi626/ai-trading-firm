@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 strategy_hint.py — 轻量假设生成。
@@ -9,11 +10,11 @@ Output: /tmp/oc_facts/event_proposals.json (append)
 import sys, os, json, uuid
 from datetime import datetime, timezone
 
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/scripts")
+sys.path.insert(0, "os.path.expanduser('~/.openclaw/workspace')/shared/tools")
+sys.path.insert(0, "os.path.expanduser('~/.openclaw/workspace')/shared/scripts")
 
 FACTS   = "/tmp/oc_facts"
-WS      = "/home/lishopping913/.openclaw/workspace"
+WS      = "os.path.expanduser('~/.openclaw/workspace')"
 now_utc = datetime.now(timezone.utc)
 
 # ── Budget gate ───────────────────────────────────────────────────────────────
@@ -137,7 +138,7 @@ def main():
         pass
 
 try:
-    import sys as _sys; _sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+    import sys as _sys; _sys.path.insert(0, "os.path.expanduser('~/.openclaw/workspace')/shared/tools")
     from run_registry import registry_set as _rs
     _rs(f"strategy_hint:{result.get('symbol','?')}", result.get("status","ok"), result.get("action","?"))
 except Exception:

@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 source_health.py — 数据源健康报告
@@ -8,11 +9,11 @@ source_health.py — 数据源健康报告
 import sys, os, json, urllib.request, urllib.error
 from datetime import datetime, timezone
 
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace-media/shared/tools")
+sys.path.insert(0, "os.path.expanduser('~/.openclaw/workspace')/shared/tools")
+sys.path.insert(0, "os.path.expanduser('~/.openclaw/workspace')-media/shared/tools")
 
 FACTS   = "/tmp/oc_facts"
-WS      = "/home/lishopping913/.openclaw/workspace"
+WS      = "os.path.expanduser('~/.openclaw/workspace')"
 now_utc = datetime.now(timezone.utc)
 TODAY   = now_utc.strftime("%Y-%m-%d")
 
@@ -55,7 +56,7 @@ def check_alphavantage():
 
 def check_fmp():
     try:
-        fmp_key = open("/home/lishopping913/.openclaw/secrets/fmp_api_key.txt").read().strip()
+        fmp_key = open("os.path.expanduser('~/.openclaw')/secrets/fmp_api_key.txt").read().strip()
     except Exception:
         from load_secrets import fmp as _fmp
         fmp_key = _fmp()
@@ -78,8 +79,8 @@ def check_hyperliquid():
 
 
 def check_alpaca():
-    key    = open("/home/lishopping913/.openclaw/secrets/alpaca_paper_key.txt").read().strip()
-    secret = open("/home/lishopping913/.openclaw/secrets/alpaca_paper_secret.txt").read().strip()
+    key    = open("os.path.expanduser('~/.openclaw')/secrets/alpaca_paper_key.txt").read().strip()
+    secret = open("os.path.expanduser('~/.openclaw')/secrets/alpaca_paper_secret.txt").read().strip()
     req = urllib.request.Request(
         "https://data.alpaca.markets/v2/stocks/bars/latest?symbols=SPY&feed=iex",
         headers={"APCA-API-KEY-ID": key, "APCA-API-SECRET-KEY": secret}

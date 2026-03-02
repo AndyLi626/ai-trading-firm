@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-02T20:04:55.557757+00:00",
+  "generated_at": "2026-03-02T20:32:55.213284+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -7,96 +7,96 @@
       "agent": "media",
       "delivery": "none",
       "schedule_hash": "0843207f253627e9",
-      "payload_hash": "5d70af1e5dc04fcc"
+      "payload_hash": "ee4f0b1bbc8dd759"
     },
     "cron::audit-daily": {
       "name": "audit-daily",
       "agent": "audit",
       "delivery": "none",
       "schedule_hash": "a67588e0d72590d3",
-      "payload_hash": "ef5e71153fded294"
+      "payload_hash": "848011d3cee9709e"
     },
     "cron::strategy-scan": {
       "name": "strategy-scan",
       "agent": "research",
       "delivery": "none",
       "schedule_hash": "640e52438a52bcb2",
-      "payload_hash": "719177cffebfe211"
+      "payload_hash": "1c17c81708b5854e"
     },
     "cron::infra-5min-report": {
       "name": "infra-5min-report",
       "agent": "main",
       "delivery": "none",
       "schedule_hash": "aafb5c251dced45d",
-      "payload_hash": "2f089fe5b694fc71"
+      "payload_hash": "a3db75f4a490ef66"
     },
     "cron::manager-30min-report": {
       "name": "manager-30min-report",
       "agent": "manager",
       "delivery": "announce",
       "schedule_hash": "855b8e5644218760",
-      "payload_hash": "18e228237b03532f"
+      "payload_hash": "23f133dd08ee0c81"
     },
     "cron::autonomy-orchestrator": {
       "name": "autonomy-orchestrator",
       "agent": "manager",
       "delivery": "none",
       "schedule_hash": "84387d1026fe376b",
-      "payload_hash": "8bbf66a74b3b525c"
+      "payload_hash": "282064066298fc73"
     },
     "cron::repo-skills-scan": {
       "name": "repo-skills-scan",
       "agent": "research",
       "delivery": "none",
       "schedule_hash": "f797aca6dd63b533",
-      "payload_hash": "7b9782634549df38"
+      "payload_hash": "38de3d0e1b3d7680"
     },
     "cron::infra-12h-scan": {
       "name": "infra-12h-scan",
       "agent": "infra",
       "delivery": "none",
       "schedule_hash": "66e8450383118019",
-      "payload_hash": "50a17189ebd62c3e"
+      "payload_hash": "66e9104195b7759e"
     },
     "cron::daily-model-reset": {
       "name": "daily-model-reset",
       "agent": "main",
       "delivery": "none",
       "schedule_hash": "f9a22e0a4e44d33c",
-      "payload_hash": "40b53c0a12e40760"
+      "payload_hash": "ee33b6cbe72c4dca"
     },
     "cron::market-pulse-15m": {
       "name": "market-pulse-15m",
       "agent": "main",
       "delivery": "none",
       "schedule_hash": "f9d0a2d67a8ab7ab",
-      "payload_hash": "202e24b4b03c905c"
+      "payload_hash": "1314e3a5417dbdb3"
     },
     "cron::infra-ticket-poll": {
       "name": "infra-ticket-poll",
       "agent": "infra",
       "delivery": "none",
       "schedule_hash": "5136d44b12e902dc",
-      "payload_hash": "97515ab0953a17b0"
+      "payload_hash": "d07cd5f900acee6d"
     },
     "cron::anomaly-detector": {
       "name": "anomaly-detector",
       "agent": "media",
       "delivery": "none",
       "schedule_hash": "e36b921a9f57adf9",
-      "payload_hash": "038fb01ca689d49c"
+      "payload_hash": "c7d76c459c4b2d29"
     },
     "cron::emergency-scan-poll": {
       "name": "emergency-scan-poll",
       "agent": "media",
       "delivery": "none",
       "schedule_hash": "e36b921a9f57adf9",
-      "payload_hash": "49bf787f41136950"
+      "payload_hash": "47627bd1942af7db"
     },
     "script::apply_hook.py": {
       "path": "shared/scripts/apply_hook.py",
-      "hash": "a4983d40ba4b7f2c",
-      "size": 1924
+      "hash": "06e01e920dffd9ec",
+      "size": 1938
     },
     "script::arch_lock.py": {
       "path": "shared/scripts/arch_lock.py",
@@ -110,18 +110,18 @@
     },
     "script::archivist_preflight.py": {
       "path": "shared/scripts/archivist_preflight.py",
-      "hash": "e258485163787716",
-      "size": 2029
+      "hash": "575ed0bc7f9b303a",
+      "size": 2019
     },
     "script::archivist_query.py": {
       "path": "shared/scripts/archivist_query.py",
-      "hash": "28ce7e1952bcdee0",
-      "size": 884
+      "hash": "41335c1431f1d7e3",
+      "size": 895
     },
     "script::audit_data_violation.py": {
       "path": "shared/scripts/audit_data_violation.py",
-      "hash": "4668b7a08dcf78a6",
-      "size": 2491
+      "hash": "e13b14b9458affa8",
+      "size": 2502
     },
     "script::audit_model_verify.py": {
       "path": "shared/scripts/audit_model_verify.py",
@@ -140,13 +140,13 @@
     },
     "script::budget_refresh.py": {
       "path": "shared/scripts/budget_refresh.py",
-      "hash": "9b9a5ad6ff81ce58",
-      "size": 6460
+      "hash": "233d6604d33d4d10",
+      "size": 6494
     },
     "script::check_budget_status.py": {
       "path": "shared/scripts/check_budget_status.py",
-      "hash": "2857e017ffa794b2",
-      "size": 6331
+      "hash": "aee52522118b379e",
+      "size": 6333
     },
     "script::check_manager_cache.py": {
       "path": "shared/scripts/check_manager_cache.py",
@@ -155,18 +155,18 @@
     },
     "script::collect_market.py": {
       "path": "shared/scripts/collect_market.py",
-      "hash": "8291b5a83e9f8714",
-      "size": 3074
+      "hash": "54383b3c57d9ce91",
+      "size": 3104
     },
     "script::collect_media.py": {
       "path": "shared/scripts/collect_media.py",
-      "hash": "d59c924e0ce38468",
-      "size": 5255
+      "hash": "4f9acd056c5b7900",
+      "size": 5287
     },
     "script::collect_team.py": {
       "path": "shared/scripts/collect_team.py",
-      "hash": "c3286a560c31d748",
-      "size": 3268
+      "hash": "aa55f8bef1219b68",
+      "size": 3296
     },
     "script::cron_drift_enforcer.py": {
       "path": "shared/scripts/cron_drift_enforcer.py",
@@ -175,8 +175,8 @@
     },
     "script::daily_usage_report.py": {
       "path": "shared/scripts/daily_usage_report.py",
-      "hash": "68416e8659644a2d",
-      "size": 8778
+      "hash": "5a899bb0c0e432b8",
+      "size": 8780
     },
     "script::data_gate.py": {
       "path": "shared/scripts/data_gate.py",
@@ -190,18 +190,18 @@
     },
     "script::drift_detector.py": {
       "path": "shared/scripts/drift_detector.py",
-      "hash": "dded1b6950dd6db9",
-      "size": 3203
+      "hash": "8458bdeec7794206",
+      "size": 3222
     },
     "script::e2e_smoke.py": {
       "path": "shared/scripts/e2e_smoke.py",
-      "hash": "a78a0320205f4d39",
-      "size": 14935
+      "hash": "a9777588023e1077",
+      "size": 14979
     },
     "script::emergency_scan.py": {
       "path": "shared/scripts/emergency_scan.py",
-      "hash": "09b30dcc6cbede7f",
-      "size": 8033
+      "hash": "ea79a97de7a99ad7",
+      "size": 8067
     },
     "script::emergency_trigger.py": {
       "path": "shared/scripts/emergency_trigger.py",
@@ -210,13 +210,13 @@
     },
     "script::fix_execution_logs.py": {
       "path": "shared/scripts/fix_execution_logs.py",
-      "hash": "8974b38a3e59694b",
-      "size": 2219
+      "hash": "b7021f67a001b819",
+      "size": 2230
     },
     "script::harvest_openclaw_usage.py": {
       "path": "shared/scripts/harvest_openclaw_usage.py",
-      "hash": "cc937f2a0a476e8a",
-      "size": 16090
+      "hash": "54cbb4a7fd90bc5d",
+      "size": 16095
     },
     "script::healthcheck.py": {
       "path": "shared/scripts/healthcheck.py",
@@ -225,8 +225,8 @@
     },
     "script::infra_poll_unified.py": {
       "path": "shared/scripts/infra_poll_unified.py",
-      "hash": "fc3e03a5883dae15",
-      "size": 8082
+      "hash": "46b70c9803fed613",
+      "size": 8094
     },
     "script::infra_scan.py": {
       "path": "shared/scripts/infra_scan.py",
@@ -245,48 +245,48 @@
     },
     "script::manager_cooldown.py": {
       "path": "shared/scripts/manager_cooldown.py",
-      "hash": "d31384007cdd74b0",
-      "size": 2581
+      "hash": "2fee9798fd725ade",
+      "size": 2594
     },
     "script::market_anomaly_detector.py": {
       "path": "shared/scripts/market_anomaly_detector.py",
-      "hash": "a599f4c0b67112b1",
-      "size": 6861
+      "hash": "3717ecb7d51c6d41",
+      "size": 6889
     },
     "script::market_pulse.py": {
       "path": "shared/scripts/market_pulse.py",
-      "hash": "77b618c4ac8297f0",
-      "size": 8146
+      "hash": "6f58f7f9564e9c7a",
+      "size": 8178
     },
     "script::media_finalize.py": {
       "path": "shared/scripts/media_finalize.py",
-      "hash": "27191485f5d5d264",
-      "size": 1973
+      "hash": "45c1478b06de3909",
+      "size": 2003
     },
     "script::model_override_reset.py": {
       "path": "shared/scripts/model_override_reset.py",
-      "hash": "c915ab6bd31a7c32",
-      "size": 2543
+      "hash": "fe3d77a94d390f2c",
+      "size": 2573
     },
     "script::model_probe.py": {
       "path": "shared/scripts/model_probe.py",
-      "hash": "ed389008071f05e8",
-      "size": 4522
+      "hash": "9a38a8711b6c0b0c",
+      "size": 4533
     },
     "script::postmortem_enforcer.py": {
       "path": "shared/scripts/postmortem_enforcer.py",
-      "hash": "cdc17b697a9650ae",
-      "size": 2105
+      "hash": "1eb75ce4840ec398",
+      "size": 2120
     },
     "script::postmortem_generator.py": {
       "path": "shared/scripts/postmortem_generator.py",
-      "hash": "7bfc0f97c23d41f2",
-      "size": 6931
+      "hash": "6e5119e110c3ce4c",
+      "size": 6939
     },
     "script::provider_budget_guard.py": {
       "path": "shared/scripts/provider_budget_guard.py",
-      "hash": "6e8a8d41aa2d9485",
-      "size": 7156
+      "hash": "249ba2b2225ed703",
+      "size": 7181
     },
     "script::repo_skills_scan.py": {
       "path": "shared/scripts/repo_skills_scan.py",
@@ -295,23 +295,23 @@
     },
     "script::risk_review_lite.py": {
       "path": "shared/scripts/risk_review_lite.py",
-      "hash": "6c8951f451efc95e",
-      "size": 4762
+      "hash": "256478bd52e23dc3",
+      "size": 4806
     },
     "script::run_with_budget.py": {
       "path": "shared/scripts/run_with_budget.py",
-      "hash": "6bad88c44aac9463",
-      "size": 5965
+      "hash": "cac2b0c62e787232",
+      "size": 5967
     },
     "script::source_health.py": {
       "path": "shared/scripts/source_health.py",
-      "hash": "196e1c8a8d9f8f3b",
-      "size": 6104
+      "hash": "7b5293f63665b506",
+      "size": 6137
     },
     "script::strategy_hint.py": {
       "path": "shared/scripts/strategy_hint.py",
-      "hash": "4cb72eea96f1fe3a",
-      "size": 9669
+      "hash": "ec5ecc07fe61c287",
+      "size": 9714
     },
     "script::test_gate.py": {
       "path": "shared/scripts/test_gate.py",
@@ -325,8 +325,8 @@
     },
     "script::update_cache.py": {
       "path": "shared/scripts/update_cache.py",
-      "hash": "9d1b530a3908d8c0",
-      "size": 875
+      "hash": "6231eabd7d5cd31d",
+      "size": 886
     },
     "script::upgrade_check.py": {
       "path": "shared/scripts/upgrade_check.py",
@@ -335,8 +335,8 @@
     },
     "script::write_signal.py": {
       "path": "shared/scripts/write_signal.py",
-      "hash": "437f178e45eb9d93",
-      "size": 1295
+      "hash": "56a31477d0ad5623",
+      "size": 1323
     },
     "config::model_aliases.json": {
       "path": "shared/config/model_aliases.json",
@@ -385,12 +385,12 @@
     },
     "adr::ADR-007-model-override-tracing.md": {
       "path": "ledger/ADRs/ADR-007-model-override-tracing.md",
-      "hash": "e8b90a734e30d351",
-      "size": 1021
+      "hash": "2a24fd58e2e14f97",
+      "size": 985
     },
     "adr::ADR-008-upgrade-sop.md": {
       "path": "ledger/ADRs/ADR-008-upgrade-sop.md",
-      "hash": "37648b4e89b24d6c",
+      "hash": "2b4eea5af02aec95",
       "size": 4378
     },
     "adr::ADR-009-no-gateway-restart-in-session.md": {

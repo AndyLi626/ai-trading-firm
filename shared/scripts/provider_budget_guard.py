@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # Import GCP client
-sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 import urllib.request
 try:
     from gcp_client import get_token
@@ -33,7 +33,7 @@ def bq_query(sql):
     return rows
 
 # Load provider caps from config file
-CONFIG_PATH = '/home/lishopping913/.openclaw/workspace/shared/config/model_aliases.json'
+CONFIG_PATH = os.path.expanduser('~/.openclaw/workspace/shared/config/model_aliases.json')
 
 def load_provider_caps():
     try:
@@ -100,7 +100,7 @@ WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR)"""
                 provider_costs[provider] += cost
         
         # Check provider cooldowns
-        cache_path = '/home/lishopping913/.openclaw/workspace/memory/bot_cache.json'
+        cache_path = os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json')
         now = datetime.now(timezone.utc)
         
         if os.path.exists(cache_path):
@@ -148,7 +148,7 @@ WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR)"""
         # Check for hard stops to determine exit code
         if result['hard_stop_providers']:
             # Update bot_cache.json with hard stop flags
-            cache_path = '/home/lishopping913/.openclaw/workspace/memory/bot_cache.json'
+            cache_path = os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json')
             if os.path.exists(cache_path):
                 try:
                     with open(cache_path, 'r') as f:

@@ -3,7 +3,7 @@
 # Called via exec() from openclaw cron payload
 # Writes directly to memory/market/ without /tmp dependency
 set -e
-cd /home/lishopping913/.openclaw/workspace
+cd $(cd "$(dirname "$0")/../.."; pwd)
 python3 shared/scripts/market_pulse.py 2>/dev/null
 #
 python3 -c "

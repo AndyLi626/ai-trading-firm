@@ -36,4 +36,4 @@ _Format: DATE | TIME | CHANGE | APPROVED BY | TESTS | RESULT_
 
 ## 20260302T035636Z | bot=manager | result=APPLIED
 - patch: {"agents.defaults.timeoutSeconds": 250}
-- detail: /home/lishopping913/.openclaw/openclaw.json
+- detail: ~/.openclaw/openclaw.json

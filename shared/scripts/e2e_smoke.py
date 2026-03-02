@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """
 e2e_smoke.py — Boss E2E Control-Plane Smoke Test
@@ -298,7 +299,7 @@ def main():
     if not DRY_RUN:
         try:
             tg_r = subprocess.run(
-                ["openclaw", "send", "--to", "1555430296",
+                ["openclaw", "send", "--to", os.environ.get("BOSS_TELEGRAM_ID", "REDACTED"),
                  "--channel", "telegram", msg],
                 capture_output=True, text=True, timeout=20
             )

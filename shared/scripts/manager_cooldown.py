@@ -3,6 +3,7 @@ import json
 import sys
 import time
 from datetime import datetime
+import os
 
 
 def main():
@@ -17,7 +18,7 @@ def main():
     
     # Read bot_cache.json
     try:
-        with open('/home/lishopping913/.openclaw/workspace/memory/bot_cache.json', 'r') as f:
+        with open(os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json'), 'r') as f:
             cache = json.load(f)
     except FileNotFoundError:
         cache = {"manager": {}}
@@ -66,7 +67,7 @@ def main():
     # Write back to cache
     cache['manager'] = manager
     try:
-        with open('/home/lishopping913/.openclaw/workspace/memory/bot_cache.json', 'w') as f:
+        with open(os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json'), 'w') as f:
             json.dump(cache, f, indent=2)
     except Exception as e:
         print(json.dumps({"error": f"Failed to update cache: {e}"}))

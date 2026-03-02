@@ -9,10 +9,10 @@ from datetime import datetime
 from pathlib import Path
 
 # Configuration
-TICKET_QUEUE_PATH = '/home/lishopping913/.openclaw/workspace/shared/state/ticket_queue.jsonl'
-INCIDENT_LOG_PATH = '/home/lishopping913/.openclaw/workspace/shared/knowledge/INCIDENT_LOG.md'
-POSTMORTEM_DIR = '/home/lishopping913/.openclaw/workspace/shared/knowledge/postmortems'
-GCP_CLIENT_PATH = '/home/lishopping913/.openclaw/workspace/shared/tools/gcp_client.py'
+TICKET_QUEUE_PATH = os.path.expanduser('~/.openclaw/workspace/shared/state/ticket_queue.jsonl')
+INCIDENT_LOG_PATH = os.path.expanduser('~/.openclaw/workspace/shared/knowledge/INCIDENT_LOG.md')
+POSTMORTEM_DIR = os.path.expanduser('~/.openclaw/workspace/shared/knowledge/postmortems')
+GCP_CLIENT_PATH = os.path.expanduser('~/.openclaw/workspace/shared/tools/gcp_client.py')
 
 
 def read_ticket_queue(incident_id):

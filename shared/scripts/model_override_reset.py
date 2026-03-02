@@ -7,11 +7,12 @@ Pinned agents (media, audit) are never touched.
 import json, os, sys, shutil
 from datetime import datetime, timezone
 
-sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 from gcp_client import log_decision
+import os
 
 CFG_PATH  = os.path.expanduser('~/.openclaw/openclaw.json')
-CACHE_PATH = '/home/lishopping913/.openclaw/workspace/memory/bot_cache.json'
+CACHE_PATH = os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json')
 
 CANONICAL_DEFAULTS = {
     'main':     'anthropic/claude-sonnet-4-6',

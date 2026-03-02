@@ -6,7 +6,7 @@ No live GCP writes — uses mock insert_rows.
 import os, sys, json, tempfile, unittest
 from unittest.mock import patch, MagicMock
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
 SCRIPTS_DIR = os.path.join(WORKSPACE, "shared", "scripts")
 sys.path.insert(0, os.path.join(WORKSPACE, "shared", "tools"))
 sys.path.insert(0, SCRIPTS_DIR)

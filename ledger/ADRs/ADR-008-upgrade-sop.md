@@ -70,7 +70,7 @@ sed -i "s|OPENCLAW_SERVICE_VERSION=.*|OPENCLAW_SERVICE_VERSION=<target_ver>|" \
 # 6. meta Updated
 python3 -c "
 import json,datetime,pathlib
-p = pathlib.Path('/home/lishopping913/.openclaw/openclaw.json')
+p = pathlib.Path('~/.openclaw/openclaw.json')
 d = json.load(open(p))
 d['meta']['lastTouchedVersion'] = '<target_ver>'
 d['meta']['lastTouchedAt'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -83,7 +83,7 @@ systemctl --user restart openclaw-gateway.service
 sleep 5
 
 # 8. Telegram 1 (1)
-openclaw send --to 1555430296 --channel telegram \
+openclaw send --to ${BOSS_TELEGRAM_ID} --channel telegram \
  "⬆️ Upgrade applied: openclaw <target_ver> | gateway restart OK | verify "
 ```
 
@@ -132,7 +132,7 @@ systemctl --user restart openclaw-gateway.service
 # , Cause, ,
 
 # 5. Telegram 1
-openclaw send --to 1555430296 --channel telegram \
+openclaw send --to ${BOSS_TELEGRAM_ID} --channel telegram \
  "⚠️ Upgrade rollback: → <prev_ver> | Cause: <reason>"
 ```
 

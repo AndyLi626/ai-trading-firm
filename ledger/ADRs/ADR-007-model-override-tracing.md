@@ -19,8 +19,8 @@ Without gateway reload after model change, stale cache causes the old model to b
 # runs/ Verify actual model used
 python3 -c "
 import json, os
-runs = '/home/lishopping913/.openclaw/cron/runs'
-d    = json.load(open('/home/lishopping913/.openclaw/cron/jobs.json'))
+runs = '~/.openclaw/cron/runs'
+d    = json.load(open('~/.openclaw/cron/jobs.json'))
 for j in d['jobs']:
     rf = f'{runs}/{j[\"id\"]}.jsonl'
     if not os.path.exists(rf): continue

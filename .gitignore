@@ -31,3 +31,7 @@ memory/
 .DS_Store
 Thumbs.db
 .gsd/
+
+# Runtime state files (operational data, not for VCS)
+runtime_state/*.md
+runtime_state/*.json

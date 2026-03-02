@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import json, sys, os, uuid
-sys.path.insert(0, '/home/lishopping913/.openclaw/workspace-manager/shared/tools')
+sys.path.insert(0, os.path.expanduser('~/.openclaw/workspace-manager/shared/tools'))
 from gcp_client import insert_rows, get_token
 import urllib.request
+import os
 
 LOG_PATH = os.path.expanduser('~/.openclaw/workspace/runtime_state/trading_log.jsonl')
 with open(LOG_PATH) as f:

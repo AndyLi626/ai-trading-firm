@@ -6,8 +6,9 @@ One script, no bot ambiguity. Called after collect_media.py succeeds.
 import sys, os, json, uuid, time
 from datetime import datetime, timezone
 
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 from gcp_client import log_signal
+import os
 try:
     from token_meter import record_run, facts_changed
     _METER = True
@@ -15,7 +16,7 @@ except Exception:
     _METER = False
 
 FACTS = "/tmp/oc_facts/media_facts.json"
-CACHE = "/home/lishopping913/.openclaw/workspace/memory/bot_cache.json"
+CACHE = os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json')
 RUN_ID = str(uuid.uuid4())
 _t0 = time.time()
 

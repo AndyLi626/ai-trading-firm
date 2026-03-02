@@ -2,12 +2,13 @@
 """Tests for model governance system."""
 import json, os, sys, unittest, subprocess, tempfile, shutil
 from unittest.mock import patch, MagicMock
+import os
 
-sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 
-ALIASES_PATH = '/home/lishopping913/.openclaw/workspace/shared/config/model_aliases.json'
-BUDGET_GUARD = '/home/lishopping913/.openclaw/workspace/shared/scripts/provider_budget_guard.py'
-DRIFT_ENFORCER = '/home/lishopping913/.openclaw/workspace/shared/scripts/cron_drift_enforcer.py'
+ALIASES_PATH = os.path.expanduser('~/.openclaw/workspace/shared/config/model_aliases.json')
+BUDGET_GUARD = os.path.expanduser('~/.openclaw/workspace/shared/scripts/provider_budget_guard.py')
+DRIFT_ENFORCER = os.path.expanduser('~/.openclaw/workspace/shared/scripts/cron_drift_enforcer.py')
 
 class TestModelAliases(unittest.TestCase):
     def setUp(self):

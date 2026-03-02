@@ -2,9 +2,10 @@
 """Preflight dedup. Usage: echo '{"request":"..."}' | python3 archivist_preflight.py"""
 import sys, json, os
 
-CAPS   = '/home/lishopping913/.openclaw/workspace/ledger/CAPABILITIES.md'
-STATUS = '/home/lishopping913/.openclaw/workspace/ledger/STATUS_MATRIX.md'
-ADRS   = '/home/lishopping913/.openclaw/workspace/ledger/ADRs'
+_WS    = os.path.expanduser('~/.openclaw/workspace')
+CAPS   = os.path.join(_WS, 'ledger/CAPABILITIES.md')
+STATUS = os.path.join(_WS, 'ledger/STATUS_MATRIX.md')
+ADRS   = os.path.join(_WS, 'ledger/ADRs')
 
 data = json.loads(sys.stdin.read())
 request = data.get('request','').lower()

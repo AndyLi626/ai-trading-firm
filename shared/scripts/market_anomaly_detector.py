@@ -5,6 +5,7 @@ market_anomaly_detector.py — 确定性异动检测，无 LLM。
 """
 import sys, os, json, uuid, subprocess, time
 from datetime import datetime, timezone, timedelta
+import os
 
 WS       = os.path.expanduser("~/.openclaw/workspace")
 FACTS    = "/tmp/oc_facts"
@@ -192,7 +193,7 @@ def main():
     }
 
 try:
-    import sys as _sys; _sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
+    import sys as _sys; _sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
     from run_registry import registry_set as _rs
     _rs('anomaly_detector', 'ok', f"events={summary.get('events_triggered',0)}")
 except Exception:

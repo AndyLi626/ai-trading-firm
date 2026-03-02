@@ -2,9 +2,10 @@
 """Model probe — minimal test call to each provider. Max 5 tokens."""
 import json, os, sys, time, urllib.request, urllib.error
 from datetime import datetime, timezone
+import os
 
 SECRETS = os.path.expanduser('~/.openclaw/secrets')
-OUT = '/home/lishopping913/.openclaw/workspace/memory/model_probe_results.json'
+OUT = os.path.expanduser('~/.openclaw/workspace/memory/model_probe_results.json')
 
 def probe_anthropic():
     key_file = f'{SECRETS}/anthropic_api_key.txt'

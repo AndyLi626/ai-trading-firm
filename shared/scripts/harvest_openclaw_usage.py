@@ -13,9 +13,9 @@ Output JSON: {"harvested": N, "skipped_dupes": N, "llm_runs": N, "script_runs": 
 import os, sys, json, uuid, argparse, glob, time
 from datetime import datetime, timezone
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
-RUNS_DIR  = "/home/lishopping913/.openclaw/cron/runs"
-JOBS_FILE = "/home/lishopping913/.openclaw/cron/jobs.json"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
+RUNS_DIR = os.path.expanduser('~/.openclaw/cron/runs')
+JOBS_FILE = os.path.expanduser('~/.openclaw/cron/jobs.json')
 STATE_FILE = "/tmp/oc_facts/harvest_state.json"
 FALLBACK_LOG = "/tmp/oc_facts/harvest_fallback.jsonl"
 

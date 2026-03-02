@@ -2,12 +2,13 @@
 """Drift detector. Compares current state to ARCH_LOCK.json. Writes /tmp/oc_facts/drift_report.json"""
 import hashlib, json, os, subprocess, sys, time
 from datetime import datetime, timezone
+import os
 
-LOCK_PATH = '/home/lishopping913/.openclaw/workspace/ledger/ARCH_LOCK.json'
+LOCK_PATH = os.path.expanduser('~/.openclaw/workspace/ledger/ARCH_LOCK.json')
 OUT_PATH  = '/tmp/oc_facts/drift_report.json'
-TICKET_Q  = '/home/lishopping913/.openclaw/workspace/shared/state/ticket_queue.jsonl'
-QUARANTINE= '/home/lishopping913/.openclaw/workspace/shared/scripts/quarantine'
-ALIASES   = '/home/lishopping913/.openclaw/workspace/shared/config/model_aliases.json'
+TICKET_Q  = os.path.expanduser('~/.openclaw/workspace/shared/state/ticket_queue.jsonl')
+QUARANTINE= os.path.expanduser('~/.openclaw/workspace/shared/scripts/quarantine')
+ALIASES   = os.path.expanduser('~/.openclaw/workspace/shared/config/model_aliases.json')
 
 def fhash(p):
     h = hashlib.sha256()
@@ -30,7 +31,7 @@ for path, expected in lock.get('files',{}).items():
         drifts.append({'type':'file_missing','path':path})
 
 # 2. Unauthorized cron check
-enforcer = '/home/lishopping913/.openclaw/workspace/shared/scripts/cron_drift_enforcer.py'
+enforcer = os.path.expanduser('~/.openclaw/workspace/shared/scripts/cron_drift_enforcer.py')
 r = subprocess.run(['python3', enforcer], capture_output=True, text=True, timeout=15)
 try:
     cron_result = json.loads(r.stdout)

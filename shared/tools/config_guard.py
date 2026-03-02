@@ -3,8 +3,9 @@
 import json, os, re, shutil, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
+import os
 
-WORKSPACE = Path("/home/lishopping913/.openclaw/workspace")
+WORKSPACE = Path(os.path.expanduser('~/.openclaw/workspace'))
 LIVE_CONFIG = Path.home() / ".openclaw/openclaw.json"
 BACKUPS_DIR = Path.home() / ".openclaw/backups"
 PROPOSALS_DIR = WORKSPACE / "shared/config_proposals"

@@ -4,8 +4,9 @@ write_signal.py — Write one signal to GCP market_signals table.
 Usage: echo '{"source_bot":"media",...}' | python3 write_signal.py
 """
 import sys, os, json, uuid, time
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 from gcp_client import log_signal
+import os
 try:
     from token_meter import record_run
     _METER = True

@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 # Add the shared/scripts directory to the path so we can import the modules
-sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/scripts')
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/scripts'))
 
 # Import the modules we need to test
 import provider_budget_guard

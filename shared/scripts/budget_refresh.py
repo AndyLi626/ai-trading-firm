@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 """
 budget_refresh.py — /budget refresh handler (Boss-only, 0 LLM, deterministic)
 - Re-reads provider caps from model_aliases.json
@@ -10,13 +11,13 @@ budget_refresh.py — /budget refresh handler (Boss-only, 0 LLM, deterministic)
 """
 import json, os, sys, time, urllib.request, urllib.error
 from datetime import datetime, timezone
-sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 from gcp_client import get_token as gcp_token, log_decision
 
 SECRETS    = os.path.expanduser('~/.openclaw/secrets')
-CACHE_PATH = '/home/lishopping913/.openclaw/workspace/memory/bot_cache.json'
-ALIASES    = '/home/lishopping913/.openclaw/workspace/shared/config/model_aliases.json'
-OUT_DIR    = '/home/lishopping913/.openclaw/workspace/memory'
+CACHE_PATH = os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json')
+ALIASES    = os.path.expanduser('~/.openclaw/workspace/shared/config/model_aliases.json')
+OUT_DIR    = os.path.expanduser('~/.openclaw/workspace/memory')
 
 def load_caps():
     cfg = json.load(open(ALIASES))

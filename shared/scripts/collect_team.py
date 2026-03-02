@@ -8,9 +8,10 @@ from datetime import datetime, timezone
 
 FACTS_DIR = "/tmp/oc_facts"
 os.makedirs(FACTS_DIR, exist_ok=True)
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 
 from gcp_client import get_token
+import os
 
 try:
     from token_meter import record_run as _record_run

@@ -6,9 +6,10 @@ Output: /tmp/oc_facts/MARKET_PULSE.json + memory/autonomy/YYYY-MM-DD/MARKET_PULS
 """
 import sys, os, json, urllib.request, urllib.error, time, uuid
 from datetime import datetime, timezone
+import os
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
-SECRETS = "/home/lishopping913/.openclaw/secrets"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
+SECRETS = os.path.expanduser('~/.openclaw/secrets')
 FACTS_DIR = "/tmp/oc_facts"
 DEFAULT_SYMBOLS = "SPY,QQQ,PLTR,XOM,GLD"
 
@@ -161,7 +162,7 @@ def main():
 
 
     try:
-        import sys as _sys; _sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
+        import sys as _sys; _sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
         from run_registry import registry_set as _rs
         _rs('market_pulse', 'ok', f"stocks={len(output.get('stocks',{}))} crypto={len(output.get('crypto',{}))}")
     except Exception:

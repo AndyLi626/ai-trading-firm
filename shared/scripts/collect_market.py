@@ -5,7 +5,8 @@ Outputs: /tmp/oc_facts/market_facts.json + /tmp/oc_facts/market_status.json
 """
 # Token accounting: log no-op if facts unchanged
 import sys, os
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+import os
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 try:
     from token_meter import facts_changed, record_run
     _METER_OK = True
@@ -51,7 +52,7 @@ except Exception as e:
 
 # FMP for SPY price
 try:
-    SECRETS = "/home/lishopping913/.openclaw/secrets"
+    SECRETS = os.path.expanduser('~/.openclaw/secrets')
     fmp_key = open(os.path.join(SECRETS,"fmp_api_key.txt")).read().strip()
     url = f"https://financialmodelingprep.com/stable/quote?symbol=SPY&apikey={fmp_key}"
     with urllib.request.urlopen(url, timeout=10) as r:

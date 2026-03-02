@@ -4,6 +4,7 @@ Test: Gateway health, channels, agents, cron jobs
 Run: python3 tests/test_gateway.py
 """
 import sys, os, json, subprocess, time
+import os
 
 PASS = []; FAIL = []
 def ok(name, val=""): PASS.append(name); print(f"  ✅ {name}{' → '+str(val) if val else ''}")
@@ -54,7 +55,7 @@ except Exception as e:
 
 # 5. Model assignments correct
 try:
-    with open('/home/lishopping913/.openclaw/openclaw.json') as f:
+    with open(os.path.expanduser('~/.openclaw/openclaw.json')) as f:
         c = json.load(f)
     expected = {
         "main":"anthropic/claude-sonnet-4-6","manager":"anthropic/claude-haiku-4-5",
@@ -94,7 +95,7 @@ except Exception as e:
 
 # 8. timeoutSeconds set
 try:
-    with open('/home/lishopping913/.openclaw/openclaw.json') as f:
+    with open(os.path.expanduser('~/.openclaw/openclaw.json')) as f:
         c = json.load(f)
     ts = c['agents']['defaults'].get('timeoutSeconds', 0)
     assert ts >= 60, f"timeoutSeconds={ts} too low"

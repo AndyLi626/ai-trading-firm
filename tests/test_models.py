@@ -4,6 +4,7 @@ Test: All AI model endpoints — Anthropic (Haiku+Sonnet), Qwen, Gemini Flash Li
 Run: python3 tests/test_models.py
 """
 import sys, os, json, urllib.request, time
+import os
 sys.path.insert(0, os.path.expanduser('~/.openclaw/secrets'))
 
 PASS = []; FAIL = []
@@ -12,7 +13,7 @@ def fail(name, err): FAIL.append(name); print(f"  ❌ {name}: {err}")
 
 print("=== TEST: AI Model Endpoints ===\n")
 
-SECRETS = '/home/lishopping913/.openclaw/secrets'
+SECRETS = os.path.expanduser('~/.openclaw/secrets')
 
 def anthropic_call(model):
     key = open(f'{SECRETS}/anthropic_api_key.txt').read().strip()
@@ -78,7 +79,7 @@ try:
     with ur2.urlopen(url, timeout=8) as r2:
         d2 = json.loads(r2.read())
     assert d2.get("models"), "no models returned"
-    with open("/home/lishopping913/.openclaw/openclaw.json") as cf:
+    with open(os.path.expanduser('~/.openclaw/openclaw.json')) as cf:
         cc = json.load(cf)
     ids = [m["id"] for m in cc["models"]["providers"]["google"]["models"]]
     assert "gemini-2.0-flash-lite" in ids, f"not in config: {ids}"
@@ -88,7 +89,7 @@ except Exception as e:
 
 # 5. Verify openclaw.json model assignments
 try:
-    with open('/home/lishopping913/.openclaw/openclaw.json') as f:
+    with open(os.path.expanduser('~/.openclaw/openclaw.json')) as f:
         config = json.load(f)
     expected = {
         "main":     "anthropic/claude-sonnet-4-6",

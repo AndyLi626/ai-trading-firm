@@ -6,8 +6,9 @@ Logs SEV-0 DATA_FABRICATION_RISK to GCP decisions table and prints ticket JSON.
 """
 import sys, os, json
 from datetime import datetime, timezone
+import os
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
 BOT_CACHE_PATH = os.path.join(WORKSPACE, "memory", "bot_cache.json")
 GCP_CLIENT_DIR = os.path.join(WORKSPACE, "shared", "tools")
 

@@ -5,8 +5,9 @@ Tests: 6 total
 """
 import sys, os, json, uuid, subprocess, tempfile, shutil, time
 from datetime import datetime, timezone, timedelta
+import os
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
 SCRIPTS = os.path.join(WORKSPACE, "shared", "scripts")
 PY = sys.executable
 

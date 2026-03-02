@@ -5,11 +5,12 @@ risk_review_lite.py — 规则门控，无 LLM。
 """
 import sys, os, json, uuid
 from datetime import datetime, timezone, time as dtime
+import os
 
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 
 FACTS   = "/tmp/oc_facts"
-WS      = "/home/lishopping913/.openclaw/workspace"
+WS = os.path.expanduser('~/.openclaw/workspace')
 now_utc = datetime.now(timezone.utc)
 
 RISK_RULES = {
@@ -121,7 +122,7 @@ def main():
 
     approved_count = sum(1 for v in new_verdicts if v.get("approved"))
 try:
-    import sys as _sys; _sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+    import sys as _sys; _sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
     from run_registry import registry_set as _rs
     _rs(f"risk_review:{verdict.get('symbol','?')}", "ok", verdict.get("decision","?"))
 except Exception:

@@ -28,7 +28,7 @@
 
 ## 3. 消息路由
 
-- **Boss → ManagerBot only**（Telegram bot: 8206459051, Boss ID: 1555430296）
+- **Boss → ManagerBot only**（Telegram bot: 8206459051, Boss ID: ${BOSS_TELEGRAM_ID}）
 - **InfraBot → Boss**（Telegram bot: 8762207071）仅用于系统告警
 - **Bot↔Bot**: 通过 `bot_cache.json` + GCP `market_signals` 表
 - **禁止绕过**: Boss 不得直接访问 Research/Media/Risk/Audit

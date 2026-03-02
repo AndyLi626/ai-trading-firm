@@ -6,7 +6,8 @@ No bot logic. Pure data collection.
 """
 # Token accounting: log no-op if facts unchanged
 import sys, os
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+import os
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
 try:
     from token_meter import facts_changed, record_run
     _METER_OK = True
@@ -26,8 +27,8 @@ _NEW_FACTS  = "/tmp/oc_facts/media_facts_new.json"
 FACTS_DIR = "/tmp/oc_facts"
 os.makedirs(FACTS_DIR, exist_ok=True)
 
-SECRETS = "/home/lishopping913/.openclaw/secrets"
-SHARED  = "/home/lishopping913/.openclaw/workspace/shared/tools"
+SECRETS = os.path.expanduser('~/.openclaw/secrets')
+SHARED  = os.path.expanduser('~/.openclaw/workspace/shared/tools')
 sys.path.insert(0, SHARED)
 
 def load_secret(name):

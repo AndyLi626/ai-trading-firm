@@ -74,10 +74,10 @@ Skip filler. Come back with the answer or the thing already built.
 - `run_with_budget.py` — 所有 LLM 路径的门控，绝对不可隔离
 
 ## Command Handlers (Boss-only)
-When you receive a message matching these patterns from Boss (Telegram ID 1555430296):
+When you receive a message matching these patterns from Boss (Telegram ID ${BOSS_TELEGRAM_ID}):
 
 ### /budget refresh
-- Action: exec `python3 /home/lishopping913/.openclaw/workspace/shared/scripts/budget_refresh.py`
+- Action: exec `python3 ~/.openclaw/workspace/shared/scripts/budget_refresh.py`
 - Display: Parse output JSON and format as:
   ```
   Budget Refresh ✅ <refreshed_at>

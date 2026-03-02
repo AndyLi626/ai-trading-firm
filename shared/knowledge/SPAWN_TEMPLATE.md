@@ -16,7 +16,7 @@ Telegram → control-plane only. Large builds → Webchat or exec.
 [One sentence: what should exist or work after this task completes]
 
 ## CONTEXT
-- Workspace: /home/lishopping913/.openclaw/workspace/
+- Workspace: ~/.openclaw/workspace/
 - Relevant files: [list paths only — do not inline contents]
 - Current state: [brief description of what exists now]
 
@@ -105,7 +105,7 @@ task = """
 Create governance + test framework for the trading firm platform.
 
 ## CONTEXT
-- Workspace: /home/lishopping913/.openclaw/workspace/
+- Workspace: ~/.openclaw/workspace/
 - Existing tests: tests/test_*.py (9 files), tests/run_all.py
 - Agents: manager, research, media, risk, audit, infra (see agents/)
 - Shared tools: shared/tools/gcp_client.py, shared/scripts/collect_*.py

@@ -6,8 +6,9 @@ Uses file/subprocess manipulation only — no live API calls.
 """
 import sys, os, json, subprocess, tempfile, shutil, time
 from datetime import datetime, timezone, timedelta
+import os
 
-WS = "/home/lishopping913/.openclaw/workspace"
+WS = os.path.expanduser('~/.openclaw/workspace')
 FACTS_DIR = "/tmp/oc_facts"
 CACHE_PATH = os.path.join(WS, "memory/bot_cache.json")
 

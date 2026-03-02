@@ -6,7 +6,7 @@ Output: runtime_state/usage_report_YYYY-MM-DD.json + human-readable summary.
 import os, sys, json
 from datetime import datetime, timezone
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
 sys.path.insert(0, os.path.join(WORKSPACE, "shared", "tools"))
 sys.path.insert(0, os.path.join(WORKSPACE, "shared", "knowledge"))
 

@@ -5,10 +5,11 @@ Exit 0: all covered. Exit 1: missing found (tickets created).
 """
 import json, os, sys, re
 from datetime import datetime, timezone
+import os
 
-TICKET_Q  = '/home/lishopping913/.openclaw/workspace/shared/state/ticket_queue.jsonl'
-INCIDENT  = '/home/lishopping913/.openclaw/workspace/shared/knowledge/INCIDENT_LOG.md'
-PM_DIR    = '/home/lishopping913/.openclaw/workspace/shared/knowledge/postmortems'
+TICKET_Q  = os.path.expanduser('~/.openclaw/workspace/shared/state/ticket_queue.jsonl')
+INCIDENT  = os.path.expanduser('~/.openclaw/workspace/shared/knowledge/INCIDENT_LOG.md')
+PM_DIR    = os.path.expanduser('~/.openclaw/workspace/shared/knowledge/postmortems')
 OUT_PATH  = '/tmp/oc_facts/postmortem_status.json'
 now = datetime.now(timezone.utc)
 os.makedirs(PM_DIR, exist_ok=True)

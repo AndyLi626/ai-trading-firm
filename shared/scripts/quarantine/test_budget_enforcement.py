@@ -9,7 +9,7 @@ All GCP writes use is_test=True.
 import os, sys, json, uuid, subprocess, time
 from datetime import datetime, timezone
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
 BUDGET_FILE = os.path.join(WORKSPACE, "shared", "knowledge", "BUDGET.json")
 CACHE_FILE  = "/tmp/oc_facts/budget_state.json"
 sys.path.insert(0, os.path.join(WORKSPACE, "shared", "tools"))

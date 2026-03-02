@@ -195,13 +195,19 @@
         "at": "2026-03-02T18:22:27.588580+00:00",
         "by": "infra",
         "detail": "处理中（逾期 12分钟）— 继续执行"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T20:24:53.649867+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 112分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T07:01:02.619825+00:00",
     "ack_at": "2026-03-02T07:01:02.619820+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:32:27.588455+00:00"
+    "next_update_at": "2026-03-02T20:34:53.649702+00:00"
   },
   "GOVERNANCE-CRON-SPRAWL": {
     "ticket_id": "GOVERNANCE-CRON-SPRAWL",
@@ -399,13 +405,19 @@
         "at": "2026-03-02T18:22:27.590130+00:00",
         "by": "infra",
         "detail": "处理中（逾期 12分钟）— 继续执行"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T20:24:53.659327+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 112分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T07:01:02.620493+00:00",
     "ack_at": "2026-03-02T07:01:02.620489+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:32:27.590035+00:00"
+    "next_update_at": "2026-03-02T20:34:53.655755+00:00"
   },
   "INFRA-2026-03-02-001": {
     "ticket_id": "INFRA-2026-03-02-001",
@@ -561,22 +573,28 @@
         "at": "2026-03-02T18:22:27.586398+00:00",
         "by": "infra",
         "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:32"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T20:24:53.665578+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 112分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T18:22:27.586243+00:00",
     "ack_at": "2026-03-02T18:22:27.586238+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:32:27.586214+00:00"
+    "next_update_at": "2026-03-02T20:34:53.665427+00:00"
   },
   "171a90a0-cf62-4503-bbba-d97e99b6da7c": {
     "ticket_id": "171a90a0-cf62-4503-bbba-d97e99b6da7c",
-    "action": "create",
+    "action": "incident",
     "from": "manager",
     "to": "infra",
     "message": "strategy_hint P1.5: 이벤트 트리거 LLM 접목 (anomaly→hint→risklite→pr\n\nstrategy_hint P1.5: 이벤트 트리거 LLM 접목 (anomaly→hint→risklite→proposals)\n\n검수기준: anomaly 이벤트 → event_proposals.json 생성 확인 + risk_gate=passed 포함 + budget stop 시 graceful degrade 확인",
     "priority": "high",
-    "status": "OPEN",
+    "status": "INCIDENT",
     "created_at": "2026-03-02T18:27:16.936353+00:00",
     "eta_min": 10,
     "ack_deadline": "2026-03-02T18:37:16.936367+00:00",
@@ -587,16 +605,17 @@
         "by": "manager"
       }
     ],
-    "_ts": "2026-03-02T18:27:16.936389+00:00"
+    "_ts": "2026-03-02T20:24:53.603343+00:00",
+    "reason": "ACK 超时 117分钟"
   },
   "d6dfd5d2-1a98-46bd-98ff-3908bdd0e36e": {
     "ticket_id": "d6dfd5d2-1a98-46bd-98ff-3908bdd0e36e",
-    "action": "create",
+    "action": "incident",
     "from": "manager",
     "to": "infra",
     "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
     "priority": "normal",
-    "status": "OPEN",
+    "status": "INCIDENT",
     "created_at": "2026-03-02T18:33:32.746861+00:00",
     "eta_min": 30,
     "ack_deadline": "2026-03-02T18:43:32.746872+00:00",
@@ -607,16 +626,17 @@
         "by": "manager"
       }
     ],
-    "_ts": "2026-03-02T18:33:32.746884+00:00"
+    "_ts": "2026-03-02T20:24:53.606101+00:00",
+    "reason": "ACK 超时 111分钟"
   },
   "296c8f63-056b-4afa-9206-100a8dc7562e": {
     "ticket_id": "296c8f63-056b-4afa-9206-100a8dc7562e",
-    "action": "create",
+    "action": "incident",
     "from": "manager",
     "to": "infra",
     "message": "E2E SMOKE FAIL 자동 티켓: SC2_ticketify_ack: ack error: cannot i\n\nE2E SMOKE FAIL 자동 티켓: SC2_ticketify_ack: ack error: cannot import name 'ack_ticke; SC5_cron_drift: drift=1 violations=[]\n\n검수기준: smoke 재실행 시 PASS 6/6 확인",
     "priority": "high",
-    "status": "OPEN",
+    "status": "INCIDENT",
     "created_at": "2026-03-02T18:33:32.808428+00:00",
     "eta_min": 10,
     "ack_deadline": "2026-03-02T18:43:32.808442+00:00",
@@ -627,16 +647,17 @@
         "by": "manager"
       }
     ],
-    "_ts": "2026-03-02T18:33:32.808456+00:00"
+    "_ts": "2026-03-02T20:24:53.608940+00:00",
+    "reason": "ACK 超时 111分钟"
   },
   "8bef6ef9-9c07-4277-ac58-98b24bd7447c": {
     "ticket_id": "8bef6ef9-9c07-4277-ac58-98b24bd7447c",
-    "action": "create",
+    "action": "incident",
     "from": "manager",
     "to": "infra",
     "message": "E2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\nE2E SMOKE SC-2: data mismatch test (자동 생성 테스트 티켓)\n\n검수기준: smoke test 자동 ACK 확인",
     "priority": "normal",
-    "status": "OPEN",
+    "status": "INCIDENT",
     "created_at": "2026-03-02T18:33:52.170073+00:00",
     "eta_min": 30,
     "ack_deadline": "2026-03-02T18:43:52.170085+00:00",
@@ -647,16 +668,17 @@
         "by": "manager"
       }
     ],
-    "_ts": "2026-03-02T18:33:52.170096+00:00"
+    "_ts": "2026-03-02T20:24:53.614159+00:00",
+    "reason": "ACK 超时 111分钟"
   },
   "1f60d767-f87e-4182-b25b-3099a4c7bbb8": {
     "ticket_id": "1f60d767-f87e-4182-b25b-3099a4c7bbb8",
-    "action": "create",
+    "action": "incident",
     "from": "manager",
     "to": "infra",
     "message": "E2E SMOKE FAIL 자동 티켓: SC2_ticketify_ack: ack error: name '_l\n\nE2E SMOKE FAIL 자동 티켓: SC2_ticketify_ack: ack error: name '_load_index' is not def\n\n검수기준: smoke 재실행 시 PASS 6/6 확인",
     "priority": "high",
-    "status": "OPEN",
+    "status": "INCIDENT",
     "created_at": "2026-03-02T18:33:52.232043+00:00",
     "eta_min": 10,
     "ack_deadline": "2026-03-02T18:43:52.232060+00:00",
@@ -667,7 +689,8 @@
         "by": "manager"
       }
     ],
-    "_ts": "2026-03-02T18:33:52.232072+00:00"
+    "_ts": "2026-03-02T20:24:53.620153+00:00",
+    "reason": "ACK 超时 111分钟"
   },
   "d6fa6318-ae72-464b-8eb7-656eaeaa3eab": {
     "ticket_id": "d6fa6318-ae72-464b-8eb7-656eaeaa3eab",
@@ -691,22 +714,28 @@
         "at": "2026-03-02T18:33:56.616739+00:00",
         "by": "infra",
         "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:43"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T20:24:53.674961+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 100分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T18:33:56.616635+00:00",
     "ack_at": "2026-03-02T18:33:56.616631+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:43:56.616615+00:00"
+    "next_update_at": "2026-03-02T20:34:53.671818+00:00"
   },
   "dad11f9e-0324-46f6-99f5-3fe5cc811f67": {
     "ticket_id": "dad11f9e-0324-46f6-99f5-3fe5cc811f67",
-    "action": "create",
+    "action": "incident",
     "from": "manager",
     "to": "infra",
     "message": "E2E SMOKE FAIL 자동 티켓: SC5_cron_drift: drift=1 violations=[]\n\nE2E SMOKE FAIL 자동 티켓: SC5_cron_drift: drift=1 violations=[]\n\n검수기준: smoke 재실행 시 PASS 6/6 확인",
     "priority": "high",
-    "status": "OPEN",
+    "status": "INCIDENT",
     "created_at": "2026-03-02T18:33:56.678003+00:00",
     "eta_min": 10,
     "ack_deadline": "2026-03-02T18:43:56.678018+00:00",
@@ -717,7 +746,8 @@
         "by": "manager"
       }
     ],
-    "_ts": "2026-03-02T18:33:56.678032+00:00"
+    "_ts": "2026-03-02T20:24:53.626137+00:00",
+    "reason": "ACK 超时 110分钟"
   },
   "e981d34f-00f6-44a6-8187-d780a3e31b7f": {
     "ticket_id": "e981d34f-00f6-44a6-8187-d780a3e31b7f",
@@ -741,13 +771,19 @@
         "at": "2026-03-02T18:34:04.388298+00:00",
         "by": "infra",
         "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:44"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T20:24:53.681194+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 100分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T18:34:04.388208+00:00",
     "ack_at": "2026-03-02T18:34:04.388204+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:44:04.388187+00:00"
+    "next_update_at": "2026-03-02T20:34:53.680783+00:00"
   },
   "4f3435d4-e610-4bb3-9274-9dcbdf08f411": {
     "ticket_id": "4f3435d4-e610-4bb3-9274-9dcbdf08f411",
@@ -771,13 +807,19 @@
         "at": "2026-03-02T18:34:16.643321+00:00",
         "by": "infra",
         "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:44"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T20:24:53.686214+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 100分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T18:34:16.643224+00:00",
     "ack_at": "2026-03-02T18:34:16.643220+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:44:16.643202+00:00"
+    "next_update_at": "2026-03-02T20:34:53.686070+00:00"
   },
   "be223823-500f-4017-bbb6-168862a9f87c": {
     "ticket_id": "be223823-500f-4017-bbb6-168862a9f87c",
@@ -801,22 +843,28 @@
         "at": "2026-03-02T18:34:55.839788+00:00",
         "by": "infra",
         "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:44"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T20:24:53.693325+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 99分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T18:34:55.839691+00:00",
     "ack_at": "2026-03-02T18:34:55.839687+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:44:55.839668+00:00"
+    "next_update_at": "2026-03-02T20:34:53.693157+00:00"
   },
   "55470d8e-50ed-4fd9-b743-8675a588f023": {
     "ticket_id": "55470d8e-50ed-4fd9-b743-8675a588f023",
-    "action": "create",
+    "action": "incident",
     "from": "manager",
     "to": "infra",
     "message": "upgrade-check 주간 cron 추가 제안: 매주 월요일 09:00 UTC, upgrade_check\n\nupgrade-check 주간 cron 추가 제안: 매주 월요일 09:00 UTC, upgrade_check.py 실행, delivery=none\n\n검수기준: cron 추가 후 첫 실행에서 versions_consistent=True 확인",
     "priority": "normal",
-    "status": "OPEN",
+    "status": "INCIDENT",
     "created_at": "2026-03-02T18:48:32.294412+00:00",
     "eta_min": 30,
     "ack_deadline": "2026-03-02T18:58:32.294426+00:00",
@@ -827,7 +875,8 @@
         "by": "manager"
       }
     ],
-    "_ts": "2026-03-02T18:48:32.294438+00:00"
+    "_ts": "2026-03-02T20:24:53.632176+00:00",
+    "reason": "ACK 超时 96分钟"
   },
   "62705ef2-f551-4a66-bb52-daed76822512": {
     "ticket_id": "62705ef2-f551-4a66-bb52-daed76822512",
@@ -851,12 +900,48 @@
         "at": "2026-03-02T18:48:37.918321+00:00",
         "by": "infra",
         "detail": "RECEIVED | ETA=30min | next_update=2026-03-02T18:58"
+      },
+      {
+        "event": "PROGRESS",
+        "at": "2026-03-02T20:24:53.700294+00:00",
+        "by": "infra",
+        "detail": "处理中（逾期 86分钟）— 继续执行"
       }
     ],
     "_ts": "2026-03-02T18:48:37.918224+00:00",
     "ack_at": "2026-03-02T18:48:37.918219+00:00",
     "ack_type": "auto",
     "owner": "infra",
-    "next_update_at": "2026-03-02T18:58:37.918201+00:00"
+    "next_update_at": "2026-03-02T20:34:53.700130+00:00"
+  },
+  "INFRA-2026-03-02-004": {
+    "ticket_id": "INFRA-2026-03-02-004",
+    "action": "ack",
+    "from": "manager",
+    "to": "infra",
+    "message": "INFRA-2026-03-02-004",
+    "priority": "high",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T20:24:53.599001+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T20:34:53.599027+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T20:24:53.599039+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T20:24:53.642075+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=10min | next_update=2026-03-02T20:34"
+      }
+    ],
+    "_ts": "2026-03-02T20:24:53.638862+00:00",
+    "ack_at": "2026-03-02T20:24:53.638855+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T20:34:53.638828+00:00"
   }
 }

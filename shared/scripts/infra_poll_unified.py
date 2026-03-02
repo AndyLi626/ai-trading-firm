@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 """
 infra_poll_unified.py — 统一轮询器（确定性，budget-exempt，tokens=0）
 每分钟由 infra-ticket-poll cron 调用
@@ -102,7 +103,7 @@ def sync_manager_runtime(tickets_seen, tickets_acked):
     """Manager  runtime_state file  (Rule 8  )"""
     import json
     from datetime import datetime, timezone
-    MGR_RT = "/home/lishopping913/.openclaw/workspace-manager/runtime_state"
+    MGR_RT = os.path.expanduser('~/.openclaw/workspace-manager/runtime_state')
     now    = datetime.now(timezone.utc)
 
     # 1. infra_heartbeat.json

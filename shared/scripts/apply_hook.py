@@ -3,8 +3,9 @@
 import sys, json, os
 from datetime import datetime, timezone
 
-CHANGELOG = '/home/lishopping913/.openclaw/workspace/ledger/CHANGELOG.md'
-TICKET_Q  = '/home/lishopping913/.openclaw/workspace/shared/state/ticket_queue.jsonl'
+_WS       = os.path.expanduser('~/.openclaw/workspace')
+CHANGELOG = os.path.join(_WS, 'ledger/CHANGELOG.md')
+TICKET_Q  = os.path.join(_WS, 'shared/state/ticket_queue.jsonl')
 ARCH_TYPES = {'cron','model','budget','schema','topology','routing','prompt'}
 
 data = json.loads(sys.stdin.read())

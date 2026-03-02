@@ -11,7 +11,7 @@ Exit code: 0=allowed, 1=hard_stop
 import os, sys, json, uuid, subprocess
 from datetime import datetime, timezone
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
 sys.path.insert(0, os.path.join(WORKSPACE, "shared", "tools"))
 
 HARVEST_SCRIPT = os.path.join(WORKSPACE, "shared", "scripts", "harvest_openclaw_usage.py")

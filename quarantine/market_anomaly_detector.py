@@ -192,7 +192,7 @@ def main():
     }
 
 try:
-    import sys as _sys; _sys.path.insert(0, '/home/lishopping913/.openclaw/workspace/shared/tools')
+    import sys as _sys, os as _os; _sys.path.insert(0, _os.path.expanduser('~/.openclaw/workspace/shared/tools'))
     from run_registry import registry_set as _rs
     _rs('anomaly_detector', 'ok', f"events={summary.get('events_triggered',0)}")
 except Exception:

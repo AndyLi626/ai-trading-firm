@@ -5,11 +5,12 @@ test_data_gate.py — Unit + integration tests for the Data Provenance Gate.
 import json, os, re, subprocess, sys, tempfile, time, unittest
 from datetime import datetime, timezone, timedelta
 from unittest.mock import patch, MagicMock
+import os
 
 ARTIFACT_PATH = "/tmp/oc_facts/MARKET_PULSE.json"
-DATA_GATE = "/home/lishopping913/.openclaw/workspace/shared/scripts/data_gate.py"
-AUDIT_SCRIPT = "/home/lishopping913/.openclaw/workspace/shared/scripts/audit_data_violation.py"
-BOT_CACHE = "/home/lishopping913/.openclaw/workspace/memory/bot_cache.json"
+DATA_GATE = os.path.expanduser('~/.openclaw/workspace/shared/scripts/data_gate.py')
+AUDIT_SCRIPT = os.path.expanduser('~/.openclaw/workspace/shared/scripts/audit_data_violation.py')
+BOT_CACHE = os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json')
 
 
 def _write_artifact(data: dict):
@@ -112,7 +113,7 @@ class TestDataGate(unittest.TestCase):
         with patch.dict(sys.modules, {"gcp_client": MagicMock()}):
             # Patch log_decision so no live GCP call
             env = os.environ.copy()
-            env["PYTHONPATH"] = "/home/lishopping913/.openclaw/workspace/shared/tools"
+            env["PYTHONPATH"] = os.path.expanduser('~/.openclaw/workspace/shared/tools')
 
             # Use a mock that overrides gcp_client import inside audit script
             mock_gcp = os.path.join(tempfile.gettempdir(), "gcp_client.py")

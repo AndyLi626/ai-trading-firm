@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 """
 strategy_hint.py — P1.5 Event trigger LLM 
 Trigger: anomaly_detector / market_pulse  / emergency_requests
@@ -12,10 +13,10 @@ Output: /tmp/oc_facts/event_proposals.json (append, risk_gate=pending)
 import sys, os, json, uuid, subprocess
 from datetime import datetime, timezone
 
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
-sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/scripts")
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
+sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/scripts'))
 
-WS      = "/home/lishopping913/.openclaw/workspace"
+WS = os.path.expanduser('~/.openclaw/workspace')
 FACTS   = "/tmp/oc_facts"
 now_utc = datetime.now(timezone.utc)
 

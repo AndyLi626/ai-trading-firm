@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Archivist query. Usage: python3 archivist_query.py <keyword>"""
 import sys, os
+import os
 
-LEDGER = '/home/lishopping913/.openclaw/workspace/ledger'
+LEDGER = os.path.expanduser('~/.openclaw/workspace/ledger')
 SOURCES = ['CAPABILITIES.md','STATUS_MATRIX.md','ARCHITECTURE.md']
 
 keyword = ' '.join(sys.argv[1:]).lower() if len(sys.argv) > 1 else ''

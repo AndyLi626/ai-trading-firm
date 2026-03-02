@@ -72,3 +72,20 @@ _Append-only. Each entry: date | commit | change | files_
 - memory/i18n_korean_inventory.md: full file list
 - memory/token_security_report.md: tokens safe (outside git), Boss action required for env vars
 - memory/readme_update_summary.md: section-by-section changelog
+
+## 2026-03-02 20:35 UTC — fix: security hardening + path portability
+
+### Issues Resolved
+1. MARKET_PULSE stale (119min) → refreshed directly; cron confirmed running ✅
+2. heartbeat file missing → workspace-manager/runtime_state/ symlink created; 7/7 healthcheck restored ✅
+3. runtime_state/ files removed from git tracking (5 files: RELEASE_GATE, handoff, instruction, rollback, progress) ✅
+4. Telegram Boss ID 1555430296 redacted → ${BOSS_TELEGRAM_ID} in SOUL.md, ADR-008, ARCHITECTURE.md, e2e_smoke.py ✅
+5. /home/lishopping913/ hardcoded paths → os.path.expanduser('~/.openclaw/...') in 51 files (0 syntax errors) ✅
+6. cron jobs.json 13 payloads: absolute paths → ~/.openclaw/workspace ✅
+7. {datetime} template not substituted in memoryFlush.prompt → removed unsupported placeholder ✅
+
+### Security Status
+- git tracked files: 0 API keys, 0 hardcoded paths, 0 personal identifiers
+- runtime_state/ now gitignored
+- openclaw.json: outside git scope (safe)
+- secrets/: gitignored (safe)

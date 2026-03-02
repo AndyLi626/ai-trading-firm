@@ -6,8 +6,9 @@ Example: python3 update_cache.py media '{"last_sentiment_score":0.15,"last_scan_
 """
 import sys, os, json
 from datetime import datetime, timezone
+import os
 
-CACHE = "/home/lishopping913/.openclaw/workspace/memory/bot_cache.json"
+CACHE = os.path.expanduser('~/.openclaw/workspace/memory/bot_cache.json')
 
 if len(sys.argv) < 3:
     print("usage: update_cache.py <bot> <json_patch>"); sys.exit(1)

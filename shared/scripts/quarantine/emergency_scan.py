@@ -5,8 +5,9 @@ Called by emergency_poll.sh (media bot cron, 1-min interval).
 """
 import sys, os, json, uuid, subprocess
 from datetime import datetime, timezone
+import os
 
-WORKSPACE = "/home/lishopping913/.openclaw/workspace"
+WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
 SCRIPTS = os.path.join(WORKSPACE, "shared", "scripts")
 FACTS_DIR = "/tmp/oc_facts"
 REQUESTS_FILE = os.path.join(FACTS_DIR, "emergency_requests.json")
@@ -78,7 +79,7 @@ def run_brave_news(symbols: list) -> list:
     """Fetch Brave news for symbols. Returns list of articles."""
     try:
         import urllib.request, urllib.parse, gzip
-        SECRETS = "/home/lishopping913/.openclaw/secrets"
+        SECRETS = os.path.expanduser('~/.openclaw/secrets')
         key_file = os.path.join(SECRETS, "brave_api_key.txt")
         if not os.path.exists(key_file):
             return []
@@ -201,7 +202,7 @@ def main():
     })
 
     # ── P1 downstream: strategy_hint → risk_review_lite ──────────────────────
-    WS = "/home/lishopping913/.openclaw/workspace"
+    WS = os.path.expanduser('~/.openclaw/workspace')
     try:
         # Budget check before downstream LLM work
         import subprocess as _sp
@@ -222,7 +223,7 @@ def main():
         pass  # degrade silently, main scan already done
 
 try:
-    import sys as _sys; _sys.path.insert(0, "/home/lishopping913/.openclaw/workspace/shared/tools")
+    import sys as _sys; _sys.path.insert(0, os.path.join(os.path.expanduser('~/.openclaw/workspace'), 'shared/tools'))
     from run_registry import registry_set as _rs
     _rs("emergency_scan", result.get("status","ok"), f"signals={result.get('signals_count',0)} chain={result.get('chain_id','')[:8]}")
 except Exception:

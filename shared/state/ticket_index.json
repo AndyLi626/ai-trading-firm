@@ -1387,5 +1387,35 @@
     "ack_type": "auto",
     "owner": "infra",
     "next_update_at": "2026-03-02T22:41:34.299987+00:00"
+  },
+  "INFRA-2026-03-02-006": {
+    "ticket_id": "INFRA-2026-03-02-006",
+    "action": "ack",
+    "from": "manager",
+    "to": "infra",
+    "message": "INFRA-2026-03-02-006",
+    "priority": "high",
+    "status": "IN_PROGRESS",
+    "created_at": "2026-03-02T22:37:05.281418+00:00",
+    "eta_min": 10,
+    "ack_deadline": "2026-03-02T22:47:05.281438+00:00",
+    "history": [
+      {
+        "event": "CREATED",
+        "at": "2026-03-02T22:37:05.281445+00:00",
+        "by": "manager"
+      },
+      {
+        "event": "ACK",
+        "at": "2026-03-02T22:37:05.285699+00:00",
+        "by": "infra",
+        "detail": "RECEIVED | ETA=10min | next_update=2026-03-02T22:47"
+      }
+    ],
+    "_ts": "2026-03-02T22:37:05.285602+00:00",
+    "ack_at": "2026-03-02T22:37:05.285597+00:00",
+    "ack_type": "auto",
+    "owner": "infra",
+    "next_update_at": "2026-03-02T22:47:05.285577+00:00"
   }
 }

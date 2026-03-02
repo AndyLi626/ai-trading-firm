@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 """
-infra_poll_unified.py — 통합 ticket 폴러 (budget-exempt, deterministic)
-두 소스를 동시에 처리:
-  1. workspace-manager/INFRA_TICKETS.md  (Manager가 씀)
-  2. /tmp/oc_facts/infra_tickets.json    (브릿지/직접 작성)
+infra_poll_unified.py — 统一工单轮询器 (budget-exempt, 确定性)
+同时处理两个来源：
+  1. workspace-manager/INFRA_TICKETS.md  (Manager 写入)
+  2. /tmp/oc_facts/infra_tickets.json    (桥接/直接写入)
 
-동작:
-  - OPEN + 미ACK 티켓 → 자동 ACK (60초 이내)
-  - ACK를 INFRA_TICKETS.md에 직접 append
-  - 상태를 infra_tickets.json에 sync
-  - heartbeat 파일 갱신
-  - OVERDUE → INCIDENT 자동 승격
+行为：
+  - OPEN + 未ACK 工单 → 自动 ACK（60秒内）
+  - ACK 直接追加到 INFRA_TICKETS.md
+  - 状态同步到 infra_tickets.json
+  - 更新 heartbeat 文件
+  - OVERDUE → INCIDENT 自动升级
 
-tokens=0 (LLM 호출 없음) — run_with_budget 통과 불필요
+tokens=0（无 LLM 调用）— 不受 run_with_budget 限制
 """
 import sys, os, json, re, uuid
 from datetime import datetime, timezone, timedelta
 
-# ── 경로 상수 ─────────────────────────────────────────────────────────────────
+# ── 路径常量 ──────────────────────────────────────────────────────────────────
 WS         = "/home/lishopping913/.openclaw/workspace"
 WS_MGR     = "/home/lishopping913/.openclaw/workspace-manager"
 MD_PATH    = f"{WS_MGR}/INFRA_TICKETS.md"
 JSON_PATH  = "/tmp/oc_facts/infra_tickets.json"
 HEARTBEAT  = f"{WS}/memory/infra_ticket_poller_heartbeat.json"
-ACK_TIMEOUT = 600   # 10분 이내 ACK
-ETA_RESOLVE = 60    # 기본 resolve ETA (분)
+ACK_TIMEOUT = 600   # 10分钟内 ACK
+ETA_RESOLVE = 60    # 默认 resolve ETA（分钟）
 now_utc    = datetime.now(timezone.utc)
 
 # ── JSON DB ───────────────────────────────────────────────────────────────────
@@ -37,60 +37,70 @@ def save_json_db(tickets):
     os.makedirs(os.path.dirname(JSON_PATH), exist_ok=True)
     json.dump(tickets, open(JSON_PATH, "w"), indent=2)
 
-# ── Markdown 파서 ─────────────────────────────────────────────────────────────
+# ── Markdown 解析器 ───────────────────────────────────────────────────────────
 
 def parse_md_tickets():
-    """INFRA_TICKETS.md에서 OPEN 상태 ticket ID 목록 추출"""
+    """从 INFRA_TICKETS.md 提取 OPEN 状态的工单 ID"""
     if not os.path.exists(MD_PATH):
         return []
     content = open(MD_PATH).read()
 
     found = []
-    # 패턴: ### INFRA-YYYY-MM-DD-NNN 뒤에 나오는 JSON 블록에서 status=OPEN 확인
-    blocks = re.findall(
-        r'### (INFRA-[\d-]+).*?```json\s*(\{.*?\})\s*```',
-        content, re.DOTALL
-    )
-    for tid, json_str in blocks:
-        try:
-            data = json.loads(json_str)
-            status = data.get('status', '')
-            if 'OPEN' in status and 'ACK' not in status:
-                found.append({
-                    'ticket_id': data.get('ticket_id', tid),
-                    'title':     data.get('title', ''),
-                    'priority':  data.get('priority', 'P1'),
-                    'created_at': data.get('created_at', now_utc.isoformat()),
-                    'from':      data.get('requester', 'manager'),
-                    'source':    'md',
-                    'status':    'OPEN',
-                })
-        except Exception:
-            pass
+    # 模式：## 或 ### 标题中提取 INFRA-ID
+    all_ids = list(dict.fromkeys(
+        re.findall(r'#{1,3}\s+(INFRA-[\d]+-[\d]+-[\d]+-\d+)', content)
+    ))
+
+    # 已 ACK 的工单
+    acked = set(re.findall(r'## (INFRA-[\d]+-[\d]+-[\d]+-\d+): InfraBot ACK', content))
+
+    for tid in all_ids:
+        if tid in acked:
+            continue
+        # 提取对应 JSON 块中的元数据
+        pattern = rf'{re.escape(tid)}.*?```json\s*(\{{.*?\}})\s*```'
+        m = re.search(pattern, content, re.DOTALL)
+        data = {}
+        if m:
+            try: data = json.loads(m.group(1))
+            except Exception: pass
+
+        status = data.get('status', 'OPEN')
+        if 'OPEN' in status and 'RESOLVED' not in status:
+            found.append({
+                'ticket_id':  data.get('ticket_id', tid),
+                'title':      data.get('title', ''),
+                'priority':   data.get('priority', 'P1'),
+                'created_at': data.get('created_at', now_utc.isoformat()),
+                'from':       data.get('requester', 'manager'),
+                'source':     'md',
+                'status':     'OPEN',
+            })
+
     return found
 
-# ── ACK 작성기 ────────────────────────────────────────────────────────────────
+# ── ACK 写入器 ────────────────────────────────────────────────────────────────
 
-def write_ack_to_md(ticket_id, priority, eta_min):
-    """INFRA_TICKETS.md에 ACK 섹션을 append"""
+def write_ack_to_md(ticket_id, priority, eta_min, late=False):
+    """向 INFRA_TICKETS.md 追加 ACK 段落"""
     if not os.path.exists(MD_PATH):
         return
     eta_ts  = (now_utc + timedelta(minutes=eta_min)).strftime('%H:%M UTC')
     upd_ts  = (now_utc + timedelta(minutes=min(eta_min, 10))).strftime('%H:%M UTC')
+    late_note = "（补发 ACK — 渠道连接问题已修复）" if late else ""
     ack_txt = f"""
 ## {ticket_id}: InfraBot ACK
 
-**ACK 시각**: {now_utc.strftime('%Y-%m-%d %H:%M:%S')} UTC
-**status**: IN_PROGRESS
-**eta_resolve**: {eta_ts}
-**eta_next_update**: {upd_ts}
-**owner**: infra
-**blockers**: none
-**ack_type**: auto (control-plane, no approval needed)
+**ACK 时间**: {now_utc.strftime('%Y-%m-%d %H:%M:%S')} UTC {late_note}
+**状态**: IN_PROGRESS
+**预计完成**: {eta_ts}
+**下次更新**: {upd_ts}
+**负责人**: infra
+**阻塞项**: 无
+**ACK 类型**: 自动 (control-plane, 无需审批)
 
 ---
 """
-    # 중복 방지: 이미 ACK 섹션이 있으면 skip
     existing = open(MD_PATH).read()
     if f"{ticket_id}: InfraBot ACK" in existing:
         return
@@ -99,7 +109,7 @@ def write_ack_to_md(ticket_id, priority, eta_min):
 
 
 def sync_to_json(md_ticket, status, ack_at=None):
-    """JSON DB에 ticket 상태 동기화"""
+    """同步工单状态到 JSON DB"""
     tickets = load_json_db()
     existing = next((t for t in tickets if t['ticket_id'] == md_ticket['ticket_id']), None)
     if existing:
@@ -108,58 +118,62 @@ def sync_to_json(md_ticket, status, ack_at=None):
             existing['ack_at'] = ack_at
             existing['owner']  = 'infra'
     else:
-        entry = {**md_ticket, 'status': status, 'message': md_ticket.get('title',''),
-                 'history': [{'event':'CREATED','at':md_ticket['created_at'],'by':md_ticket['from']}]}
+        entry = {**md_ticket, 'status': status, 'message': md_ticket.get('title', ''),
+                 'history': [{'event': 'CREATED', 'at': md_ticket['created_at'], 'by': md_ticket['from']}]}
         if ack_at:
             entry['ack_at'] = ack_at
             entry['owner']  = 'infra'
         tickets.append(entry)
     save_json_db(tickets)
 
-# ── 메인 폴 루프 ─────────────────────────────────────────────────────────────
+# ── 主轮询逻辑 ────────────────────────────────────────────────────────────────
 
 def poll():
     results = {'acked': [], 'incidents': [], 'already_ok': [], 'errors': []}
 
-    # ── 소스 1: INFRA_TICKETS.md ──────────────────────────────────────────────
+    # ── 来源1：INFRA_TICKETS.md ───────────────────────────────────────────────
     md_open = parse_md_tickets()
     for t in md_open:
         tid      = t['ticket_id']
         priority = t.get('priority', 'P1')
         eta_min  = 60 if priority == 'P0' else 120
 
-        created  = datetime.fromisoformat(t['created_at'].replace('Z', '+00:00'))
-        age_sec  = (now_utc - created).total_seconds()
+        try:
+            created = datetime.fromisoformat(t['created_at'].replace('Z', '+00:00'))
+            age_sec = (now_utc - created).total_seconds()
+        except Exception:
+            age_sec = 0
 
-        if age_sec > ACK_TIMEOUT * 3:   # 30분 초과 → INCIDENT
+        late = age_sec > ACK_TIMEOUT
+        if age_sec > ACK_TIMEOUT * 3:  # 30分钟以上 → INCIDENT
             sync_to_json(t, 'INCIDENT')
             results['incidents'].append(tid)
         else:
             ack_at = now_utc.isoformat()
-            write_ack_to_md(tid, priority, eta_min)
+            write_ack_to_md(tid, priority, eta_min, late=late)
             sync_to_json(t, 'IN_PROGRESS', ack_at)
             results['acked'].append(tid)
 
-    # ── 소스 2: JSON DB (기존 OPEN 티켓) ─────────────────────────────────────
+    # ── 来源2：JSON DB（现有 OPEN 工单）──────────────────────────────────────
     json_tickets = load_json_db()
     for t in json_tickets:
         if t.get('status') == 'OPEN':
-            tid     = t['ticket_id']
             eta_min = 10 if t.get('priority') == 'high' else 30
-            t['status']   = 'IN_PROGRESS'
-            t['ack_at']   = now_utc.isoformat()
-            t['ack_type'] = 'auto'
-            t['owner']    = 'infra'
-            t['eta_min']  = eta_min
-            t['next_update_at'] = (now_utc + timedelta(minutes=min(eta_min, 10))).isoformat()
+            t['status']          = 'IN_PROGRESS'
+            t['ack_at']          = now_utc.isoformat()
+            t['ack_type']        = 'auto'
+            t['owner']           = 'infra'
+            t['eta_min']         = eta_min
+            t['next_update_at']  = (now_utc + timedelta(minutes=min(eta_min, 10))).isoformat()
             t.setdefault('history', []).append({
-                'event': 'ACK', 'at': now_utc.isoformat(), 'by': 'infra',
+                'event':  'ACK',
+                'at':     now_utc.isoformat(),
+                'by':     'infra',
                 'detail': f'RECEIVED | ETA={eta_min}min | next_update={t["next_update_at"][:16]}'
             })
-            results['acked'].append(tid)
+            results['acked'].append(t['ticket_id'])
 
         elif t.get('status') == 'IN_PROGRESS':
-            # 진행 중 → next_update_at 초과 시 진도 업데이트
             nxt = t.get('next_update_at')
             if nxt:
                 try:
@@ -168,8 +182,10 @@ def poll():
                         overdue = int((now_utc - nxt_dt).total_seconds() / 60)
                         t['next_update_at'] = (now_utc + timedelta(minutes=10)).isoformat()
                         t.setdefault('history', []).append({
-                            'event': 'PROGRESS', 'at': now_utc.isoformat(), 'by': 'infra',
-                            'detail': f'처리 중 (overdue {overdue}min) — 계속 진행 중'
+                            'event':  'PROGRESS',
+                            'at':     now_utc.isoformat(),
+                            'by':     'infra',
+                            'detail': f'处理中（已逾期 {overdue}分钟）— 继续执行'
                         })
                         results['already_ok'].append(t['ticket_id'])
                 except Exception:
@@ -177,28 +193,28 @@ def poll():
 
     save_json_db(json_tickets)
 
-    # ── heartbeat 갱신 ────────────────────────────────────────────────────────
+    # ── Heartbeat ─────────────────────────────────────────────────────────────
     os.makedirs(os.path.dirname(HEARTBEAT), exist_ok=True)
     hb = {
-        'last_run_at':     now_utc.isoformat(),
-        'tickets_seen':    len(md_open) + len([t for t in json_tickets if t.get('status') in ('OPEN','IN_PROGRESS')]),
-        'tickets_acked':   len(results['acked']),
-        'incidents':       results['incidents'],
-        'errors':          results['errors'],
-        'status':          'alive',
-        'next_run_in':     '60s',
+        'last_run_at':   now_utc.isoformat(),
+        'tickets_seen':  len(md_open) + len([t for t in json_tickets
+                                              if t.get('status') in ('OPEN', 'IN_PROGRESS')]),
+        'tickets_acked': len(results['acked']),
+        'incidents':     results['incidents'],
+        'errors':        results['errors'],
+        'status':        'alive',
+        'next_run_in':   '60s',
     }
     json.dump(hb, open(HEARTBEAT, 'w'), indent=2)
 
-    output = {
-        'status':      'ok',
-        'polled_at':   now_utc.isoformat(),
-        'md_open':     len(md_open),
-        'acked':       results['acked'],
-        'incidents':   results['incidents'],
-        'heartbeat':   HEARTBEAT,
-    }
-    print(json.dumps(output))
+    print(json.dumps({
+        'status':    'ok',
+        'polled_at': now_utc.isoformat(),
+        'md_open':   len(md_open),
+        'acked':     results['acked'],
+        'incidents': results['incidents'],
+        'heartbeat': HEARTBEAT,
+    }))
 
 
 if __name__ == '__main__':

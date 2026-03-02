@@ -25,3 +25,16 @@ _Append-only. Each entry: date | commit | change | files_
 - **Files:** shared/scripts/infra_poll_unified.py
 - **Validated:** ✅
 - **Rollback:** check .bak files or git log
+
+## 2026-03-02 17:37 UTC — ARCH_LOCK 기준선 수립 + MARKET_PULSE 수정
+
+### ARCH_LOCK
+- `arch_lock.py generate` 실행: 67개 항목 기준선 수립
+- `arch_lock.py check`: drift=0, status=clean
+- 대상: cron jobs (13개) + scripts (54개)
+
+### MARKET_PULSE freshness 수정
+- **근본 원인**: `run_with_budget.py` 호출 인수 오류 (`int("python3")` ValueError)
+- **수정**: 5개 whitelist cron의 payload를 직접 실행 방식으로 변경
+  - market-pulse-15m, anomaly-detector, emergency-scan-poll, infra-ticket-poll, media-intel-scan
+- **결과**: MARKET_PULSE age=0min (수정 전 139min)

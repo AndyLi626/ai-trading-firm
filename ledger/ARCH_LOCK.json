@@ -1,90 +1,382 @@
 {
-  "generated_at": "2026-03-02T15:18:30Z",
-  "files": {
-    "/home/lishopping913/.openclaw/openclaw.json": {
-      "sha256_prefix": "be931749351fc7a7",
-      "mtime": 1772462336.0,
-      "size": 7933
+  "generated_at": "2026-03-02T17:36:58.801561+00:00",
+  "version": 1,
+  "entries": {
+    "cron::media-intel-scan": {
+      "name": "media-intel-scan",
+      "agent": "media",
+      "delivery": "none",
+      "schedule_hash": "0843207f253627e9",
+      "payload_hash": "5d70af1e5dc04fcc"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/cron_drift_enforcer.py": {
-      "sha256_prefix": "205e9f314324c49a",
-      "mtime": 1772460852.0,
-      "size": 2328
+    "cron::audit-daily": {
+      "name": "audit-daily",
+      "agent": "audit",
+      "delivery": "none",
+      "schedule_hash": "a67588e0d72590d3",
+      "payload_hash": "ec99b1ed846888ed"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/provider_budget_guard.py": {
-      "sha256_prefix": "6e8a8d41aa2d9485",
-      "mtime": 1772462349.0,
-      "size": 7156
+    "cron::strategy-scan": {
+      "name": "strategy-scan",
+      "agent": "research",
+      "delivery": "none",
+      "schedule_hash": "640e52438a52bcb2",
+      "payload_hash": "8813e6ec7fa1e364"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/data_gate.py": {
-      "sha256_prefix": "e5b86dffcf527355",
-      "mtime": 1772432567.0,
-      "size": 2363
+    "cron::infra-5min-report": {
+      "name": "infra-5min-report",
+      "agent": "main",
+      "delivery": "none",
+      "schedule_hash": "aafb5c251dced45d",
+      "payload_hash": "2f089fe5b694fc71"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/budget_refresh.py": {
-      "sha256_prefix": "9b9a5ad6ff81ce58",
-      "mtime": 1772461125.0,
-      "size": 6460
+    "cron::manager-30min-report": {
+      "name": "manager-30min-report",
+      "agent": "manager",
+      "delivery": "announce",
+      "schedule_hash": "855b8e5644218760",
+      "payload_hash": "631148462211b4ae"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/model_override_reset.py": {
-      "sha256_prefix": "c915ab6bd31a7c32",
-      "mtime": 1772460839.0,
-      "size": 2543
+    "cron::autonomy-orchestrator": {
+      "name": "autonomy-orchestrator",
+      "agent": "manager",
+      "delivery": "none",
+      "schedule_hash": "84387d1026fe376b",
+      "payload_hash": "dfe25d3eb90e99ba"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/config/model_aliases.json": {
-      "sha256_prefix": "c4f430e2f7911dda",
-      "mtime": 1772462349.0,
-      "size": 792
+    "cron::repo-skills-scan": {
+      "name": "repo-skills-scan",
+      "agent": "research",
+      "delivery": "none",
+      "schedule_hash": "f797aca6dd63b533",
+      "payload_hash": "7b9782634549df38"
     },
-    "/home/lishopping913/.openclaw/cron/jobs.json": {
-      "sha256_prefix": "deefe06aa4929dc7",
-      "mtime": 1772463696.0,
-      "size": 18435
+    "cron::infra-12h-scan": {
+      "name": "infra-12h-scan",
+      "agent": "infra",
+      "delivery": "none",
+      "schedule_hash": "66e8450383118019",
+      "payload_hash": "50a17189ebd62c3e"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/tools/gcp_client.py": {
-      "sha256_prefix": "ea30a30c189b9e01",
-      "mtime": 1772462349.0,
-      "size": 10135
+    "cron::daily-model-reset": {
+      "name": "daily-model-reset",
+      "agent": "main",
+      "delivery": "none",
+      "schedule_hash": "f9a22e0a4e44d33c",
+      "payload_hash": "40b53c0a12e40760"
     },
-    "/home/lishopping913/.openclaw/workspace/ledger/ARCHITECTURE.md": {
-      "sha256_prefix": "f4ca2d5c08e84cb8",
-      "mtime": 1772463713.0,
-      "size": 3611
+    "cron::market-pulse-15m": {
+      "name": "market-pulse-15m",
+      "agent": "main",
+      "delivery": "none",
+      "schedule_hash": "f9d0a2d67a8ab7ab",
+      "payload_hash": "33101428b7f07719"
     },
-    "/home/lishopping913/.openclaw/workspace/ledger/STATUS_MATRIX.md": {
-      "sha256_prefix": "79669d4817b0d4f3",
-      "mtime": 1772463740.0,
-      "size": 3192
+    "cron::infra-ticket-poll": {
+      "name": "infra-ticket-poll",
+      "agent": "infra",
+      "delivery": "none",
+      "schedule_hash": "5136d44b12e902dc",
+      "payload_hash": "97515ab0953a17b0"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/market_pulse.py": {
-      "sha256_prefix": "90359eb60b5b5228",
-      "mtime": 1772464587.0,
-      "size": 7246
+    "cron::anomaly-detector": {
+      "name": "anomaly-detector",
+      "agent": "media",
+      "delivery": "none",
+      "schedule_hash": "e36b921a9f57adf9",
+      "payload_hash": "038fb01ca689d49c"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/infra_poll_unified.py": {
-      "sha256_prefix": "e5c76529b8d6111e",
-      "mtime": 1772436210.0,
-      "size": 8135
+    "cron::emergency-scan-poll": {
+      "name": "emergency-scan-poll",
+      "agent": "media",
+      "delivery": "none",
+      "schedule_hash": "e36b921a9f57adf9",
+      "payload_hash": "49bf787f41136950"
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/postmortem_enforcer.py": {
-      "sha256_prefix": "cdc17b697a9650ae",
-      "mtime": 1772464657.0,
-      "size": 2105
-    },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/archivist_query.py": {
-      "sha256_prefix": "28ce7e1952bcdee0",
-      "mtime": 1772463845.0,
-      "size": 884
-    },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/apply_hook.py": {
-      "sha256_prefix": "a4983d40ba4b7f2c",
-      "mtime": 1772463845.0,
+    "script::apply_hook.py": {
+      "path": "shared/scripts/apply_hook.py",
+      "hash": "a4983d40ba4b7f2c",
       "size": 1924
     },
-    "/home/lishopping913/.openclaw/workspace/shared/scripts/drift_detector.py": {
-      "sha256_prefix": "dded1b6950dd6db9",
-      "mtime": 1772463845.0,
+    "script::arch_lock.py": {
+      "path": "shared/scripts/arch_lock.py",
+      "hash": "7e24c4c85f7b5cb7",
+      "size": 5467
+    },
+    "script::archivist_apply_hook.py": {
+      "path": "shared/scripts/archivist_apply_hook.py",
+      "hash": "5d7ba8237615aa79",
+      "size": 4844
+    },
+    "script::archivist_preflight.py": {
+      "path": "shared/scripts/archivist_preflight.py",
+      "hash": "e258485163787716",
+      "size": 2029
+    },
+    "script::archivist_query.py": {
+      "path": "shared/scripts/archivist_query.py",
+      "hash": "28ce7e1952bcdee0",
+      "size": 884
+    },
+    "script::audit_data_violation.py": {
+      "path": "shared/scripts/audit_data_violation.py",
+      "hash": "4668b7a08dcf78a6",
+      "size": 2491
+    },
+    "script::autonomy_init_day.py": {
+      "path": "shared/scripts/autonomy_init_day.py",
+      "hash": "fb5f10d5cf4bf127",
+      "size": 4276
+    },
+    "script::autonomy_orchestrator.py": {
+      "path": "shared/scripts/autonomy_orchestrator.py",
+      "hash": "b103b1f9ea1399ea",
+      "size": 5158
+    },
+    "script::budget_refresh.py": {
+      "path": "shared/scripts/budget_refresh.py",
+      "hash": "9b9a5ad6ff81ce58",
+      "size": 6460
+    },
+    "script::check_budget_status.py": {
+      "path": "shared/scripts/check_budget_status.py",
+      "hash": "2857e017ffa794b2",
+      "size": 6331
+    },
+    "script::check_manager_cache.py": {
+      "path": "shared/scripts/check_manager_cache.py",
+      "hash": "0d2a139f9ea4b258",
+      "size": 2536
+    },
+    "script::collect_market.py": {
+      "path": "shared/scripts/collect_market.py",
+      "hash": "8291b5a83e9f8714",
+      "size": 3074
+    },
+    "script::collect_media.py": {
+      "path": "shared/scripts/collect_media.py",
+      "hash": "d59c924e0ce38468",
+      "size": 5255
+    },
+    "script::collect_team.py": {
+      "path": "shared/scripts/collect_team.py",
+      "hash": "c3286a560c31d748",
+      "size": 3268
+    },
+    "script::cron_drift_enforcer.py": {
+      "path": "shared/scripts/cron_drift_enforcer.py",
+      "hash": "6a1822b8c4a0545b",
+      "size": 2381
+    },
+    "script::daily_usage_report.py": {
+      "path": "shared/scripts/daily_usage_report.py",
+      "hash": "68416e8659644a2d",
+      "size": 8778
+    },
+    "script::data_gate.py": {
+      "path": "shared/scripts/data_gate.py",
+      "hash": "e5b86dffcf527355",
+      "size": 2363
+    },
+    "script::detect_changes.py": {
+      "path": "shared/scripts/detect_changes.py",
+      "hash": "d904b5978fc038b1",
+      "size": 6692
+    },
+    "script::drift_detector.py": {
+      "path": "shared/scripts/drift_detector.py",
+      "hash": "dded1b6950dd6db9",
       "size": 3203
+    },
+    "script::emergency_scan.py": {
+      "path": "shared/scripts/emergency_scan.py",
+      "hash": "09b30dcc6cbede7f",
+      "size": 8033
+    },
+    "script::emergency_trigger.py": {
+      "path": "shared/scripts/emergency_trigger.py",
+      "hash": "7c46f3bbf71dce5b",
+      "size": 3535
+    },
+    "script::fix_execution_logs.py": {
+      "path": "shared/scripts/fix_execution_logs.py",
+      "hash": "8974b38a3e59694b",
+      "size": 2219
+    },
+    "script::harvest_openclaw_usage.py": {
+      "path": "shared/scripts/harvest_openclaw_usage.py",
+      "hash": "cc937f2a0a476e8a",
+      "size": 16090
+    },
+    "script::infra_poll_unified.py": {
+      "path": "shared/scripts/infra_poll_unified.py",
+      "hash": "e5c76529b8d6111e",
+      "size": 8135
+    },
+    "script::infra_scan.py": {
+      "path": "shared/scripts/infra_scan.py",
+      "hash": "ad8cc0a2cf560718",
+      "size": 7757
+    },
+    "script::infra_ticket.py": {
+      "path": "shared/scripts/infra_ticket.py",
+      "hash": "17e5aa1287b38cfa",
+      "size": 9937
+    },
+    "script::ledger_preflight.py": {
+      "path": "shared/scripts/ledger_preflight.py",
+      "hash": "c32a18033219d910",
+      "size": 7883
+    },
+    "script::manager_cooldown.py": {
+      "path": "shared/scripts/manager_cooldown.py",
+      "hash": "d31384007cdd74b0",
+      "size": 2581
+    },
+    "script::market_anomaly_detector.py": {
+      "path": "shared/scripts/market_anomaly_detector.py",
+      "hash": "a599f4c0b67112b1",
+      "size": 6861
+    },
+    "script::market_pulse.py": {
+      "path": "shared/scripts/market_pulse.py",
+      "hash": "90359eb60b5b5228",
+      "size": 7246
+    },
+    "script::media_finalize.py": {
+      "path": "shared/scripts/media_finalize.py",
+      "hash": "27191485f5d5d264",
+      "size": 1973
+    },
+    "script::model_override_reset.py": {
+      "path": "shared/scripts/model_override_reset.py",
+      "hash": "c915ab6bd31a7c32",
+      "size": 2543
+    },
+    "script::model_probe.py": {
+      "path": "shared/scripts/model_probe.py",
+      "hash": "ed389008071f05e8",
+      "size": 4522
+    },
+    "script::postmortem_enforcer.py": {
+      "path": "shared/scripts/postmortem_enforcer.py",
+      "hash": "cdc17b697a9650ae",
+      "size": 2105
+    },
+    "script::postmortem_generator.py": {
+      "path": "shared/scripts/postmortem_generator.py",
+      "hash": "7bfc0f97c23d41f2",
+      "size": 6931
+    },
+    "script::provider_budget_guard.py": {
+      "path": "shared/scripts/provider_budget_guard.py",
+      "hash": "6e8a8d41aa2d9485",
+      "size": 7156
+    },
+    "script::repo_skills_scan.py": {
+      "path": "shared/scripts/repo_skills_scan.py",
+      "hash": "7f49647f2dfb8944",
+      "size": 4018
+    },
+    "script::risk_review_lite.py": {
+      "path": "shared/scripts/risk_review_lite.py",
+      "hash": "6c8951f451efc95e",
+      "size": 4762
+    },
+    "script::run_with_budget.py": {
+      "path": "shared/scripts/run_with_budget.py",
+      "hash": "66bfb37d7199d482",
+      "size": 3863
+    },
+    "script::source_health.py": {
+      "path": "shared/scripts/source_health.py",
+      "hash": "196e1c8a8d9f8f3b",
+      "size": 6104
+    },
+    "script::strategy_hint.py": {
+      "path": "shared/scripts/strategy_hint.py",
+      "hash": "f6c8cd8da3d22914",
+      "size": 7132
+    },
+    "script::test_gate.py": {
+      "path": "shared/scripts/test_gate.py",
+      "hash": "a2cfcc0a0c7f5a36",
+      "size": 2685
+    },
+    "script::token_cost_summary.py": {
+      "path": "shared/scripts/token_cost_summary.py",
+      "hash": "e7c432595a971700",
+      "size": 7045
+    },
+    "script::update_cache.py": {
+      "path": "shared/scripts/update_cache.py",
+      "hash": "9d1b530a3908d8c0",
+      "size": 875
+    },
+    "script::write_signal.py": {
+      "path": "shared/scripts/write_signal.py",
+      "hash": "437f178e45eb9d93",
+      "size": 1295
+    },
+    "config::model_aliases.json": {
+      "path": "shared/config/model_aliases.json",
+      "hash": "c4f430e2f7911dda",
+      "size": 792
+    },
+    "config::model_pricing.json": {
+      "path": "shared/config/model_pricing.json",
+      "hash": "01c59de55fb64a40",
+      "size": 1721
+    },
+    "config::watchlist.json": {
+      "path": "shared/config/watchlist.json",
+      "hash": "abdc2337afe5ea76",
+      "size": 703
+    },
+    "adr::ADR-001-telegram-control-plane-only.md": {
+      "path": "ledger/ADRs/ADR-001-telegram-control-plane-only.md",
+      "hash": "aa4ad9e6d4ef2ea1",
+      "size": 802
+    },
+    "adr::ADR-002-market-data-provenance.md": {
+      "path": "ledger/ADRs/ADR-002-market-data-provenance.md",
+      "hash": "61f8f613355103e7",
+      "size": 773
+    },
+    "adr::ADR-003-unauthorized-cron-forbidden.md": {
+      "path": "ledger/ADRs/ADR-003-unauthorized-cron-forbidden.md",
+      "hash": "4948baf54334da38",
+      "size": 987
+    },
+    "adr::ADR-004-provider-level-budget.md": {
+      "path": "ledger/ADRs/ADR-004-provider-level-budget.md",
+      "hash": "d0143f8e2384a438",
+      "size": 940
+    },
+    "adr::ADR-005-governance-flow.md": {
+      "path": "ledger/ADRs/ADR-005-governance-flow.md",
+      "hash": "c53bbee7cd1b2ba9",
+      "size": 1126
+    },
+    "skills::index": {
+      "count": 14,
+      "hash": "5db82e73d1696412",
+      "names": [
+        "agent-team-orchestration",
+        "airadar",
+        "alpaca-trading",
+        "arc-agent-lifecycle",
+        "arxiv-search-collector",
+        "data-analyst",
+        "hyperliquid",
+        "kalshi-trading",
+        "market-news-analyst",
+        "market-pulse",
+        "openclaw-twitter",
+        "reddit-readonly",
+        "social-sentiment",
+        "yahoo-data-fetcher"
+      ]
     }
   }
 }

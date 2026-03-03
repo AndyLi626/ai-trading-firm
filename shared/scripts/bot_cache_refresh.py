@@ -68,6 +68,23 @@ def run():
 
     # Only update deterministic metadata fields
     cache['_updated']        = now
+
+    # Compute open_issues / blocked_items / chain_status from INFRA_TICKETS.md
+    import re as _re
+    _wm = os.path.expanduser("~/.openclaw/workspace-manager")
+    _tf  = f"{_wm}/INFRA_TICKETS.md"
+    if os.path.exists(_tf):
+        _tc = open(_tf).read()
+        _statuses = _re.findall(r'"status":\s*"([^"]+)"', _tc)
+        _open_tids = [s for s in _statuses if s not in ("RESOLVED","CLOSED")]
+        cache['open_issues']            = _open_tids
+        cache['blocked_items']          = []
+        cache['last_full_chain_status'] = "degraded" if _open_tids else "ok"
+    else:
+        cache['open_issues']            = []
+        cache['blocked_items']          = []
+        cache['last_full_chain_status'] = "ok"
+
     cache['_refresh_source'] = 'bot_cache_refresh.py (deterministic)'
     cache['system_health'] = {
         'heartbeat_age_min':    hb_age,

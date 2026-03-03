@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T01:07:35.242634+00:00",
+  "generated_at": "2026-03-03T03:01:04.890171+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -268,6 +268,11 @@
       "hash": "b7021f67a001b819",
       "size": 2230
     },
+    "script::gemini_proxy.py": {
+      "path": "shared/scripts/gemini_proxy.py",
+      "hash": "a31960b3a0c58a58",
+      "size": 3975
+    },
     "script::harvest_openclaw_usage.py": {
       "path": "shared/scripts/harvest_openclaw_usage.py",
       "hash": "54cbb4a7fd90bc5d",
@@ -489,8 +494,8 @@
       "size": 1497
     },
     "skills::index": {
-      "count": 14,
-      "hash": "5db82e73d1696412",
+      "count": 15,
+      "hash": "c7fbb44541f5bd1c",
       "names": [
         "agent-team-orchestration",
         "airadar",
@@ -498,6 +503,7 @@
         "arc-agent-lifecycle",
         "arxiv-search-collector",
         "data-analyst",
+        "economic-calendar-fetcher",
         "hyperliquid",
         "kalshi-trading",
         "market-news-analyst",

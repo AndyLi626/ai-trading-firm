@@ -1,9 +1,9 @@
 {
   "market_pulse": {
     "task_key": "market_pulse",
-    "last_run_at": "2026-03-03T01:07:35.169034+00:00",
+    "last_run_at": "2026-03-03T03:01:04.769812+00:00",
     "last_status": "ok",
-    "last_summary_at": "2026-03-03T01:07:35.169034+00:00",
+    "last_summary_at": "2026-03-03T03:01:04.769812+00:00",
     "last_summary_text": "stocks=0 crypto=0"
   },
   "premarket_scan:SPY,QQQ,NVDA,PLTR,XOM,GLD": {

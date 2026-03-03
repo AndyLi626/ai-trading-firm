@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T00:40:40.227260+00:00",
+  "generated_at": "2026-03-03T01:07:29.784534+00:00",
   "version": 1,
   "entries": {
     "cron::media-intel-scan": {
@@ -7,7 +7,7 @@
       "agent": "media",
       "delivery": "none",
       "schedule_hash": "0843207f253627e9",
-      "payload_hash": "ee4f0b1bbc8dd759"
+      "payload_hash": "b7d4682ec6845d53"
     },
     "cron::audit-daily": {
       "name": "audit-daily",
@@ -172,6 +172,11 @@
       "path": "shared/scripts/autonomy_orchestrator.py",
       "hash": "b103b1f9ea1399ea",
       "size": 5158
+    },
+    "script::blogwatcher_scan.py": {
+      "path": "shared/scripts/blogwatcher_scan.py",
+      "hash": "fa852fda1de2243d",
+      "size": 1999
     },
     "script::boot_policy_check.py": {
       "path": "shared/scripts/boot_policy_check.py",

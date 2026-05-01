@@ -181,17 +181,3 @@ tests/           # test_smoke.py, test_config_guard.py, test_archivist.py, etc.
 | ADR-008 | Upgrade SOP (Proposal→Preflight→Apply→Verify→Rollback) | Approved |
 | ADR-009 | No gateway restart during active session | Approved |
 
-
-
-
-Design a Financial Library - Java
-Design the Architecture for a Production-Grade Financial Library in Java 17+
-
-Your task is to design and build the skeleton of an industrial-strength financial library in Java. Focus on defining the core interfaces and architectural structure; implementations should be minimal and included only to
-illustrate how components interact.
-
-The library should reflect production-quality design. You may decide which production elements and engineering considerations to include. Use your selection of features and abstractions to demonstrate both the breadth and depth of your experience.
-The primary function of the library is to support valuation and common risk metrics across the following asset classes: Rates, Foreign Exchange (FX), Credit, and Mortgages.
-You will not have time to design a complete or fully detailed system. Instead, choose the aspects that best showcase your ability to build robust, scalable financial software and your knowledge of financial instruments and their valuation methodologies.
-Submit your design in code (java, yml, json, MD,..), bundle in a zip.
-Include a readme.MD to explain the design considerations.

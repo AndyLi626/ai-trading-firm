@@ -23,7 +23,13 @@ import sys
 import uuid
 from datetime import datetime, timezone
 
-WORKSPACE = os.path.expanduser('~/.openclaw/workspace')
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
+DEFAULT_WORKSPACE = os.path.expanduser("~/.openclaw/workspace")
+WORKSPACE = os.environ.get(
+    "OPENCLAW_WORKSPACE",
+    DEFAULT_WORKSPACE if os.path.isdir(DEFAULT_WORKSPACE) else REPO_ROOT,
+)
 sys.path.insert(0, os.path.join(WORKSPACE, "shared", "tools"))
 
 HARVEST_SCRIPT = os.path.join(WORKSPACE, "shared", "scripts", "harvest_openclaw_usage.py")

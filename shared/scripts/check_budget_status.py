@@ -68,7 +68,7 @@ def _query_today_per_bot() -> dict:
         # Try new table first
         sql = f"""
             SELECT bot, SUM(total_tokens) AS tokens
-            FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
+            FROM `example-gcp-project.trading_firm.token_usage_runs`
             WHERE date = '{today}' AND (is_test IS NULL OR is_test = FALSE)
                   AND (record_source IS NULL OR record_source != 'test')
             GROUP BY bot
@@ -81,7 +81,7 @@ def _query_today_per_bot() -> dict:
         if not result:
             sql_legacy = f"""
                 SELECT bot, SUM(total_tokens) AS tokens
-                FROM `ai-org-mvp-001.trading_firm.token_usage`
+                FROM `example-gcp-project.trading_firm.token_usage`
                 WHERE DATE(SAFE.PARSE_TIMESTAMP('%s', SAFE_CAST(timestamp AS STRING))) = '{today}'
                    OR DATE(timestamp) = '{today}'
                 GROUP BY bot

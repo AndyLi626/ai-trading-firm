@@ -43,8 +43,8 @@ else:
 
 # Verify
 token = get_token()
-query_url = "https://bigquery.googleapis.com/bigquery/v2/projects/ai-org-mvp-001/queries"
-qbody = json.dumps({"query": "SELECT COUNT(*) FROM `ai-org-mvp-001.trading_firm.execution_logs`", "useLegacySql": False, "timeoutMs": 30000}).encode()
+query_url = "https://bigquery.googleapis.com/bigquery/v2/projects/example-gcp-project/queries"
+qbody = json.dumps({"query": "SELECT COUNT(*) FROM `example-gcp-project.trading_firm.execution_logs`", "useLegacySql": False, "timeoutMs": 30000}).encode()
 qreq = urllib.request.Request(query_url, data=qbody, headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
 qresp = json.loads(urllib.request.urlopen(qreq).read())
 count = qresp.get('rows', [{}])[0].get('f', [{}])[0].get('v', '?')

@@ -153,7 +153,7 @@ def main():
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         rows = g.query(
             "SELECT SUM(total_tokens) AS t "
-            "FROM `ai-org-mvp-001.trading_firm.token_usage_runs` "
+            f"FROM `{g.PROJECT}.{g.DATASET}.token_usage_runs` "
             f"WHERE bot='{bot_id}' AND date='{today}'"
         )
         today_total = int((rows[0].get("t") or 0) if rows else 0)

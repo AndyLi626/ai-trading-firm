@@ -3,14 +3,27 @@
 GCP BigQuery client for the AI Trading Firm.
 Used by all bots to log decisions, token usage, handoffs.
 """
-import json, time, base64, urllib.request, urllib.parse, os
+import base64
+import json
+import os
+import time
+import urllib.parse
+import urllib.request
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.backends import default_backend
 
-import sys; sys.path.insert(0, os.path.expanduser('~/.openclaw/secrets')); SA_PATH = os.path.expanduser('~/.openclaw/secrets/gcp-service-account.json')
-PROJECT = 'ai-org-mvp-001'
-DATASET = 'trading_firm'
+import sys
+
+SECRETS_DIR = os.path.expanduser('~/.openclaw/secrets')
+sys.path.insert(0, SECRETS_DIR)
+
+SA_PATH = os.environ.get(
+    "GCP_SERVICE_ACCOUNT_FILE",
+    os.path.join(SECRETS_DIR, "gcp-service-account.json"),
+)
+PROJECT = os.environ.get("GCP_PROJECT_ID", "example-gcp-project")
+DATASET = os.environ.get("BIGQUERY_DATASET", "trading_firm")
 
 _token_cache = {'token': None, 'expires': 0}
 
@@ -159,7 +172,7 @@ def log_handoff(from_bot: str, to_bot: str, summary: str, payload: dict = None, 
         "session_id": session_id or "",
         "last_checkpoint": summary,
         "context_summary": summary,
-        "next_action": f"→ {to_bot}",
+        "next_action": f"to {to_bot}",
         "full_context": json.dumps(payload) if payload else "{}"
     }
     return insert_rows("context_handoffs", [row])

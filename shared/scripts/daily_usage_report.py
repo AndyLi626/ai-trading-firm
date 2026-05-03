@@ -81,7 +81,7 @@ def run_report(gcp_query_fn=None):
                SUM(total_output_tokens) AS output_tokens,
                SUM(total_tokens)        AS total_tokens,
                COUNT(*)                 AS run_count
-        FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
+        FROM `example-gcp-project.trading_firm.token_usage_runs`
         WHERE date = '{today}'
           AND (is_test IS NULL OR is_test = FALSE)
           AND (record_source IS NULL OR record_source = 'runtime')
@@ -93,7 +93,7 @@ def run_report(gcp_query_fn=None):
     # Top task_types
     sql_tasks = f"""
         SELECT task_type, SUM(total_tokens) AS tokens, COUNT(*) AS runs
-        FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
+        FROM `example-gcp-project.trading_firm.token_usage_runs`
         WHERE date = '{today}'
           AND (is_test IS NULL OR is_test = FALSE)
           AND (record_source IS NULL OR record_source = 'runtime')
@@ -106,7 +106,7 @@ def run_report(gcp_query_fn=None):
     # Waste candidates: high-token no-op runs
     sql_waste = f"""
         SELECT run_id, bot, task_type, total_tokens, status, duration_sec
-        FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
+        FROM `example-gcp-project.trading_firm.token_usage_runs`
         WHERE date = '{today}'
           AND total_tokens > 5000
           AND (is_test IS NULL OR is_test = FALSE)
@@ -122,7 +122,7 @@ def run_report(gcp_query_fn=None):
         SELECT model,
                SUM(input_tokens)  AS inp,
                SUM(output_tokens) AS out
-        FROM `ai-org-mvp-001.trading_firm.token_usage_calls`
+        FROM `example-gcp-project.trading_firm.token_usage_calls`
         WHERE DATE(started_at) = '{today}'
         GROUP BY model
     """

@@ -81,9 +81,11 @@ def _fetch_daily_usage() -> dict:
     try:
         sys.path.insert(0, os.path.join(WORKSPACE, "tools"))
         import gcp_client as _gcp
+        project = getattr(_gcp, "PROJECT", "example-gcp-project")
+        dataset = getattr(_gcp, "DATASET", "trading_firm")
         sql = f"""
             SELECT bot, SUM(total_tokens) AS tokens
-            FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
+            FROM `{project}.{dataset}.token_usage_runs`
             WHERE date = '{today}'
             GROUP BY bot
         """

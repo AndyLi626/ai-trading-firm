@@ -87,7 +87,7 @@ def main():
     try:
         import gcp_client as g
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-        rows  = g.query(f"SELECT SUM(total_tokens) AS t FROM `ai-org-mvp-001.trading_firm.token_usage_runs` WHERE bot='{bot_id}' AND date='{today}'")
+        rows  = g.query(f"SELECT SUM(total_tokens) AS t FROM `example-gcp-project.trading_firm.token_usage_runs` WHERE bot='{bot_id}' AND date='{today}'")
         today_total = int((rows[0].get("t") or 0) if rows else 0)
     except Exception:
         pass

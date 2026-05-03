@@ -41,7 +41,7 @@ Add whatever helps you do your job. This is your cheat sheet.
 
 ### GCP BigQuery
 - SA key: ~/.openclaw/secrets/gcp-service-account.json
-- Project: ai-org-mvp-001 | Dataset: trading_firm
+- Project: example-gcp-project | Dataset: trading_firm
 - Client: shared/tools/gcp_client.py
 - Tables: decisions, token_usage, trade_plans, risk_reviews, execution_logs, context_handoffs, bot_states
 - Usage: python3 shared/tools/gcp_client.py (or import in scripts)

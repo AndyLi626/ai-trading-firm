@@ -87,7 +87,7 @@ def _existing_run_ids(run_ids: list) -> set:
     try:
         ids_str = ", ".join(f"'{rid}'" for rid in run_ids)
         sql = f"""
-            SELECT run_id FROM `ai-org-mvp-001.trading_firm.token_usage_runs`
+            SELECT run_id FROM `example-gcp-project.trading_firm.token_usage_runs`
             WHERE run_id IN ({ids_str})
         """
         rows = _gcp.query(sql)

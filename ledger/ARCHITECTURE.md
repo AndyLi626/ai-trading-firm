@@ -115,7 +115,7 @@ RiskBot → trading_engine.py → ExecutionService → Alpaca paper
 
 ---
 
-## 9. GCP 表（project: ai-org-mvp-001, dataset: trading_firm）
+## 9. GCP 表（project: example-gcp-project, dataset: trading_firm）
 
 decisions · token_usage · trade_plans · risk_reviews · execution_logs · context_handoffs · bot_states · market_signals
 

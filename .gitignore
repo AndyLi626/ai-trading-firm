@@ -9,9 +9,13 @@ __pycache__/
 runtime_state/trading_log.jsonl
 runtime_state/engine_stdout.log
 runtime_state/*.pid
+*.log
 
 # Secrets (NEVER commit)
 secrets/
+.env
+.env.*
+!.env.example
 *.key
 *.pem
 *.p12
@@ -35,3 +39,5 @@ Thumbs.db
 # Runtime state files (operational data, not for VCS)
 runtime_state/*.md
 runtime_state/*.json
+workspace-manager/runtime_state/*.json
+shared/state/*.jsonl

@@ -41,7 +41,7 @@ def _get_manager_today_tokens() -> int:
         import gcp_client as g
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         rows  = g.query(
-            f"SELECT SUM(total_tokens) AS t FROM `ai-org-mvp-001.trading_firm.token_usage_runs`"
+            f"SELECT SUM(total_tokens) AS t FROM `example-gcp-project.trading_firm.token_usage_runs`"
             f" WHERE bot='manager' AND date='{today}' AND (is_test IS NULL OR is_test=FALSE)"
         )
         return int((rows[0].get("t") or 0) if rows else 0)

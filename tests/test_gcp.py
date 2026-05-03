@@ -30,7 +30,7 @@ except Exception as e:
 
 # 3. Table row counts (connectivity check)
 import urllib.request
-PROJECT = "ai-org-mvp-001"
+PROJECT = "example-gcp-project"
 TABLES = ["decisions","token_usage","trade_plans","risk_reviews","execution_logs","context_handoffs","bot_states"]
 
 def bq_count(table):

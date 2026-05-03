@@ -36,12 +36,12 @@ def get_today_spend():
         return None
 
     q = """SELECT model, SUM(cost_usd) cost
-FROM `ai-org-mvp-001.trading_firm.token_usage`
+FROM `example-gcp-project.trading_firm.token_usage`
 WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR)
 GROUP BY 1"""
     token = gcp_token()
     req = urllib.request.Request(
-        'https://bigquery.googleapis.com/bigquery/v2/projects/ai-org-mvp-001/queries',
+        'https://bigquery.googleapis.com/bigquery/v2/projects/example-gcp-project/queries',
         data=json.dumps({'query': q, 'useLegacySql': False, 'timeoutMs': 10000}).encode(),
         headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'},
         method='POST')

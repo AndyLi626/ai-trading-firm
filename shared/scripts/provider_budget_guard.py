@@ -20,7 +20,7 @@ def bq_query(sql):
     token = get_token()
     payload = json.dumps({'query': sql, 'useLegacySql': False, 'timeoutMs': 10000}).encode()
     req = urllib.request.Request(
-        'https://bigquery.googleapis.com/bigquery/v2/projects/ai-org-mvp-001/queries',
+        'https://bigquery.googleapis.com/bigquery/v2/projects/example-gcp-project/queries',
         data=payload,
         headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'},
         method='POST')
@@ -84,7 +84,7 @@ def main():
     try:
         # Query BigQuery for last 24h token usage
         sql = """SELECT bot, model, cost_usd
-FROM `ai-org-mvp-001.trading_firm.token_usage`
+FROM `example-gcp-project.trading_firm.token_usage`
 WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR)"""
         rows = bq_query(sql)
         

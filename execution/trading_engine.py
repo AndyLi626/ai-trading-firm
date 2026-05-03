@@ -12,7 +12,15 @@ sys.path.insert(0, os.path.expanduser('~/.openclaw/workspace-research/shared/too
 sys.path.insert(0, os.path.expanduser('~/.openclaw/secrets'))
 sys.path.insert(0, os.path.expanduser('~/.openclaw/workspace/execution'))
 
-from gcp_client import insert_rows, log_decision, log_token_usage, log_handoff, get_token
+from gcp_client import (
+    DATASET,
+    PROJECT,
+    get_token,
+    insert_rows,
+    log_decision,
+    log_handoff,
+    log_token_usage,
+)
 from load_secrets import alphavantage, alpaca_paper_key, alpaca_paper_secret
 from execution_service import execute as exec_order, alpaca_request
 
@@ -163,12 +171,16 @@ def run_cycle(cycle_num, results):
                 try:
                     plan_id = order.get("plan_id", "")
                     if plan_id and "TEST" not in plan_id:
-                        update_sql = f"UPDATE `ai-org-mvp-001.trading_firm.trade_plans` SET status='executed', risk_decision='approved' WHERE plan_id='{plan_id}'"
+                        update_sql = (
+                            f"UPDATE `{PROJECT}.{DATASET}.trade_plans` "
+                            "SET status='executed', risk_decision='approved' "
+                            f"WHERE plan_id='{plan_id}'"
+                        )
                         token = get_token()
                         if token:
                             import urllib.request as _ur
                             _req = _ur.Request(
-                                "https://bigquery.googleapis.com/bigquery/v2/projects/ai-org-mvp-001/jobs",
+                                f"https://bigquery.googleapis.com/bigquery/v2/projects/{PROJECT}/jobs",
                                 data=json.dumps({"configuration":{"query":{"query":update_sql,"useLegacySql":False}}}).encode(),
                                 headers={"Authorization":f"Bearer {token}","Content-Type":"application/json"},
                                 method="POST"

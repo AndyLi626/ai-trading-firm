@@ -103,9 +103,9 @@ except Exception as e:
 try:
     def bq_count_where(table, field, val):
         req = urllib.request.Request(
-            "https://bigquery.googleapis.com/bigquery/v2/projects/ai-org-mvp-001/queries",
+            "https://bigquery.googleapis.com/bigquery/v2/projects/example-gcp-project/queries",
             data=json.dumps({"query":
-                f"SELECT COUNT(*) FROM `ai-org-mvp-001.trading_firm.{table}` WHERE {field}='{val}'",
+                f"SELECT COUNT(*) FROM `example-gcp-project.trading_firm.{table}` WHERE {field}='{val}'",
                 "useLegacySql":False}).encode(),
             headers={"Authorization":f"Bearer {get_token()}","Content-Type":"application/json"})
         with urllib.request.urlopen(req, timeout=12) as r:

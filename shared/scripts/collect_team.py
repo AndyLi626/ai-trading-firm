@@ -26,7 +26,7 @@ _t0 = time.time()
 def bq(sql):
     token = get_token()
     req = urllib.request.Request(
-        "https://bigquery.googleapis.com/bigquery/v2/projects/ai-org-mvp-001/queries",
+        "https://bigquery.googleapis.com/bigquery/v2/projects/example-gcp-project/queries",
         data=json.dumps({"query": sql, "useLegacySql": False, "timeoutMs": 8000}).encode(),
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
         method="POST"
@@ -48,31 +48,31 @@ facts = {
 }
 
 try:
-    r = bq("SELECT COUNT(*) FROM `ai-org-mvp-001.trading_firm.decisions` WHERE timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR)")
+    r = bq("SELECT COUNT(*) FROM `example-gcp-project.trading_firm.decisions` WHERE timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR)")
     facts["decisions_today"] = int(r[0][0]) if r else 0
 except Exception as e:
     errors.append(f"decisions: {e}")
 
 try:
-    r = bq("SELECT COUNT(*) FROM `ai-org-mvp-001.trading_firm.execution_logs` WHERE status='accepted'")
+    r = bq("SELECT COUNT(*) FROM `example-gcp-project.trading_firm.execution_logs` WHERE status='accepted'")
     facts["executions_total"] = int(r[0][0]) if r else 0
 except Exception as e:
     errors.append(f"executions: {e}")
 
 try:
-    r = bq("SELECT COUNT(*) FROM `ai-org-mvp-001.trading_firm.risk_reviews` WHERE decision='Approve'")
+    r = bq("SELECT COUNT(*) FROM `example-gcp-project.trading_firm.risk_reviews` WHERE decision='Approve'")
     facts["risk_approvals"] = int(r[0][0]) if r else 0
 except Exception as e:
     errors.append(f"risk: {e}")
 
 try:
-    rows = bq("SELECT source_bot,symbol,signal_type,value_label,headline FROM `ai-org-mvp-001.trading_firm.market_signals` WHERE source_bot != 'test' ORDER BY timestamp DESC LIMIT 5")
+    rows = bq("SELECT source_bot,symbol,signal_type,value_label,headline FROM `example-gcp-project.trading_firm.market_signals` WHERE source_bot != 'test' ORDER BY timestamp DESC LIMIT 5")
     facts["recent_signals"] = [{"bot": r[0], "symbol": r[1], "type": r[2], "label": r[3], "headline": (r[4] or "")[:80]} for r in rows]
 except Exception as e:
     errors.append(f"signals: {e}")
 
 try:
-    rows = bq("SELECT bot, SUM(cost_usd) FROM `ai-org-mvp-001.trading_firm.token_usage` WHERE timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR) GROUP BY bot")
+    rows = bq("SELECT bot, SUM(cost_usd) FROM `example-gcp-project.trading_firm.token_usage` WHERE timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 24 HOUR) GROUP BY bot")
     facts["bot_costs_usd"] = {r[0]: round(float(r[1] or 0), 4) for r in rows}
 except Exception as e:
     errors.append(f"costs: {e}")

@@ -1,37 +1,48 @@
-# AI Trading Firm — OpenClaw Multi-Bot Platform
+# AI Trading Firm — OpenClaw Multi-Bot Prototype
 
-> **Stable tag**: `v0.7-stable` | Healthcheck: 7/7 PASS | ARCH_LOCK: 75 entries drift=0
+> Paper-trading engineering prototype | Multi-agent orchestration | Guardrails,
+> audit trails, and cost-aware routing
 
 ## Project Summary
 
-A production-grade autonomous trading/research firm built on [OpenClaw](https://openclaw.ai).
-Six specialized bots coordinate like a human team — InfraBot is the platform operator,
-ManagerBot is the sole interface to Boss, and all cross-bot communication flows through
-deterministic channels (file queues, JSONL tickets, facts cache).
+This repository demonstrates a paper-trading multi-agent system built on
+[OpenClaw](https://openclaw.ai). Six specialized bots coordinate through
+deterministic channels such as file queues, JSONL tickets, and facts cache files.
 
-**Not a toy**: budget governance, Evidence Gate, config_guard, drift detection, E2E smoke tests,
-and a full upgrade SOP are all operational.
+The project focuses on production-style guardrails rather than live trading
+performance: budget governance, Evidence Gate checks, guarded configuration
+changes, drift detection, and smoke-test style operational checks.
+
+## Scope and Safety
+
+This project is a paper-trading engineering prototype. It does not execute
+real-money trades. The focus is on agent orchestration, cost governance,
+auditability, and risk controls rather than alpha generation or live trading
+performance.
+
+For a short reviewer-oriented path through the code, start with
+[`CODE_REVIEW_GUIDE.md`](CODE_REVIEW_GUIDE.md).
 
 ---
 
 ## Architecture
 
 ```
-Boss (Telegram) ──► ManagerBot ──► InfraBot (tickets)
-                        │
-          ┌─────────────┼──────────────┐
-          ▼             ▼              ▼
-    ResearchBot     MediaBot       AuditBot
-    (strategy)      (intel)        (daily audit)
-          │
-          ▼
-       RiskBot (gate)
+Operator (Telegram) ──► ManagerBot ──► InfraBot (tickets)
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+        ResearchBot      MediaBot       AuditBot
+        (strategy)       (intel)        (daily audit)
+              │
+              ▼
+           RiskBot (gate)
 ```
 
 | Bot | Model | Role |
 |-----|-------|------|
 | main / InfraBot | claude-sonnet-4-6 | Platform operator, ticket polling, infra scans |
-| manager / ManagerBot | gemini-2.5-flash | Boss-facing delta reports (Telegram announce) |
+| manager / ManagerBot | gemini-2.5-flash | Operator-facing delta reports (Telegram announce) |
 | research / ResearchBot | claude-sonnet-4-6 | Strategy hints, event proposals |
 | media / MediaBot | qwen-plus (restricted) | Market intel, anomaly detection |
 | audit / AuditBot | gemini-2.0-flash | Daily audit, model evidence |
@@ -82,8 +93,9 @@ python3 shared/scripts/run_with_budget.py <bot> <tokens> -- python3 <script>
 ```
 
 ### Ticket System
-JSONL queue at `shared/state/ticket_queue.jsonl`. Manager writes via `infra_ticket_bridge.py`,
-InfraBot polls every 60s. P0 tickets auto-ACK within 60s.
+JSONL queue at `shared/state/ticket_queue.jsonl`. Manager-facing tools write
+tracked tickets, and InfraBot polls every 60s. P0 tickets are designed to be
+acknowledged quickly by the control-plane poller.
 
 ```bash
 python3 shared/tools/ticketify.py "description" --priority high --acceptance "criteria"
@@ -91,19 +103,37 @@ python3 shared/tools/ticketify.py "description" --priority high --acceptance "cr
 
 ---
 
-## How to Run
+## Quick Local Checks
+
+```bash
+# Windows launcher used in this checkout
+py -m compileall .
+py shared/tools/config_check.py
+
+# macOS/Linux equivalent
+python3 -m compileall .
+python3 shared/tools/config_check.py
+```
+
+Current smoke-test status: the full suite expects a local OpenClaw workspace and
+configured paper-trading/GCP credentials. It is useful for the original runtime
+environment, but it is not yet a pure fresh-clone test.
+
+## Environment-Dependent Operations
+
+These commands require the local OpenClaw runtime and paper-trading credentials:
 
 ```bash
 # 1. Start gateway
 openclaw gateway start
 
 # 2. Check health
-python3 shared/scripts/healthcheck.py          # 7/7 PASS required
+python3 shared/scripts/healthcheck.py
 
 # 3. Run E2E smoke
-python3 shared/scripts/e2e_smoke.py --dry-run  # 6/6 PASS
+python3 shared/scripts/e2e_smoke.py --dry-run
 
-# 4. Check cron jobs
+# 4. Inspect cron jobs
 openclaw cron list
 
 # 5. Check budget
@@ -115,11 +145,15 @@ python3 shared/scripts/budget_refresh.py
 
 ---
 
-## Stability
+## Operational Snapshot
 
-Current stable tag: **`v0.7-stable`** (commit `147b238`)
+Recorded stable tag from the original OpenClaw environment:
+**`v0.7-stable`** (commit `147b238`).
 
-7/7 healthcheck criteria:
+The following checks describe the intended operating gate in that environment;
+they should not be read as a fresh-clone production guarantee.
+
+Healthcheck criteria:
 1. `platform` — gateway running, disk < 90%
 2. `ticket_poller` — heartbeat age < 2min
 3. `cron_allowlist` — no announce violations, no bad agents
@@ -134,7 +168,7 @@ Current stable tag: **`v0.7-stable`** (commit `147b238`)
 
 | Command | What it does |
 |---------|-------------|
-| `python3 shared/scripts/e2e_smoke.py` | Run E2E smoke (6 scenarios, 1 Telegram summary) |
+| `python3 shared/scripts/e2e_smoke.py` | Run E2E smoke in a configured OpenClaw environment |
 | `python3 shared/scripts/budget_refresh.py` | Refresh budget thresholds (no spend reset) |
 | `python3 shared/tools/ticketify.py "<msg>"` | Convert discussion to tracked ticket |
 | `python3 shared/scripts/upgrade_check.py` | Check for new OpenClaw version |

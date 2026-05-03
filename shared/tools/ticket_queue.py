@@ -1,37 +1,41 @@
 #!/usr/bin/env python3
-"""
-ticket_queue.py — 轻量级工单队列（JSONL + 索引）
-职责: 唯一 source of truth（替代 INFRA_TICKETS.md 作为数据源）
-MD 文件只作镜像展示，不参与状态机
+"""File-backed ticket queue.
 
-存储:
-  QUEUE_FILE  = shared/state/ticket_queue.jsonl   (追加写，不可变日志)
-  INDEX_FILE  = shared/state/ticket_index.json    (最新状态索引，可重建)
-  HEARTBEAT   = memory/infra_ticket_poller_heartbeat.json
-
-API:
-  enqueue(ticket_id, message, sender, priority) → ticket
-  ack(ticket_id, eta_min)                        → ticket
-  update(ticket_id, progress)                    → ticket
-  resolve(ticket_id, summary)                    → ticket
-  get(ticket_id)                                 → ticket | None
-  list_open()                                    → [ticket]
-  list_all()                                     → [ticket]
-  rebuild_index()                                → int (entries rebuilt)
+The JSONL queue is the source of truth for Infra work items. The JSON index is a
+rebuildable cache of latest ticket state, and the Markdown mirror is display
+only. This keeps agent-to-agent coordination deterministic and auditable.
 """
-import os, json, uuid, fcntl
+import json
+import os
+import uuid
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
-WS          = Path(os.path.expanduser("~/.openclaw/workspace"))
-STATE_DIR   = WS / "shared" / "state"
-QUEUE_FILE  = STATE_DIR / "ticket_queue.jsonl"
-INDEX_FILE  = STATE_DIR / "ticket_index.json"
-HEARTBEAT   = WS / "memory" / "infra_ticket_poller_heartbeat.json"
+try:
+    import fcntl
+except ImportError:
+    # Local review on Windows should still be able to import the module. The
+    # deployed OpenClaw environment is POSIX and uses real fcntl file locks.
+    class _NoopFcntl:
+        LOCK_EX = 0
+        LOCK_UN = 0
 
-# MD 镜像（可选，仅展示）
-MD_MIRROR   = Path(os.path.expanduser(
-    "~/.openclaw/workspace-manager/INFRA_TICKETS_MIRROR.md"))
+        @staticmethod
+        def flock(_file_obj, _flags):
+            return None
+
+    fcntl = _NoopFcntl()
+
+WS = Path(os.path.expanduser("~/.openclaw/workspace"))
+STATE_DIR = WS / "shared" / "state"
+QUEUE_FILE = STATE_DIR / "ticket_queue.jsonl"
+INDEX_FILE = STATE_DIR / "ticket_index.json"
+HEARTBEAT = WS / "memory" / "infra_ticket_poller_heartbeat.json"
+
+# Optional display-only Markdown mirror.
+MD_MIRROR = Path(
+    os.path.expanduser("~/.openclaw/workspace-manager/INFRA_TICKETS_MIRROR.md")
+)
 
 STATE_DIR.mkdir(parents=True, exist_ok=True)
 (WS / "memory").mkdir(parents=True, exist_ok=True)
@@ -39,10 +43,11 @@ STATE_DIR.mkdir(parents=True, exist_ok=True)
 now_utc = lambda: datetime.now(timezone.utc)
 
 
-# ── 底层写入（追加 JSONL）────────────────────────────────────────────────────
+# Low-level append-only event log.
+
 
 def _append(event: dict):
-    """原子性追加一条事件到 JSONL 队列"""
+    """Append one event to the JSONL queue."""
     event['_ts'] = now_utc().isoformat()
     line = json.dumps(event, ensure_ascii=False) + '\n'
     with open(QUEUE_FILE, 'a') as f:
@@ -51,14 +56,18 @@ def _append(event: dict):
         fcntl.flock(f, fcntl.LOCK_UN)
 
 
-# ── 索引管理 ─────────────────────────────────────────────────────────────────
+# Index management.
+
 
 def _load_index() -> dict:
-    try:    return json.load(open(INDEX_FILE))
-    except: return {}
+    try:
+        return json.load(open(INDEX_FILE))
+    except Exception:
+        return {}
 
 def _save_index(idx: dict):
     json.dump(idx, open(INDEX_FILE, 'w'), indent=2, ensure_ascii=False)
+
 
 def _update_index(ticket: dict):
     idx = _load_index()
@@ -67,7 +76,7 @@ def _update_index(ticket: dict):
     return ticket
 
 def rebuild_index() -> int:
-    """从 JSONL 日志重建索引"""
+    """Rebuild the latest-state index from the append-only JSONL log."""
     idx = {}
     if not QUEUE_FILE.exists():
         return 0
@@ -90,7 +99,8 @@ def rebuild_index() -> int:
     return len(idx)
 
 
-# ── 公开 API ──────────────────────────────────────────────────────────────────
+# Public API.
+
 
 def enqueue(message: str, sender: str = "manager",
             priority: str = "normal", ticket_id: str = None) -> dict:
@@ -120,7 +130,7 @@ def ack(ticket_id: str, eta_min: int = None) -> dict:
     if not t:
         return {'error': 'not_found', 'ticket_id': ticket_id}
     if t['status'] != 'OPEN':
-        return t  # 已 ACK，幂等
+        return t  # Already acknowledged; keep the operation idempotent.
 
     eta = eta_min or t.get('eta_min', 30)
     nxt = (now_utc() + timedelta(minutes=min(eta, 10))).isoformat()
@@ -184,7 +194,8 @@ def list_all() -> list:
     return list(_load_index().values())
 
 
-# ── Heartbeat（确定性，不依赖 LLM）──────────────────────────────────────────
+# Deterministic heartbeat; no LLM dependency.
+
 
 def write_heartbeat(tickets_seen=0, tickets_acked=0, errors=None):
     hb = {
@@ -201,15 +212,16 @@ def write_heartbeat(tickets_seen=0, tickets_acked=0, errors=None):
     return hb
 
 
-# ── MD 镜像（只展示，不是 source of truth）──────────────────────────────────
+# Display-only Markdown mirror. Not a source of truth.
+
 
 def render_md_mirror():
     tickets = sorted(list_all(), key=lambda t: t.get('created_at',''), reverse=True)
     lines = [
-        "# InfraBot 工单队列镜像",
-        f"_自动生成 — source of truth 在 `shared/state/ticket_index.json`_",
-        f"_更新时间: {now_utc().strftime('%Y-%m-%d %H:%M:%S')} UTC_\n",
-        "| ID | 优先级 | 状态 | 创建时间 | 负责人 |",
+        "# InfraBot Ticket Queue Mirror",
+        f"_Generated from `shared/state/ticket_index.json`._",
+        f"_Updated: {now_utc().strftime('%Y-%m-%d %H:%M:%S')} UTC_\n",
+        "| ID | Priority | Status | Created | Owner |",
         "|---|---|---|---|---|",
     ]
     for t in tickets:
@@ -221,19 +233,19 @@ def render_md_mirror():
     for t in tickets:
         lines += [
             f"\n## {t['ticket_id']}",
-            f"**状态**: {t.get('status')}  **优先级**: {t.get('priority')}",
-            f"**内容**: {t.get('message','')}",
+            f"**Status**: {t.get('status')}  **Priority**: {t.get('priority')}",
+            f"**Message**: {t.get('message','')}",
         ]
         if t.get('ack_at'):
-            lines.append(f"**ACK时间**: {t['ack_at'][:19]} UTC")
+            lines.append(f"**ACK time**: {t['ack_at'][:19]} UTC")
         if t.get('resolution'):
-            lines.append(f"**解决方案**: {t['resolution']}")
+            lines.append(f"**Resolution**: {t['resolution']}")
 
     MD_MIRROR.parent.mkdir(parents=True, exist_ok=True)
     MD_MIRROR.write_text('\n'.join(lines), encoding='utf-8')
 
 
-# ── CLI ───────────────────────────────────────────────────────────────────────
+# CLI.
 
 if __name__ == '__main__':
     import sys
@@ -264,11 +276,11 @@ if __name__ == '__main__':
 
     elif cmd == 'rebuild':
         n = rebuild_index()
-        print(f"重建索引完成: {n} 条工单")
+        print(f"Rebuilt index: {n} tickets")
 
     elif cmd == 'mirror':
         render_md_mirror()
-        print(f"MD 镜像已生成: {MD_MIRROR}")
+        print(f"Markdown mirror generated: {MD_MIRROR}")
 
     elif cmd == 'heartbeat':
         hb = write_heartbeat()

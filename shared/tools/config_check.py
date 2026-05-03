@@ -1,12 +1,12 @@
-"""
-config_check.py — ConfigCheck 门禁
-验证规则：
-1. unknown keys → REJECT
-2. soul 路径引用不存在文件 → REJECT
-3. model id 不在 registry → REJECT
-4. agentId 不在 allowlist → REJECT
+"""ConfigCheck guardrail.
 
-validate(patch_dict) → {"result": "PASS"|"REJECT", "reason": str}
+Validation rules:
+1. Unknown top-level keys are rejected.
+2. Missing soul file references are rejected.
+3. Model IDs outside the registry are rejected.
+4. Agent IDs outside the allowlist are rejected.
+
+validate(patch_dict) -> {"result": "PASS"|"REJECT", "reason": str}
 """
 
 import os
@@ -123,17 +123,17 @@ if __name__ == "__main__":
     # Run built-in tests
     tests = [
         {
-            "name": "Test 1: unknown_field → REJECT",
+            "name": "Test 1: unknown_field -> REJECT",
             "input": {"unknown_field": "x"},
             "expected": "REJECT"
         },
         {
-            "name": "Test 2: soul path not found → REJECT",
+            "name": "Test 2: soul path not found -> REJECT",
             "input": {"agents": [{"id": "main", "soul": "/nonexistent/file.md"}]},
             "expected": "REJECT"
         },
         {
-            "name": "Test 3: valid agent + model → PASS",
+            "name": "Test 3: valid agent + model -> PASS",
             "input": {"agents": [{"id": "main", "model": {"primary": "anthropic/claude-sonnet-4-6"}}]},
             "expected": "PASS"
         },
@@ -142,13 +142,13 @@ if __name__ == "__main__":
     all_passed = True
     for t in tests:
         result = validate(t["input"])
-        status = "✅ OK" if result["result"] == t["expected"] else "❌ FAIL"
+        status = "OK" if result["result"] == t["expected"] else "FAIL"
         if result["result"] != t["expected"]:
             all_passed = False
         print(f"{status} {t['name']}")
         print(f"   Input:    {json.dumps(t['input'])}")
         print(f"   Expected: {t['expected']}")
-        print(f"   Got:      {result['result']} — {result['reason']}")
+        print(f"   Got:      {result['result']} - {result['reason']}")
         print()
 
     sys.exit(0 if all_passed else 1)
